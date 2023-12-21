@@ -17,11 +17,20 @@ local header = {
   "",
 }
 
+local footer = {
+  "",
+  "",
+  "🚀 Done is better than perfect",
+  "",
+  "",
+}
+
 M.config = function()
   require("dashboard").setup {
     theme = "hyper",
     config = {
       header = header,
+      footer = footer,
       week_header = {
         enable = false,
       },
@@ -34,6 +43,12 @@ M.config = function()
           group = "Label",
           action = "Telescope find_files",
           key = "f",
+        },
+        {
+          desc = "󱇚 Workspaces",
+          group = "DiagnosticHint",
+          action = "Telescope workspaces",
+          key = "w",
         },
         {
           desc = " Filetree",
