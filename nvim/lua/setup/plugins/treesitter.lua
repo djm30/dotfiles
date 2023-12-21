@@ -3,6 +3,7 @@ local M = {
   "nvim-treesitter/nvim-treesitter",
   dependencies = {
     "nvim-treesitter/nvim-treesitter-textobjects",
+    "windwp/nvim-ts-autotag",
   },
   build = ":TSUpdate",
 }
@@ -19,6 +20,9 @@ M.config = function()
         "rust",
         "tsx",
         "javascript",
+        "tsx",
+        "html",
+        "css",
         "typescript",
         "vimdoc",
         "vim",
@@ -27,7 +31,25 @@ M.config = function()
       },
 
       -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
-      auto_install = false,
+      auto_install = true,
+
+      autotag = {
+        enable = true,
+        enable_rename = true,
+        enable_close = true,
+        enable_close_slash = true,
+        filetypes = {
+          "tsx",
+          "jsx",
+          "html",
+          "xml",
+          "svelte",
+          "typescriptreact",
+          "typescript",
+          "javascript",
+          "javascriptreact",
+        },
+      },
 
       highlight = { enable = true },
       indent = { enable = true },

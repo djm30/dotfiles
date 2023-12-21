@@ -18,6 +18,7 @@ end
 
 -- Close Current Buffer
 vim.keymap.set("n", "<leader>xb", close_buffer_without_closing_window, opts_with_desc "Close current buffer")
+vim.keymap.set("n", "<leader>xx", close_buffer_without_closing_window, opts_with_desc "Close current buffer")
 
 vim.keymap.set(
   "n",
