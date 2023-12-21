@@ -110,10 +110,14 @@ M.config = function()
         return vim_item
       end,
     },
+
     window = {
-      documentation = {
-        border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-      },
+      -- completion = {
+      --   border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+      -- },
+      -- documentation = {
+      --   border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+      -- },
     },
   }
 
