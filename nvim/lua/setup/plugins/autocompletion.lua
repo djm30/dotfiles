@@ -1,29 +1,38 @@
-local kind_icons = {
-  Text = "󰉿",
-  Method = "󰆧",
-  Function = "󰊕",
-  Constructor = "",
-  Field = " ",
-  Variable = "󰀫",
-  Class = "󰠱",
-  Interface = "",
-  Module = "",
-  Property = "󰜢",
-  Unit = "󰑭",
-  Value = "󰎠",
-  Enum = "",
-  Keyword = "󰌋",
-  Snippet = "",
+local icons = {
   Color = "󰏘",
-  File = "󰈙",
   Reference = "",
   Folder = "󰉋",
-  EnumMember = "",
-  Constant = "󰏿",
-  Struct = "",
+  Text = "󰉿",
+  Snippet = "",
+  Keyword = "󰌋",
+  File = "󰈙",
+  Property = "󰜢",
+  Module = "󰜢",
+  Namespace = "",
+  Package = "󰊕",
+  Method = "",
+  Interface = "",
+  Class = "󰌋",
+  Constructor = "",
+  Field = " ",
+  Enum = "",
+  Function = "",
+  Variable = "",
+  Constant = "",
+  String = "",
+  Number = "#",
+  Boolean = "",
+  Array = "",
+  Object = "",
+  Key = "",
+  Null = "",
+  EnumMember = "",
+  Struct = "",
   Event = "",
   Operator = "󰆕",
-  TypeParameter = " ",
+  TypeParameter = "",
+  Component = "",
+  Fragment = "",
   Misc = " ",
 }
 
@@ -98,23 +107,31 @@ M.config = function()
       { name = "path" },
     },
     formatting = {
-      fields = { "kind", "abbr", "menu" },
-      format = function(entry, vim_item)
-        vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
-        vim_item.menu = ({
-          nvim_lsp = "[LSP]",
-          luasnip = "[Snippet]",
-          buffer = "[Buffer]",
-          path = "[Path]",
-        })[entry.source.name]
+      fields = { "abbr", "kind", "menu" },
+      -- format = function(entry, vim_item)
+      --   vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
+      --   vim_item.menu = ({
+      --     nvim_lsp = "[LSP]",
+      --     luasnip = "[Snippet]",
+      --     buffer = "[Buffer]",
+      --     path = "[Path]",
+      --   })[entry.source.name]
+      --   return vim_item
+      -- end,
+      format = function(_, vim_item)
+        local icon = icons[vim_item.kind] or ""
+        icon = " " .. icon
+        vim_item.menu = ("    (" .. vim_item.kind .. ") ")
+        vim_item.kind = icon
         return vim_item
       end,
     },
 
     window = {
-      -- completion = {
-      --   border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-      -- },
+      completion = {
+        scrollbar = false,
+        -- border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+      },
       -- documentation = {
       --   border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
       -- },
