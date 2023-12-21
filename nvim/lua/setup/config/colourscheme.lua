@@ -48,6 +48,7 @@ local telescope_custom_highlights = {
   TelescopeResultsNormal = { bg = colours.bg0 },
   TelescopeResultsBorder = { bg = colours.bg0, fg = colours.bg0 },
   NavicIconsFile = { fg = colours.blue, bg = colours.bg0 },
+  IncSearch = { fg = colours.bg0, bg = "#BA78D7" },
 }
 
 require("onedark").setup {

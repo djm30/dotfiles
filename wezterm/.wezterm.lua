@@ -8,7 +8,7 @@ local function rgba(r, g, b, a)
 end
 
 config.font = wezterm.font_with_fallback({
-	{ family = "JetBrainsMono Nerd Font", scale = 1.2 },
+	{ family = "JetBrainsMono Nerd Font", weight = "Medium", scale = 1.2 },
 	{ family = "MesloLGS NF", scale = 1.2 },
 })
 

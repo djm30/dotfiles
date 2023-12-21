@@ -27,6 +27,7 @@ tools=(
     neovim
     lazygit
     ripgrep
+    bat
 )
 
 # Applications to install with brew cask

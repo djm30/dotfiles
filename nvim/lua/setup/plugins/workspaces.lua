@@ -7,7 +7,9 @@ local opts_with_desc = require("setup.config.util").opts_with_desc
 M.config = function()
   require("workspaces").setup {
     hooks = {
-      open = "Neotree show right",
+      open = function()
+        vim.cmd "Neotree show right"
+      end,
     },
   }
   vim.keymap.set("n", "<leader>wa", ":WorkspacesAdd <CR>", opts_with_desc "Adds current dir as a workspace")

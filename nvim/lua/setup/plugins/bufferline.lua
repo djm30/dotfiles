@@ -5,6 +5,14 @@ M.config = function()
     options = {
       diagnostics = "nvim_lsp",
       show_buffer_close_icons = false,
+      offsets = {
+        {
+          filetype = "neo-tree",
+          text = "File Explorer",
+          highlight = "Directory",
+          separator = true, -- use a "true" to enable the default, or set your own character
+        },
+      },
     },
     highlights = {
       buffer_selected = {

@@ -40,6 +40,9 @@ function M.config()
 
   function _lazygit_toggle()
     lazygit:toggle()
+    if lazygit:is_open() then
+      vim.cmd "startinsert"
+    end
   end
 
   -- Set key mapping for the lazygit terminal

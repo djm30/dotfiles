@@ -55,9 +55,12 @@ keymap("n", "N", "Nzzzv", opts)
 
 -- Copies selection to system clipboard
 keymap({ "n", "v" }, "<leader>y", [["+y]], opts_with_desc "Copies to clipboard")
+keymap({ "n", "v" }, "<leader>Y", function()
+  vim.fn.setreg("+", vim.fn.getreg "0")
+end, opts_with_desc "Puts last yank in clipboard")
 
 -- Copies from cursor pos to end of line to system clipboard
-keymap("n", "<leader>Y", [["+Y]], opts_with_desc "Copies to end of line to clipboard")
+-- keymap("n", "<leader>Y", [["+Y]], opts_with_desc "Copies to end of line to clipboard")
 
 -- Deletes selection without copying? Need a better key combo for it
 -- keymap({"n", "v"}, "<leader>", [["_d]], opts)
