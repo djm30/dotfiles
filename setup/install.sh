@@ -25,8 +25,8 @@ tools=(
     fzf
     lf
     neovim
-    wezterm
     lazygit
+    ripgrep
 )
 
 # Applications to install with brew cask
@@ -44,6 +44,7 @@ applications=(
     visual-studio-code
     discord
     betterdisplay
+    wezterm
 )
 
 # Add taps
