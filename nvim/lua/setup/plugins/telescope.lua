@@ -108,11 +108,29 @@ M.config = function()
     extensions = {
       "fzf",
       "projects",
+      ["ui-select"] = {
+        require("telescope.themes").get_dropdown {},
+
+        -- pseudo code / specification for writing custom displays, like the one
+        -- for "codeactions"
+        -- specific_opts = {
+        --   [kind] = {
+        --     make_indexed = function(items) -> indexed_items, width,
+        --     make_displayer = function(widths) -> displayer
+        --     make_display = function(displayer) -> function(e)
+        --     make_ordinal = function(e) -> string
+        --   },
+        --   -- for example to disable the custom builtin "codeactions" display
+        --      do the following
+        --   codeactions = false,
+        -- }
+      },
     },
   }
 
   pcall(require("telescope").load_extension, "fzf")
   pcall(require("telescope").load_extension, "workspaces")
+  pcall(require("telescope").load_extension, "ui-select")
 
   local function find_git_root()
     -- Use the current buffer's path as the starting point for the git search
