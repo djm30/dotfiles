@@ -1,13 +1,6 @@
-local opts = { noremap = true, silent = true }
+local opts_with_desc = require("setup.config.util").opts_with_desc
+local opts = require("setup.config.util").opts
 
-local function opts_with_desc(desc)
-  return {
-    noremap = opts.noremap,
-    silent = opts.silent,
-    desc = desc,
-  }
-end
--- Shorten function name
 local keymap = vim.keymap.set
 
 -- Remap space as leader key
@@ -40,32 +33,6 @@ keymap("n", "<S-h>", ":bprevious<CR>", opts)
 
 keymap("n", "<leader>sv", ":vs", opts_with_desc "Splits Vertically")
 keymap("n", "<leader>sh", ":split", opts_with_desc "Splits Horizontally")
-
--- function CLOSE_CURRENT()
---   local file_type = vim.bo.filetype
---
---   -- Check if the current buffer is a regular file
---   if file_type ~= "qf" and file_type ~= "Neoterm" and file_type ~= "help" then
---     -- Save changes if the buffer is modified
---     if vim.bo.modified then
---       vim.cmd "w"
---     end
---     vim.cmd "bd!"
---     -- Check if the current buffer is the quickfix list
---   elseif file_type == "qf" then
---     vim.cmd "cclose"
---     -- Check if the current buffer is the file explorer (NERDTree)
---   elseif file_type == "neo-tree" then
---     vim.cmd "Neotree close"
---     -- Check if the current buffer is a help file
---   elseif file_type == "help" then
---     vim.cmd "close"
---   end
--- end
-
--- Map <leader>x to the CLOSE_CURRENT function
--- keymap("n", "<leader>x", ":lua CLOSE_CURRENT()<CR>", opts_with_desc "Exits current buffer / closes window")
--- keymap("n", "<leader>x", ":w<CR>:bdelete<CR>", opts_with_desc("Saves and exits current buffer"))
 
 -- IDK what Q does but it doesn't do anything now
 keymap("n", "Q", "<nop>", opts)
@@ -144,5 +111,3 @@ vim.cmd [[
 
 -- Map <leader>t h to the HTerm command
 keymap("n", "<leader>th", ":HTerm<CR>", opts_with_desc "New horizontal terminal")
-
-vim.cmd [[autocmd TermOpen * setlocal nonumber norelativenumber | startinsert]]

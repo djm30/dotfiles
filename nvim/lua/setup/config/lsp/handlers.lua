@@ -51,15 +51,7 @@ M.setup = function()
   })
 end
 local function lsp_keymaps(bufnr)
-  local opts = { noremap = true, silent = true }
-
-  local function opts_with_desc(desc)
-    return {
-      noremap = opts.noremap,
-      silent = opts.silent,
-      desc = desc,
-    }
-  end
+  local opts_with_desc = require("setup.config.util").opts_with_desc
 
   local keymap = vim.api.nvim_buf_set_keymap
 

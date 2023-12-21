@@ -112,7 +112,7 @@ M.config = function()
   }
 
   pcall(require("telescope").load_extension, "fzf")
-  pcall(require("telescope").load_extension, "projects")
+  pcall(require("telescope").load_extension, "workspaces")
 
   local function find_git_root()
     -- Use the current buffer's path as the starting point for the git search
@@ -169,7 +169,7 @@ M.config = function()
 
   vim.keymap.set("n", "<leader>fo", telescope_live_grep_open_files, { desc = "Grep open files" })
   vim.keymap.set("n", "<leader>ff", require("telescope.builtin").find_files, { desc = "Find files" })
-  vim.keymap.set("n", "<leader>fp", require("telescope").extensions.projects.projects, { desc = "Find Projects" })
+  vim.keymap.set("n", "<leader>fp", require("telescope").extensions.workspaces.workspaces, { desc = "Find Projects" })
   vim.keymap.set("n", "<leader>fg", require("telescope.builtin").live_grep, { desc = "Find by Grep" })
   vim.keymap.set("n", "<leader>fh", require("telescope.builtin").help_tags, { desc = "Find help" })
   vim.keymap.set("n", "<leader>fw", require("telescope.builtin").grep_string, { desc = "Find current word" })

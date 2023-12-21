@@ -14,8 +14,9 @@ M.config = function()
       d = "Show diff",
       b = "Show current line blame info",
     },
-    ["<leader>x"] = { name = "Exit" },
+    ["<leader>x"] = { name = "Close" },
     ["<leader>c"] = { name = "Code" },
+    ["<leader>w"] = { name = "Workspaces" },
   }
 end
 
