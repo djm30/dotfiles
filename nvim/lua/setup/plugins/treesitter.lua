@@ -13,7 +13,6 @@ M.config = function()
       -- Add languages to be installed here that you want installed for treesitter
       ensure_installed = {
         "c",
-        "cpp",
         "go",
         "lua",
         "python",
@@ -76,7 +75,8 @@ M.config = function()
           },
         },
         swap = {
-          enable = true,
+          -- I dont really know what this is or if i will ever use it
+          enable = false,
           swap_next = {
             ["<leader>a"] = "@parameter.inner",
           },

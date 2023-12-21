@@ -44,7 +44,7 @@ function M.config()
 
   -- Set key mapping for the lazygit terminal
   local map = vim.api.nvim_set_keymap
-  local opts = { noremap = true, silent = true }
+  local opts = { noremap = true, silent = true, desc = "Open Lazygit" }
   map("n", "<leader>gg", "<cmd>lua _lazygit_toggle()<CR>", opts)
 end
 

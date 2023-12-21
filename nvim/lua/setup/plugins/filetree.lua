@@ -19,6 +19,13 @@ return {
         modified = {
           symbol = "",
         },
+        git_status = {
+          symbols = {
+            untracked = "󱨧",
+            unstaged = "󰲶",
+            staged = "󰄬",
+          },
+        },
       },
       filesystem = {
         always_show = {

@@ -4,12 +4,26 @@ local M = {
   dependencies = { { "nvim-tree/nvim-web-devicons" } },
 }
 
+local header = {
+  " ",
+  "",
+  "  ██╗    ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗        ██╗    ██╗  ",
+  " ██╔╝    ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║       ██╔╝    ╚██╗ ",
+  "██╔╝     ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║      ██╔╝      ╚██╗",
+  "╚██╗     ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║     ██╔╝       ██╔╝",
+  " ╚██╗    ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║    ██╔╝       ██╔╝ ",
+  "  ╚═╝    ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝    ╚═╝        ╚═╝  ",
+  "                                                                               ",
+  "",
+}
+
 M.config = function()
   require("dashboard").setup {
     theme = "hyper",
     config = {
+      header = header,
       week_header = {
-        enable = true,
+        enable = false,
       },
       shortcut = {
         { desc = "󰊳 Update", group = "@property", action = "Lazy update", key = "u" },
@@ -22,16 +36,16 @@ M.config = function()
           key = "f",
         },
         {
-          desc = " Apps",
+          desc = " Filetree",
           group = "DiagnosticHint",
-          action = "Telescope app",
-          key = "a",
+          action = "Neotree toggle .",
+          key = "e",
         },
         {
-          desc = " dotfiles",
+          desc = "󰗼 quit",
           group = "Number",
-          action = "Telescope dotfiles",
-          key = "d",
+          action = "quit",
+          key = "q",
         },
       },
     },

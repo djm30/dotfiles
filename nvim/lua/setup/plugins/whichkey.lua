@@ -7,7 +7,15 @@ M.config = function()
     ["<leader>f"] = { name = "Find" },
     ["<leader>s"] = { name = "Split" },
     ["<leader>t"] = { name = "Terminal" },
-    ["<leader>c"] = { name = "Code via LSP" },
+    ["<leader>g"] = {
+      name = "Git",
+      g = { "Toggle LazyGit" },
+      t = { name = "Toggle...", b = { "Show current line blame" }, d = { "Show deletions" } },
+      d = "Show diff",
+      b = "Show current line blame info",
+    },
+    ["<leader>x"] = { name = "Exit" },
+    ["<leader>c"] = { name = "Code" },
   }
 end
 
