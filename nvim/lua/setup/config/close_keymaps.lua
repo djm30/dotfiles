@@ -30,7 +30,7 @@ vim.keymap.set(
 vim.keymap.set("n", "<leader>xw", ":wa | close<CR>", opts_with_desc "Save all and close current window")
 
 -- Close All Buffers
-vim.keymap.set("n", "<leader>xa", ":%bd|e#|bd#<CR>", opts_with_desc "Close all buffers")
+vim.keymap.set("n", "<leader>xa", ": wa | %bd|e#|bd#<CR>", opts_with_desc "Close all buffers")
 
 -- Close Quickfix List
 vim.keymap.set("n", "<leader>xq", ":cclose<CR>", opts_with_desc "Close quickfix list")
@@ -41,3 +41,4 @@ vim.keymap.set("n", "<leader>xh", ":close<CR>", opts_with_desc "Close current ho
 
 -- Save All Buffers and Force Quit NeoVim
 vim.keymap.set("n", "<leader>xfqa", ":wa | qa!<CR>", opts_with_desc "Save all and force quit NeoVim")
+vim.keymap.set("n", "<leader>xfqb", ":wa | bd!<CR>", opts_with_desc "Saves and force quits buffer")
