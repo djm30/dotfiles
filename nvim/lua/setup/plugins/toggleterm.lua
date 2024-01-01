@@ -28,7 +28,7 @@ function M.config()
     },
     winbar = {
       enabled = true,
-      name_formatter = function(term) --  term: Terminal
+      name_formatter = function(term) --  term: Terminalauto
         return term.count
       end,
     },

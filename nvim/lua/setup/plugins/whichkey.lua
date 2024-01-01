@@ -17,6 +17,7 @@ M.config = function()
     ["<leader>x"] = { name = "Close" },
     ["<leader>c"] = { name = "Code" },
     ["<leader>w"] = { name = "Workspaces" },
+    ["<leader>d"] = { name = "Diagnostics" },
   }
 end
 

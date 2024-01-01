@@ -9,6 +9,7 @@ M.config = function()
     hooks = {
       open = function()
         vim.cmd "Neotree show right"
+        -- vim.api.nvim_feedkeys(":" .. "lua CLOSE_ALL_BUFFERS_EXCEPT_NEOTREE()", "n", false)
       end,
     },
   }

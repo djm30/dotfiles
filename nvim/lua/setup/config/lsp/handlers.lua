@@ -5,6 +5,8 @@ if not status_cmp_ok then
   return
 end
 
+local border = "rounded"
+
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
 M.capabilities.textDocument.completion.completionItem.snippetSupport = true
 M.capabilities = cmp_nvim_lsp.default_capabilities(M.capabilities)
@@ -33,7 +35,7 @@ M.setup = function()
     float = {
       focusable = true,
       style = "minimal",
-      border = "rounded",
+      border = border,
       source = "always",
       header = "",
       prefix = "",
@@ -43,11 +45,11 @@ M.setup = function()
   vim.diagnostic.config(config)
 
   vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-    border = "rounded",
+    border = border,
   })
 
   vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-    border = "rounded",
+    border = border,
   })
 end
 local function lsp_keymaps(bufnr)
@@ -62,7 +64,13 @@ local function lsp_keymaps(bufnr)
   keymap(bufnr, "n", "gr", "<cmd>Telescope lsp_references<CR>", opts_with_desc "Go to references")
   keymap(bufnr, "n", "<leader>cd", "<cmd>lua vim.diagnostic.open_float()<CR>", opts_with_desc "Open diagnostic float")
   --  keymap(bufnr, "n", "<leader>cf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr>", opts_with_desc("Format with builtin LSP"))
-  keymap(bufnr, "n", "<leader>cf", "<cmd>lua require('conform').format()<cr>", opts_with_desc "Format with builtin LSP")
+  keymap(
+    bufnr,
+    "n",
+    "<leader>cf",
+    "<cmd>lua require('conform').format()<cr>",
+    opts_with_desc "Format with conform formatter"
+  )
   keymap(bufnr, "n", "<leader>cd", "<cmd>lua vim.diagnostic.open_float()<CR>", opts_with_desc "Open diagnostic float")
   keymap(bufnr, "n", "<leader>ci", "<cmd>LspInfo<cr>", opts_with_desc "Open LspInfo")
   keymap(bufnr, "n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts_with_desc "Run Code Action")
@@ -99,6 +107,20 @@ M.on_attach = function(client, bufnr)
   if client.name == "sumneko_lua" then
     client.server_capabilities.documentFormattingProvider = false
   end
+
+  -- if client.name == "svelte" then
+  --   vim.api.nvim_create_autocmd("BufWritePost", {
+  --     pattern = { "*.js", "*.ts" },
+  --     callback = function(ctx)
+  --       client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.file })
+  --     end,
+  --   })
+  --
+  --   vim.api.nvim_create_autocmd({ "BufWrite" }, {
+  --     pattern = { "+page.server.ts", "+page.ts", "+layout.server.ts", "+layout.ts" },
+  --     command = "LspRestart svelte",
+  --   })
+  -- end
 
   lsp_keymaps(bufnr)
 

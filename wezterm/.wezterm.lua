@@ -64,7 +64,6 @@ config.keys = {
 	{ key = "q", mods = "LEADER", action = act.CloseCurrentPane({ confirm = true }) },
 	{ key = "z", mods = "LEADER", action = act.TogglePaneZoomState },
 	{ key = "o", mods = "LEADER", action = act.RotatePanes("Clockwise") },
-
 	-- Activates pane resize key table
 	{
 		key = "r",

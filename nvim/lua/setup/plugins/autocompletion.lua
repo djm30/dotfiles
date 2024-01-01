@@ -2,19 +2,19 @@ local icons = {
   Color = "󰏘",
   Reference = "",
   Folder = "󰉋",
-  Text = "󰉿",
-  Snippet = "",
-  Keyword = "󰌋",
+  Text = "",
+  Snippet = "",
+  Keyword = "",
   File = "󰈙",
-  Property = "󰜢",
-  Module = "󰜢",
-  Namespace = "",
-  Package = "󰊕",
-  Method = "",
+  Property = "",
+  Module = "",
+  Namespace = "",
+  Package = "",
+  Method = "",
   Interface = "",
-  Class = "󰌋",
+  Class = "",
   Constructor = "",
-  Field = " ",
+  Field = "",
   Enum = "",
   Function = "",
   Variable = "",
@@ -33,7 +33,7 @@ local icons = {
   TypeParameter = "",
   Component = "",
   Fragment = "",
-  Misc = " ",
+  Misc = "",
 }
 
 local M = {
@@ -45,6 +45,7 @@ local M = {
     "hrsh7th/cmp-path",
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-cmdline",
+    "hrsh7th/cmp-nvim-lsp-signature-help",
     "rafamadriz/friendly-snippets",
   },
 }
@@ -102,12 +103,13 @@ M.config = function()
     },
     sources = {
       { name = "nvim_lsp" },
+      { name = "nvim_lsp_signature_help" },
       { name = "luasnip" },
       { name = "buffer" },
       { name = "path" },
     },
     formatting = {
-      fields = { "abbr", "kind", "menu" },
+      fields = { "kind", "abbr", "menu" },
       -- format = function(entry, vim_item)
       --   vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
       --   vim_item.menu = ({
@@ -120,32 +122,42 @@ M.config = function()
       -- end,
       format = function(_, vim_item)
         local icon = icons[vim_item.kind] or ""
-        icon = " " .. icon
-        vim_item.menu = ("    (" .. vim_item.kind .. ") ")
+        vim_item.menu = ("    " .. vim_item.kind .. " ")
         vim_item.kind = icon
         return vim_item
       end,
     },
 
     window = {
-      completion = {
-        scrollbar = false,
-        -- border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-      },
-      -- documentation = {
-      --   border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+      -- completion = {
+      --   winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None",
+      --   scrollbar = false,
       -- },
+      -- documentation = {
+      --   winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None",
+      --   scrollbar = false,
+      -- },
+      completion = cmp.config.window.bordered {
+        winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None",
+        scrollbar = false,
+      },
+      documentation = cmp.config.window.bordered {
+        winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None",
+        scrollbar = false,
+      },
     },
   }
 
-  cmp.setup.cmdline(":", {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = cmp.config.sources({
-      { name = "path" },
-    }, {
-      { name = "cmdline" },
-    }),
-  })
+  vim.cmd(":set winhighlight=" .. cmp.config.window.bordered().winhighlight)
+
+  -- cmp.setup.cmdline(":", {
+  --   mapping = cmp.mapping.preset.cmdline(),
+  --   sources = cmp.config.sources({
+  --     { name = "path" },
+  --   }, {
+  --     { name = "cmdline" },
+  --   }),
+  -- })
 end
 
 return M

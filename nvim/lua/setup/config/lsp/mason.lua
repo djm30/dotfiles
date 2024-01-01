@@ -12,6 +12,7 @@ local servers = {
   "svelte",
   "marksman",
   "emmet_language_server",
+  "clangd",
 }
 
 local formatters = {
@@ -66,6 +67,9 @@ for _, server in pairs(servers) do
   local require_ok, conf_opts = pcall(require, "setup.config.lsp.settings." .. server)
   if require_ok then
     opts = vim.tbl_deep_extend("force", conf_opts, opts)
+    if server == "svelte" then
+      print(opts)
+    end
   end
 
   lspconfig[server].setup(opts)

@@ -25,11 +25,11 @@
 -- diff_change
 -- diff_text
 
-local style = "darker"
+local style = "dark"
 
 local colours = require("onedark.palette")[style]
 
-local telescope_custom_highlights = {
+local custom_highlights = {
   LeapBackdrop = { fg = colours.grey },
   TelescopeNormal = { bg = colours.bg0 },
   TelescopeBorder = { bg = colours.bg0, fg = colours.bg0 },
@@ -49,8 +49,16 @@ local telescope_custom_highlights = {
   TelescopeResultsBorder = { bg = colours.bg0, fg = colours.bg0 },
   NavicIconsFile = { fg = colours.blue, bg = colours.bg0 },
   IncSearch = { fg = colours.bg0, bg = "#BA78D7" },
+  Pmenu = { bg = "none" },
+  NoiceCmdlinePopup = { bg = colours.bg0, fg = colours.light_grey },
+  NoiceCmdlinePopupTitle = { fg = colours.bg0, bg = colours.blue },
+  NoiceCmdlinePopupBorder = { bg = colours.bg0, fg = colours.bg0 },
+  WhichKeyFloat = { bg = "none", fg = "none" },
+  FloatBorder = { bg = "none", fg = "none" },
+  NormalFloat = { bg = "none", fg = "none" },
+  DashboardHeader = { fg = colours.purple },
+  DashboardFooter = { fg = colours.blue },
 }
-
 require("onedark").setup {
   style = style,
   transparent = true,
@@ -61,7 +69,23 @@ require("onedark").setup {
     background = true, -- use background color for virtual text
   },
 
-  highlights = telescope_custom_highlights,
+  lualine = {
+    transparent = true,
+  },
+
+  highlights = custom_highlights,
 }
 -- Colourscheme
 vim.cmd.colorscheme "onedark"
+
+-- vim.cmd [[
+-- highlight WhichKeyFloat ctermbg=none guibg=none
+-- ]]
+--
+-- vim.cmd [[
+-- highlight FloatBorder ctermbg=none guibg=none
+-- ]]
+--
+-- vim.cmd [[
+-- highlight NormalFloat ctermbg=none guibg=none
+-- ]]
