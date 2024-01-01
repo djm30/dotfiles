@@ -32,8 +32,9 @@ main() {
     clone_dotfiles
 
     # Execute scripts from the scripts directory
-    execute_script "$DOTFILES_DIR/setup/symlinks.sh"
-    execute_script "$DOTFILES_DIR/setup/install_software.sh"
+    # execute_script "$DOTFILES_DIR/setup/symlinks.sh"
+    # execute_script "$DOTFILES_DIR/setup/install.sh"
+    execute_script "$DOTFILES_DIR/setup/zsh.sh"
     execute_script "$DOTFILES_DIR/setup/macos_config.sh"
     # Add more scripts as needed
 }
