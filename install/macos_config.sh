@@ -1,10 +1,3 @@
-# setup mac os setting
-#
-# like hide dock
-# key repeat
-# accessiblity settings like 3 finger drag maybe if possible
-
-
 # Trackpad 3 Finger Drag
 defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerDrag -bool true
 

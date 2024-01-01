@@ -1,14 +1,19 @@
 # Dotfiles
 
-All my dotfiles, using symbolic links with a script in `setup` to create them
+All my dotfiles, each application is stored in its own folder, with a `links.prop` to configure any symlinks required
 
+### Installation
+Run this command to clone the repo and setup symlinks
 
-### Clean MacOS installation
-Should hopefully install all fonts, cli tools and applications as well as configuring some mac options as well?
-Hopefully won't have to test this for a good bit
+```bash
+curl -s https://raw.githubusercontent.com/djm30/dotfiles/main/install/setup.sh | bash
 ```
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/djm30/dotfiles/main/bootstrap.sh)"
+#### Other install scripts
+- install.sh - installs fonts, applications and cli tools
+- macos_config.sh - configures MacOS with some options I like
 
-```
 
+## Todo
 
+- [ ] Add screenshots
+- [ ] More information

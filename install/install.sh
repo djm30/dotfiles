@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Installs all applications, fonts, cli tools etc for my mac
+
 # Install Homebrew if it's not already installed
 if ! command -v brew >/dev/null; then
     echo "Installing Homebrew..."
