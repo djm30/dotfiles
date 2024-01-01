@@ -8,7 +8,7 @@ REPO_URL="https://github.com/djm30/dotfiles.git"
 git clone "$REPO_URL" "$HOME/dotfiles"
 
 # Change into the 'install' directory within the cloned repository
-cd "$HOME_DIR/dotfiles/install"
+cd "$HOME/dotfiles/install"
 
 
 chmod +x ./bootstrap.sh
