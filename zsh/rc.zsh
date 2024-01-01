@@ -32,7 +32,7 @@ if [ -n "$ZSH_HIGHLIGHT_DIR" ]; then
 fi
 
 # Environment-specific PATH configurations
-export PATH="$PATH:/usr/local/sbin:$DOTFILES/bin:$HOME/.local/bin:$DOTFILES/scripts/"
+export PATH="$PATH:/usr/local/sbin:$DOTFILES/bin:$HOME/.local/bin"
 export VISUAL=nvim
 export EDITOR=nvim
 export TERM=wezterm
