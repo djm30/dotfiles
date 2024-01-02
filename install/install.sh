@@ -30,6 +30,12 @@ tools=(
     lazygit
     ripgrep
     bat
+    kitty
+    xclip
+    ffmpeg
+    ghostscript
+    imagemagick
+    ffmpegthumbnailer
 )
 
 # Applications to install with brew cask
