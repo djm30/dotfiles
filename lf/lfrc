@@ -38,9 +38,9 @@ push m-
 map Q push '-q
 map esc quit
 
+map d
 map . set hidden!
-map dd trash
-map dr restore_trash
+map dd delete
 map p paste
 map x cut
 map y copy
@@ -52,7 +52,7 @@ map bg setwallpaper
 map C clear
 
 
-map gd cd ~/documents
-map gD cd ~/downloads
-map gp cd ~/pictures
+map gd cd ~/Documents
+map gD cd ~/Downloads
+map gp cd ~/Pictures
 map gc cd ~/dotfiles
