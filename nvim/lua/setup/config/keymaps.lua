@@ -31,8 +31,8 @@ keymap("n", "<A-l>", ":vertical resize +2<CR>", opts)
 keymap("n", "<S-l>", ":bnext<CR>", opts)
 keymap("n", "<S-h>", ":bprevious<CR>", opts)
 
-keymap("n", "<leader>sv", ":vs", opts_with_desc "Splits Vertically")
-keymap("n", "<leader>sh", ":split", opts_with_desc "Splits Horizontally")
+keymap("n", "<leader>sv", ":vs <CR>", opts_with_desc "Splits Vertically")
+keymap("n", "<leader>sh", ":split <CR>", opts_with_desc "Splits Horizontally")
 
 -- IDK what Q does but it doesn't do anything now
 keymap("n", "Q", "<nop>", opts)

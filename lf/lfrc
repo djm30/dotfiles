@@ -20,6 +20,10 @@ cmd mkfile ${{
   $EDITOR $ans
 }}
 
+cmd copypath ${{
+ echo "$f" | pbcopy 
+}}
+
 cmd open ${{
 
 }}
@@ -32,11 +36,10 @@ cmd custom_open ${{
 # Mappings
 map l open
 
-# q quits and cds
-# Q quits and returns to original dir
-push m-
-map Q push '-q
-map esc quit
+map m
+map mf mkfile
+map mp copypath
+map md mkdir
 
 map d
 map . set hidden!
@@ -46,11 +49,14 @@ map x cut
 map y copy
 map <enter> custom_open
 map R reload
-map mf mkfile
-map md mkdir
 map bg setwallpaper
 map C clear
 
+# q quits and cds
+# Q quits and returns to original dir
+push m-
+map Q push '-q
+map esc quit
 
 map gd cd ~/Documents
 map gD cd ~/Downloads
