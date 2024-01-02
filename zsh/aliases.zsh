@@ -1,4 +1,3 @@
-
 # ALIASES ---------------------------------------------------------------------
 alias cat='bat --style=plain'
 alias grep="rg -uu"
