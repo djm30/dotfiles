@@ -1,0 +1,58 @@
+# Previewers
+set previewer ~/.config/lf/lf_preview
+set cleaner ~/.config/lf/lf_clean
+
+# Basic settings
+set icons true
+set hidden false
+set ignorecase true
+
+# Custom Functions
+cmd mkdir ${{
+  printf "Directory Name: "
+  read ans
+  mkdir $ans
+}}
+
+cmd mkfile ${{
+  printf "File Name: "
+  read ans
+  $EDITOR $ans
+}}
+
+cmd open ${{
+
+}}
+
+cmd custom_open ${{
+  # If file is a progamming file open it in neovim instead somehow
+  open "$f"
+}}
+
+# Mappings
+map l open
+
+# q quits and cds
+# Q quits and returns to original dir
+push m-
+map Q push '-q
+map esc quit
+
+map . set hidden!
+map dd trash
+map dr restore_trash
+map p paste
+map x cut
+map y copy
+map <enter> custom_open
+map R reload
+map mf mkfile
+map md mkdir
+map bg setwallpaper
+map C clear
+
+
+map gd cd ~/documents
+map gD cd ~/downloads
+map gp cd ~/pictures
+map gc cd ~/dotfiles
