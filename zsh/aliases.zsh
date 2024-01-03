@@ -1,5 +1,5 @@
 # ALIASES ---------------------------------------------------------------------
-alias cat='bat --style=plain'
+alias cat='bat --theme=TwoDark'
 alias grep="rg -uu"
 
 # GIT ALIASES -----------------------------------------------------------------
