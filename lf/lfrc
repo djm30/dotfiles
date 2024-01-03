@@ -33,7 +33,15 @@ cmd custom_open ${{
   open "$f"
 }}
 
+map Q %{{
+  lf -remote "send $id :cd $OLDPWD; quit"
+}}
+map q quit
+
 # Mappings
+# q quits and cds
+# Q quits and returns to original dir
+
 map l open
 
 map m
@@ -52,11 +60,6 @@ map R reload
 map bg setwallpaper
 map C clear
 
-# q quits and cds
-# Q quits and returns to original dir
-push m-
-map Q push '-q
-map esc quit
 
 map gd cd ~/Documents
 map gD cd ~/Downloads
