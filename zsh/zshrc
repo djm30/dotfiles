@@ -1,0 +1,32 @@
+# source_if_exists () {
+#     if test -r "$1"; then
+#         source "$1"
+#     fi
+# }
+if test -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"; then
+    source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# Bootstrap zap?
+if [ ! -f "$HOME/.local/share/zap/zap.zsh" ]; then
+    zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1 -k
+fi
+
+source "$HOME/.local/share/zap/zap.zsh"
+
+# Source the environment-specific configurations
+plug "$HOME/.env.sh" 
+plug "$DOTFILES/zsh/aliases.zsh"
+plug "$DOTFILES/zsh/commands.zsh"
+plug "$DOTFILES/zsh/exports.zsh"
+plug "$DOTFILES/zsh/p10k.zsh"
+
+plug "zsh-users/zsh-autosuggestions"
+plug "zsh-users/zsh-syntax-highlighting"
+plug "zap-zsh/supercharge"
+plug "jeffreytse/zsh-vi-mode"
+plug "zap-zsh/fzf"
+plug "romkatv/powerlevel10k"
+
+autoload -Uz compinit
+compinit
