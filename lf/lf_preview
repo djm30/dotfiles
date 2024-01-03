@@ -30,4 +30,4 @@ fi
 
 # Uses pistol for file previews
 # pistol "$file"
-bat --color=always --theme=base16 "$file"
+bat -p --color=always --theme=base16 "$file"
