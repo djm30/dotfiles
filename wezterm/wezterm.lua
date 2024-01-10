@@ -3,6 +3,8 @@ local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 local act = wezterm.action
 
+config.color_scheme_dirs = { "./schemes" }
+
 local function rgba(r, g, b, a)
 	return "rgba(" .. r .. ", " .. g .. ", " .. b .. ", " .. a .. ")"
 end
@@ -12,11 +14,15 @@ config.font = wezterm.font_with_fallback({
 	{ family = "MesloLGS NF", scale = 1.2 },
 })
 
-config.color_scheme = "One Dark (Gogh)"
+-- config.color_scheme = "One Dark (Gogh)"
+-- config.color_scheme = "Dracula+"
+-- wezterm.color.load_scheme("$DOTFILES/wezterm/onedarkpro.toml")
+
+config.color_scheme = "OneDarkPro"
 
 config.force_reverse_video_cursor = false
 
-local opacity = 0.96
+local opacity = 0.95
 local tab_bar_colour = rgba(30, 33, 39, 0.96)
 local active_tab_colour = rgba(97, 175, 239, 0.96)
 local inactive_tab_colour = rgba(30, 33, 39, 0.96)
@@ -24,7 +30,7 @@ local inactive_tab_colour = rgba(30, 33, 39, 0.96)
 config.window_close_confirmation = "AlwaysPrompt"
 config.window_decorations = "RESIZE"
 config.window_background_opacity = opacity
-config.macos_window_background_blur = 20
+config.macos_window_background_blur = 50
 config.hide_tab_bar_if_only_one_tab = true
 config.use_fancy_tab_bar = false
 config.show_new_tab_button_in_tab_bar = false
