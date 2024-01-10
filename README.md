@@ -17,5 +17,6 @@ curl -s https://raw.githubusercontent.com/djm30/dotfiles/main/install/setup.sh |
 
 - [ ] Add screenshots
 - [ ] More information
-- [ ] Configure LF
+- [x] Configure LF
 - [ ] Learn and configure tmux
+- [ ] Confiure kitty keybinds
