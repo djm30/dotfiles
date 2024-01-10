@@ -59,6 +59,7 @@ local custom_highlights = {
   DashboardHeader = { fg = colours.purple },
   DashboardFooter = { fg = colours.blue },
 }
+
 require("onedark").setup {
   style = style,
   transparent = true,
@@ -77,15 +78,3 @@ require("onedark").setup {
 }
 -- Colourscheme
 vim.cmd.colorscheme "onedark"
-
--- vim.cmd [[
--- highlight WhichKeyFloat ctermbg=none guibg=none
--- ]]
---
--- vim.cmd [[
--- highlight FloatBorder ctermbg=none guibg=none
--- ]]
---
--- vim.cmd [[
--- highlight NormalFloat ctermbg=none guibg=none
--- ]]
