@@ -16,7 +16,7 @@ end
 M.config = function()
   require("lualine").setup {
     options = {
-      theme = "onedark",
+      -- theme = "onedark",
       disabled_filetypes = { "neo-tree" },
       globalstatus = true,
     },
