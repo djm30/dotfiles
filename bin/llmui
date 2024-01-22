@@ -1,0 +1,66 @@
+#!/bin/bash
+
+DOCKER_CMD="docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway -v ollama-webui:/app/backend/data --name ollama-webui --restart always ghcr.io/ollama-webui/ollama-webui:main"
+CONTAINER_NAME="ollama-webui"
+
+if ! docker info > /dev/null 2>&1; then
+    echo "Docker daemon is not running. Please start Docker and try again."
+    exit 1
+fi
+
+if [ "$1" ]; then
+    case $1 in 
+        start)  
+            if [ "$(docker ps -q -f name=$CONTAINER_NAME)" ]; then
+                echo "Container $CONTAINER_NAME is already running."
+            elif [ "$(docker ps -aq -f status=exited -f name=$CONTAINER_NAME)" ]; then
+                docker start $CONTAINER_NAME
+                echo "Container $CONTAINER_NAME started."
+            else
+                $DOCKER_CMD
+                echo "Container $CONTAINER_NAME started."
+            fi ;;
+        stop) 
+            if [ -z "$(docker ps -q -f name=$CONTAINER_NAME)" ]; then
+                echo "Container $CONTAINER_NAME is not running."
+            else
+                docker stop $CONTAINER_NAME -t 2
+                echo "Container $CONTAINER_NAME stopped."
+            fi ;;
+        logs) 
+            docker logs $CONTAINER_NAME ;;
+        status)
+            if [ "$(docker ps -q -f name=$CONTAINER_NAME)" ]; then
+                echo "Container $CONTAINER_NAME is running."
+            elif [ "$(docker ps -aq -f status=exited -f name=$CONTAINER_NAME)" ]; then
+                echo "Container $CONTAINER_NAME is stopped."
+            else
+                echo "Container $CONTAINER_NAME does not exist."
+            fi ;;
+        restart)
+            if [ -z "$(docker ps -aq -f name=$CONTAINER_NAME)" ]; then
+                echo "Container $CONTAINER_NAME does not exist. Can't restart!"
+            else
+                docker restart $CONTAINER_NAME
+                echo "Container $CONTAINER_NAME restarted."
+            fi ;;
+        remove)
+            if [ -z "$(docker ps -aq -f name=$CONTAINER_NAME)" ]; then
+                echo "Container $CONTAINER_NAME does not exist. Can't remove!"
+            else
+                docker rm $CONTAINER_NAME
+                echo "Container $CONTAINER_NAME removed."
+            fi ;;
+        cleanup)
+            read -p "This will delete all unused Docker resources, are you sure? (y/n)" -r
+            if [[ $REPLY =~ ^[Yy]$ ]]; then
+                docker system prune -f
+                echo "Unused Docker resources deleted."
+            fi ;;
+        *)
+            echo "Unknown command. Available commands: start, stop, logs, status, restart, remove, cleanup" ;;
+    esac
+else
+    echo "No command provided. Available commands: start, stop, logs, status, restart, remove, cleanup"
+fi
+
