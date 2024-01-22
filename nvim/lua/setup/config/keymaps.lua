@@ -1,5 +1,6 @@
 local opts_with_desc = require("setup.config.util").opts_with_desc
 local opts = require("setup.config.util").opts
+local move_with_count = require("setup.config.util").move_with_count
 
 local keymap = vim.keymap.set
 
@@ -9,11 +10,30 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 -- Normal --
+-- Better arrow key navigation
+keymap("n", "<Down>", function()
+  move_with_count "j"
+end, opts)
+keymap("n", "<Up>", function()
+  move_with_count "k"
+end, opts)
+keymap("n", "<Left>", function()
+  move_with_count "h"
+end, opts)
+keymap("n", "<Right>", function()
+  move_with_count "l"
+end, opts)
+
 -- Better window navigation
 keymap("n", "<C-h>", "<C-w>h", opts)
 keymap("n", "<C-j>", "<C-w>j", opts)
 keymap("n", "<C-k>", "<C-w>k", opts)
 keymap("n", "<C-l>", "<C-w>l", opts)
+
+keymap("n", "<S-Left>", "<C-w>h", opts)
+keymap("n", "<S-Down>", "<C-w>j", opts)
+keymap("n", "<S-Up>", "<C-w>k", opts)
+keymap("n", "<S-Right>", "<C-w>l", opts)
 
 keymap("n", "<leader>e", ":Neotree toggle<CR>", opts_with_desc "Toggles Filetree")
 
@@ -27,9 +47,17 @@ keymap("n", "<A-j>", ":resize -2<CR>", opts)
 keymap("n", "<A-h>", ":vertical resize -2<CR>", opts)
 keymap("n", "<A-l>", ":vertical resize +2<CR>", opts)
 
+keymap("n", "<A-Up>", ":resize +2<AR>", opts)
+keymap("n", "<A-Down>", ":resize -2<CR>", opts)
+keymap("n", "<A-Left>", ":vertical resize -2<CR>", opts)
+keymap("n", "<A-Right>", ":vertical resize +2<CR>", opts)
+
 -- Navigate buffers
 keymap("n", "<S-l>", ":bnext<CR>", opts)
 keymap("n", "<S-h>", ":bprevious<CR>", opts)
+
+keymap("n", "<C-n>", ":bnext<CR>", opts)
+keymap("n", "<C-m>", ":bprevious<CR>", opts)
 
 keymap("n", "<leader>sv", ":vs <CR>", opts_with_desc "Splits Vertically")
 keymap("n", "<leader>sh", ":split <CR>", opts_with_desc "Splits Horizontally")
