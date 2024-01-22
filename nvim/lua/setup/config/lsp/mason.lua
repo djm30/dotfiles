@@ -12,7 +12,7 @@ local servers = {
   "svelte",
   "marksman",
   "emmet_language_server",
-  "clangd",
+  -- "clangd",
 }
 
 local formatters = {
