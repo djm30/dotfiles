@@ -2,6 +2,7 @@ local M = {
   "nvim-lualine/lualine.nvim",
   dependencies = {
     "nvim-tree/nvim-web-devicons",
+    "olimorris/onedarkpro.nvim",
   },
 }
 local function show_macro_recording()
@@ -13,10 +14,18 @@ local function show_macro_recording()
   end
 end
 
+local function show_root_dir()
+  local cwd = vim.fn.getcwd()
+  local match = cwd:match "^.+/(.+)$"
+  return "󰉖 /" .. match
+end
+
 M.config = function()
+  local onedarkpro = require "setup.config.colourscheme.onedarkpro_lualine"
+
   require("lualine").setup {
     options = {
-      -- theme = "onedark",
+      theme = onedarkpro,
       disabled_filetypes = { "neo-tree" },
       globalstatus = true,
     },
@@ -33,6 +42,15 @@ M.config = function()
       },
       lualine_y = { "progress" },
       lualine_z = { "location" },
+    },
+
+    tabline = {
+      lualine_a = { show_root_dir },
+      lualine_b = { "filetype", "filename" },
+      lualine_c = {},
+      lualine_x = {},
+      lualine_y = {},
+      lualine_z = { "buffers" },
     },
   }
 
