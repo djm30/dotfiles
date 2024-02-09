@@ -24,6 +24,15 @@ keymap("n", "<Right>", function()
   move_with_count "l"
 end, opts)
 
+-- Buffer navigation
+keymap("n", "<Tab>", ":bnext<CR>", opts)
+keymap("n", "<S-Tab>", ":bprev<CR>", opts)
+
+-- Enter will format
+-- keymap("n", "<CR>", ":lua FORMAT()<CR>", opts)
+-- Enter will save
+keymap("n", "<CR>", ":w<CR>", opts)
+
 -- Better window navigation
 keymap("n", "<C-h>", "<C-w>h", opts)
 keymap("n", "<C-j>", "<C-w>j", opts)
