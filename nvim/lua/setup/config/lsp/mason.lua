@@ -18,17 +18,32 @@ local servers = {
 local formatters = {
   "prettier",
   "prettierd",
-  "eslint_d",
   "stylua",
   "isort",
   "black",
 }
 
-function INSTALL_FORMATTERS()
-  for _, formatter in ipairs(formatters) do
-    vim.cmd("MasonInstall " .. formatter)
+local linters = {
+  "eslint_d",
+}
+
+local debugAdapters = {
+  "js-debug-adapter",
+}
+
+local function install_tools()
+  local function install_all(requirements)
+    for _, requirement in ipairs(requirements) do
+      vim.cmd("MasonInstall " .. requirement)
+    end
   end
+
+  install_all(formatters)
+  install_all(linters)
+  install_all(debugAdapters)
 end
+
+vim.api.nvim_create_user_command("InstallTools", install_tools, {nargs = 0})
 
 local settings = {
   ui = {
