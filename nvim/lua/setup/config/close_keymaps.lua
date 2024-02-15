@@ -1,20 +1,24 @@
 local opts_with_desc = require("setup.config.util").opts_with_desc
 
+function CLOSE_BUFFER_WITHOUT_CLOSING_WINDOW(buf)
+  -- Switch to the next buffer
+  vim.cmd "bnext"
+
+  -- If the buffer after switching is the same as the current, open a new one
+  if vim.api.nvim_get_current_buf() == buf then
+    vim.cmd "enew"
+  end
+
+  -- Delete the original buffer
+  vim.cmd("bd! " .. buf)
+end
+
 local function close_buffer_without_closing_window()
   -- Get the current buffer number
 
   local current_buf = vim.api.nvim_get_current_buf()
 
-  -- Switch to the next buffer
-  vim.cmd "bnext"
-
-  -- If the buffer after switching is the same as the current, open a new one
-  if vim.api.nvim_get_current_buf() == current_buf then
-    vim.cmd "enew"
-  end
-
-  -- Delete the original buffer
-  vim.cmd("bd! " .. current_buf)
+  CLOSE_BUFFER_WITHOUT_CLOSING_WINDOW(current_buf)
 end
 
 local function close_others()
