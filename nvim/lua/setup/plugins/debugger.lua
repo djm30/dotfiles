@@ -9,32 +9,6 @@ local M = {
   },
 }
 
-M.config = function()
-  require("dapui").setup()
-  local opts_with_desc = require("setup.config.util").opts_with_desc
-
-  local dap, dapui = require "dap", require "dapui"
-
-  dap.listeners.before.attach.dapui_config = function()
-    dapui.open()
-  end
-  dap.listeners.before.launch.dapui_config = function()
-    dapui.open()
-  end
-  dap.listeners.before.event_terminated.dapui_config = function()
-    dapui.close()
-  end
-  dap.listeners.before.event_exited.dapui_config = function()
-    dapui.close()
-  end
-
-  vim.keymap.set("n", "<Leader>b", ":DapToggleBreakpoint<CR>", opts_with_desc "Toggle breakpoint on current line")
-  vim.keymap.set("n", "<F5>", ":DapContinue<CR>", opts_with_desc "Debug - Continue")
-  vim.keymap.set("n", "<F4>", ":DapTerminate<CR>", opts_with_desc " Debug - Terminate")
-  vim.keymap.set("n", "<F10>", ":DapStepOver<CR>", opts_with_desc "Debug - Step Over")
-  vim.keymap.set("n", "<F11>", ":DapStepInto<CR>", opts_with_desc "Debug - Step Into")
-end
-
 local function configure_typescript()
   require("dap-vscode-js").setup {
     -- node_path = "node", -- Path of node executable. Defaults to $NODE_PATH, and then "node"
@@ -84,6 +58,34 @@ local function configure_typescript()
       },
     }
   end
+end
+
+M.config = function()
+  require("dapui").setup()
+  local opts_with_desc = require("setup.config.util").opts_with_desc
+
+  local dap, dapui = require "dap", require "dapui"
+
+  dap.listeners.before.attach.dapui_config = function()
+    dapui.open()
+  end
+  dap.listeners.before.launch.dapui_config = function()
+    dapui.open()
+  end
+  dap.listeners.before.event_terminated.dapui_config = function()
+    dapui.close()
+  end
+  dap.listeners.before.event_exited.dapui_config = function()
+    dapui.close()
+  end
+
+  vim.keymap.set("n", "<Leader>b", ":DapToggleBreakpoint<CR>", opts_with_desc "Toggle breakpoint on current line")
+  vim.keymap.set("n", "<F5>", ":DapContinue<CR>", opts_with_desc "Debug - Continue")
+  vim.keymap.set("n", "<F4>", ":DapTerminate<CR>", opts_with_desc " Debug - Terminate")
+  vim.keymap.set("n", "<F10>", ":DapStepOver<CR>", opts_with_desc "Debug - Step Over")
+  vim.keymap.set("n", "<F11>", ":DapStepInto<CR>", opts_with_desc "Debug - Step Into")
+
+  configure_typescript()
 end
 
 return M

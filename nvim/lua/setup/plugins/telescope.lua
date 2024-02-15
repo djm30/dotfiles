@@ -66,6 +66,8 @@ M.config = function()
           ["<M-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
           ["<C-l>"] = actions.complete_tag,
           ["<C-_>"] = actions.which_key, -- keys from pressing <C-/>
+
+          ["<S-d>"] = actions.delete_buffer,
         },
 
         n = {
@@ -96,6 +98,8 @@ M.config = function()
 
           ["<PageUp>"] = actions.results_scrolling_up,
           ["<PageDown>"] = actions.results_scrolling_down,
+
+          ["<S-d>"] = actions.delete_buffer,
 
           ["?"] = actions.which_key,
         },
