@@ -10,6 +10,20 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 -- Normal --
+
+-- Make i match current line indent
+vim.cmd [[function! IndentWithI()
+    if len(getline('.')) == 0
+        return "\"_cc"
+
+    else
+        return "i"
+    endif
+
+
+endfunction
+nnoremap <expr> i IndentWithI()]]
+
 -- Better arrow key navigation
 keymap("n", "<Down>", function()
   move_with_count "j"

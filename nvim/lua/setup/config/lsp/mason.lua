@@ -43,7 +43,7 @@ local function install_tools()
   install_all(debugAdapters)
 end
 
-vim.api.nvim_create_user_command("InstallTools", install_tools, {nargs = 0})
+vim.api.nvim_create_user_command("InstallTools", install_tools, { nargs = 0 })
 
 local settings = {
   ui = {
@@ -72,6 +72,11 @@ end
 local opts = {}
 
 for _, server in pairs(servers) do
+  -- TSServer config has been moved to typescript-tools plugin
+  -- if server == "tsserver" then
+  --   goto continue
+  -- end
+
   opts = {
     on_attach = require("setup.config.lsp.handlers").on_attach,
     capabilities = require("setup.config.lsp.handlers").capabilities,
@@ -88,4 +93,6 @@ for _, server in pairs(servers) do
   end
 
   lspconfig[server].setup(opts)
+
+  ::continue::
 end
