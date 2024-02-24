@@ -109,7 +109,11 @@ M.config = function()
         },
       },
     }
+
+    require("setup.config.styled-components").directives()
+    require("setup.config.styled-components").queries()
   end, 0)
+
   require("nvim-treesitter.configs").setup {
     playground = {
       enable = true,
