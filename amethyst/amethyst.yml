@@ -68,12 +68,12 @@ cycle-layout-backward:
 # Shrink the main pane by a percentage of the screen dimension as defined by window-resize-step. Note that not all layouts respond to this command.
 shrink-main:
   mod: mod3
-  key: h
+  key: l
 
 # Expand the main pane by a percentage of the screen dimension as defined by window-resize-step. Note that not all layouts respond to this command.
 expand-main:
   mod: mod3
-  key: l
+  key: u
 
 # Increase the number of windows in the main pane. Note that not all layouts respond to this command.
 increase-main:
@@ -105,52 +105,52 @@ decrease-main:
 # Focus the next window in the list going counter-clockwise.
 focus-ccw:
   mod: mod3
-  key: u
+  key: n
 
 # Focus the next window in the list going clockwise.
 focus-cw:
   mod: mod3
-  key: d 
+  key: <NONE>
 
 # Focus the main window in the list.
 focus-main:
   mod: mod3
-  key: m
+  key: enter
 
 # Focus the next screen in the list going counter-clockwise.
 focus-screen-ccw:
   mod: mod3
-  key: '['
+  key: s
 
 # Focus the next screen in the list going clockwise.
 focus-screen-cw:
   mod: mod3
-  key: ']'
+  key: t
 
 # Move the currently focused window onto the next screen in the list going counter-clockwise.
 swap-screen-ccw:
   mod: mod3
-  key: o
+  key: c
 
 # Move the currently focused window onto the next screen in the list going clockwise.
 swap-screen-cw:
   mod: mod3
-  key: p
+  key: d
 
 # Swap the position of the currently focused window with the next window in the list going counter-clockwise.
 swap-ccw:
   mod: mod3
-  key: ;
+  key: <NONE>
 
 # Swap the position of the currently focused window with the next window in the list going clockwise.
 swap-cw:
   mod: mod3
-  key: "'"
+  key: e
 
 # Swap the position of the currently focused window with the main window in the list.
 swap-main:
   mod: mod3
-  key: enter
+  key: <NONE>
 
 # Move focus to the n-th screen in the list; e.g., focus-screen-3 will move mouse focus to the 3rd screen. Note that the main window in the given screen will be focused.
 #focus-screen-n:
@@ -180,7 +180,7 @@ select-wide-layout:
 # Select fullscreen layout
 select-fullscreen-layout:
   mod: mod3
-  key: f
+  key: m
 
 # Select column layout
 select-column-layout:
@@ -190,17 +190,17 @@ select-column-layout:
 # Move the currently focused window to the space to the left.
 throw-space-left:
   mod: mod3
-  key: left
+  key: f
 
 # Move currently the focused window to the space to the right.
 throw-space-right:
   mod: mod3
-  key: right
+  key: p
 
 # Toggle the floating state of the currently focused window; i.e., if it was floating make it tiled and if it was tiled make it floating.
 toggle-float:
   mod: mod1
-  key: t
+  key: <NONE>
 
 # Display the layout HUD with the current layout on each screen.
 display-current-layout:
@@ -250,7 +250,7 @@ window-minimum-height: 0
 window-minimum-width: 0
 
 # List of bundle identifiers for applications to either be automatically floating or automatically tiled based on floating-is-blacklist (default []).
-floating: [com.apple.systempreferences]
+floating: [com.apple.systempreferences, com.apple.finder]
 
 # Boolean flag determining behavior of the floating list. true if the applications should be floating and all others tiled. false if the applications should be tiled and all others floating (default true).
 floating-is-blacklist: true
