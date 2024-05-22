@@ -42,6 +42,7 @@ end
 
 -- Close Current Buffer
 vim.keymap.set("n", "<leader>xx", close_buffer_without_closing_window, opts_with_desc "Close current buffer")
+vim.keymap.set("n", "<leader>xc", ":close<CR>", opts_with_desc "Close current window")
 
 -- Close Current Window
 vim.keymap.set("n", "<leader>xw", ":wa | close<CR>", opts_with_desc "Save all and close current window")
@@ -61,5 +62,6 @@ vim.keymap.set("n", "<leader>xv", ":vclose<CR>", opts_with_desc "Close current v
 vim.keymap.set("n", "<leader>xh", ":close<CR>", opts_with_desc "Close current horizontal split")
 
 -- Save All Buffers and Force Quit NeoVim
+vim.keymap.set("n", "<leader>qq", ":wa | qa!<CR>", opts_with_desc "Save all and force quit NeoVim")
 vim.keymap.set("n", "<leader>xfqa", ":wa | qa!<CR>", opts_with_desc "Save all and force quit NeoVim")
 vim.keymap.set("n", "<leader>xfqb", ":wa | bd!<CR>", opts_with_desc "Saves and force quits buffer")
