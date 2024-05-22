@@ -58,7 +58,8 @@ keymap("n", "<S-Down>", "<C-w>j", opts)
 keymap("n", "<S-Up>", "<C-w>k", opts)
 keymap("n", "<S-Right>", "<C-w>l", opts)
 
-keymap("n", "<leader>e", ":Neotree toggle<CR>", opts_with_desc "Toggles Filetree")
+keymap("n", "<leader>v", ":Neotree toggle<CR>", opts_with_desc "Toggles Filetree")
+keymap("n", "<leader>e", ":Neotree focus <CR>", opts_with_desc "Focuses Filetree")
 
 -- Remap for dealing with word wrap
 keymap("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
@@ -118,7 +119,7 @@ end, opts_with_desc "Puts last yank in clipboard")
 
 -- Insert --
 -- Press jj fast to enter
-keymap("i", "jj", "<ESC>", opts)
+-- keymap("i", "jj", "<ESC>", opts)
 
 -- Visual --
 -- Stay in v mode when indenting
@@ -146,7 +147,10 @@ keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
 keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
 keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
 keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
-keymap("t", "<Esc>", [[<C-\><C-n>]], opts)
+keymap("t", "nn", [[<C-\><C-n>]], opts)
+
+-- Remaps esc to go to normal mode, but ctrl n does the same
+--keymap("t", "<Esc>", [[<C-\><C-n>]], opts)
 -- Slows down lazygit
 -- keymap("t", "jk", [[<C-\><C-n>]], opts)
 
