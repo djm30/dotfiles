@@ -52,51 +52,131 @@ M.setup = function()
     border = border,
   })
 end
+
 local function lsp_keymaps(bufnr)
-  local opts_with_desc = require("setup.config.util").opts_with_desc
+  local t = require "legendary.toolbox"
 
-  local keymap = vim.api.nvim_buf_set_keymap
+  require("legendary").keymaps {
+    itemgroup = "LSP",
+    icon = "",
+    description = "LSP related functionality",
+    keymaps = {
+      -- Your existing keymaps converted to legendary format
+      {
+        "gD",
+        vim.lsp.buf.declaration,
+        description = "Go to declaration",
+        opts = { buffer = bufnr },
+      },
+      {
+        "gd",
+        vim.lsp.buf.definition,
+        description = "Go to definition",
+        opts = { buffer = bufnr },
+      },
+      {
+        "K",
+        vim.lsp.buf.hover,
+        description = "Show hover information",
+        opts = { buffer = bufnr },
+      },
+      {
+        "gI",
+        vim.lsp.buf.implementation,
+        description = "Go to implementation",
+        opts = { buffer = bufnr },
+      },
+      {
+        "gr",
+        t.lazy_required_fn("telescope.builtin", "lsp_references", {
+          layout_strategy = "center",
+        }),
+        description = "Go to references",
+        opts = { buffer = bufnr },
+      },
+      {
+        "<leader>cd",
+        function()
+          vim.diagnostic.open_float(0, { border = "single", source = "always" })
+        end,
+        description = "Show line diagnostics",
+        opts = { buffer = bufnr },
+      },
+      {
+        "<leader>ci",
+        "<cmd>LspInfo<cr>",
+        description = "Open LSP info",
+        opts = { buffer = bufnr },
+      },
+      {
+        "<leader>ca",
+        vim.lsp.buf.code_action,
+        description = "Show code actions",
+        opts = { buffer = bufnr },
+      },
+      {
+        "<leader>cr",
+        vim.lsp.buf.rename,
+        description = "Rename symbol",
+        opts = { buffer = bufnr },
+      },
+      {
+        "<leader>cs",
+        vim.lsp.buf.signature_help,
+        description = "Show signature help",
+        opts = { buffer = bufnr },
+      },
+      {
+        "<leader>cq",
+        vim.diagnostic.setloclist,
+        description = "Populate location list with diagnostics",
+        opts = { buffer = bufnr },
+      },
 
-  keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts_with_desc "Go to declaration")
-  keymap(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts_with_desc "Go to definiton")
-  keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts_with_desc "Show hover popup")
-  keymap(bufnr, "n", "gI", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts_with_desc "Go to implementation")
-  keymap(bufnr, "n", "gr", "<cmd>Telescope lsp_references<CR>", opts_with_desc "Go to references")
-  keymap(bufnr, "n", "<leader>cd", "<cmd>lua vim.diagnostic.open_float()<CR>", opts_with_desc "Open diagnostic float")
-  --  keymap(bufnr, "n", "<leader>cf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr>", opts_with_desc("Format with builtin LSP"))
-  keymap(
-    bufnr,
-    "n",
-    "<leader>cf",
-    "<cmd>lua require('conform').format()<cr>",
-    opts_with_desc "Format with conform formatter"
-  )
-  keymap(bufnr, "n", "<leader>cd", "<cmd>lua vim.diagnostic.open_float()<CR>", opts_with_desc "Open diagnostic float")
-  keymap(bufnr, "n", "<leader>ci", "<cmd>LspInfo<cr>", opts_with_desc "Open LspInfo")
-  keymap(bufnr, "n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts_with_desc "Run Code Action")
-  keymap(
-    bufnr,
-    "n",
-    "<leader>cj",
-    "<cmd>lua vim.diagnostic.goto_next({buffer=0})<cr>",
-    opts_with_desc "Go to next diagnostic"
-  )
-  keymap(
-    bufnr,
-    "n",
-    "<leader>ck",
-    "<cmd>lua vim.diagnostic.goto_prev({buffer=0})<cr>",
-    opts_with_desc "Go to prev diagnostic"
-  )
-  keymap(bufnr, "n", "<leader>cr", "<cmd>lua vim.lsp.buf.rename()<cr>", opts_with_desc "Rename symbol")
-  keymap(bufnr, "n", "<leader>cs", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts_with_desc "Signature Help")
-  keymap(
-    bufnr,
-    "n",
-    "<leader>cq",
-    "<cmd>lua vim.diagnostic.setloclist()<CR>",
-    opts_with_desc "Populates location list with diagnostics"
-  )
+      -- Additional useful mappings from the original list
+      {
+        "gf",
+        t.lazy_required_fn("telescope.builtin", "diagnostics", {
+          layout_strategy = "center",
+          bufnr = 0,
+        }),
+        description = "Find diagnostics",
+        opts = { noremap = true },
+      },
+      {
+        "gt",
+        vim.lsp.buf.type_definition,
+        description = "Go to type definition",
+        opts = { buffer = bufnr },
+      },
+      {
+        "gq",
+        function()
+          require("conform").format { bufnr = bufnr }
+        end,
+        description = "Format",
+        opts = { buffer = bufnr },
+      },
+      {
+        "<LocalLeader>p",
+        t.lazy_required_fn("nvim-treesitter.textobjects.lsp_interop", "peek_definition_code", "@block.outer"),
+        description = "Peek definition",
+        opts = { buffer = bufnr },
+      },
+      {
+        "[d",
+        vim.diagnostic.goto_prev,
+        description = "Go to previous diagnostic item",
+        opts = { buffer = bufnr },
+      },
+      {
+        "]d",
+        vim.diagnostic.goto_next,
+        description = "Go to next diagnostic item",
+        opts = { buffer = bufnr },
+      },
+    },
+  }
 end
 
 M.on_attach = function(client, bufnr)

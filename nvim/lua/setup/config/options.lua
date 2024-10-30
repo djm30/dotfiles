@@ -52,3 +52,5 @@ end
 
 -- Sets cursorline to be a line underneath the current line instead of a highlight
 -- vim.api.nvim_set_hl(0, 'CursorLine', { underline = true })
+
+vim.opt.whichwrap:append "<,>,[,],h,l"

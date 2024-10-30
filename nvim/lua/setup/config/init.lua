@@ -1,7 +1,6 @@
 require "setup.config.options"
 require "setup.config.keymaps"
 require "setup.config.lazy"
-require "setup.config.colourscheme"
 require "setup.config.lsp"
-require "setup.config.close_keymaps"
 require "setup.config.autocmds"
+require "setup.config.commands"
