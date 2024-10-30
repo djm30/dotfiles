@@ -41,27 +41,26 @@ local function close_all()
 end
 
 -- Close Current Buffer
-vim.keymap.set("n", "<leader>xx", close_buffer_without_closing_window, opts_with_desc "Close current buffer")
-vim.keymap.set("n", "<leader>xc", ":close<CR>", opts_with_desc "Close current window")
+-- vim.keymap.set("n", "<leader>xx", close_buffer_without_closing_window, opts_with_desc "Close current buffer")
+-- vim.keymap.set("n", "<leader>xc", ":close<CR>", opts_with_desc "Close current window")
 
 -- Close Current Window
-vim.keymap.set("n", "<leader>xw", ":wa | close<CR>", opts_with_desc "Save all and close current window")
+-- vim.keymap.set("n", "<leader>xw", ":wa | close<CR>", opts_with_desc "Save all and close current window")
 
 -- Close other buffers than the active one
-vim.keymap.set("n", "<leader>xo", close_others, opts_with_desc "Closes all other buffers")
+-- vim.keymap.set("n", "<leader>xo", close_others, opts_with_desc "Closes all other buffers")
 
 -- Close All Buffers
-vim.keymap.set("n", "<leader>xa", close_all, opts_with_desc "Close all buffers")
+-- vim.keymap.set("n", "<leader>xa", close_all, opts_with_desc "Close all buffers")
 -- vim.keymap.set("n", "<leader>xa", ": wa | %bd|e#|bd#<CR>", opts_with_desc "Close all buffers")
 
 -- Close Quickfix List
-vim.keymap.set("n", "<leader>xq", ":cclose<CR>", opts_with_desc "Close quickfix list")
+-- vim.keymap.set("n", "<leader>xq", ":cclose<CR>", opts_with_desc "Close quickfix list")
 
 -- Close Current Split (Vertically/Horizontally)
-vim.keymap.set("n", "<leader>xv", ":vclose<CR>", opts_with_desc "Close current vertical split")
-vim.keymap.set("n", "<leader>xh", ":close<CR>", opts_with_desc "Close current horizontal split")
+-- vim.keymap.set("n", "<leader>xv", ":vclose<CR>", opts_with_desc "Close current vertical split")
+-- vim.keymap.set("n", "<leader>xh", ":close<CR>", opts_with_desc "Close current horizontal split")
 
 -- Save All Buffers and Force Quit NeoVim
-vim.keymap.set("n", "<leader>qq", ":wa | qa!<CR>", opts_with_desc "Save all and force quit NeoVim")
-vim.keymap.set("n", "<leader>xfqa", ":wa | qa!<CR>", opts_with_desc "Save all and force quit NeoVim")
-vim.keymap.set("n", "<leader>xfqb", ":wa | bd!<CR>", opts_with_desc "Saves and force quits buffer")
+-- vim.keymap.set("n", "<leader>qq", ":wa | qa!<CR>", opts_with_desc "Save all and force quit NeoVim")
+-- vim.keymap.set("n", "<leader>xfqa", ":wa | qa!<CR>", opts_with_desc "Save all and force quit NeoVim")

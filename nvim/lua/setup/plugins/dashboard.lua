@@ -64,16 +64,6 @@ M.config = function()
           key_format = key_format,
         },
         {
-          icon = "󱇚 ",
-          desc = "Workspaces",
-          action = "Telescope workspaces",
-          key = "w",
-          icon_hl = "DiagnosticWarn",
-          desc_hl = "DiagnosticInfo",
-          key_hl = "DiagnosticHint",
-          key_format = key_format,
-        },
-        {
           icon = " ",
           desc = "Filetree",
           action = "Neotree toggle .",
