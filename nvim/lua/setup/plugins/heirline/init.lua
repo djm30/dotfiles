@@ -2,13 +2,13 @@ return {
   "rebelot/heirline.nvim",
   lazy = true,
   config = function()
-    require("heirline").setup({
-      winbar = require("plugins.heirline.winbar"),
-      statusline = require("plugins.heirline.statusline"),
-      statuscolumn = require("plugins.heirline.statuscolumn"),
+    require("heirline").setup {
+      winbar = require "setup.plugins.heirline.winbar",
+      statusline = require "setup.plugins.heirline.statusline",
+      statuscolumn = require "setup.plugins.heirline.statuscolumn",
       opts = {
         disable_winbar_cb = function(args)
-          local conditions = require("heirline.conditions")
+          local conditions = require "heirline.conditions"
 
           return conditions.buffer_matches({
             buftype = { "nofile", "prompt", "help", "quickfix", "terminal" },
@@ -16,6 +16,6 @@ return {
           }, args.buf)
         end,
       },
-    })
+    }
   end,
 }

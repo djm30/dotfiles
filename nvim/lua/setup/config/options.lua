@@ -1,3 +1,10 @@
+local opts = require("setup.config.util").opts
+
+-- Remap space as leader key
+vim.keymap.set("", "<Space>", "<Nop>", opts)
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
 local options = {
   backup = false,
   clipboard = "", -- turn off yank to clipboard, set it to a to enable clipboard
@@ -10,7 +17,7 @@ local options = {
   mouse = "a", -- allow the mouse to be used in neovim
   pumheight = 10, -- pop up menu height
   showmode = true, -- we don't need to see things like -- INSERT -- anymore
-  showtabline = 2, -- always show tabs
+  showtabline = 0, -- always show tabs
   smartcase = true, -- smart case
   smartindent = true, -- make indenting smarter again
   splitbelow = true, -- force all horizontal splits to go below current window

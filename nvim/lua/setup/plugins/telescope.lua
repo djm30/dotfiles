@@ -172,6 +172,9 @@
 --
 -- return M
 --
+
+local fn = require "setup.config.functions"
+
 return {
   {
     "nvim-telescope/telescope.nvim", -- Awesome fuzzy finder for everything
@@ -198,6 +201,7 @@ return {
     },
     init = function()
       local t = require "legendary.toolbox"
+      -- TODO: Figure out telescope keybinds
       require("legendary").keymaps {
         {
           itemgroup = "Telescope",
@@ -285,7 +289,7 @@ return {
           layout_strategy = "horizontal",
           layout_config = {
             horizontal = {
-              height = om.on_big_screen() and 0.6 or 0.95,
+              height = fn.on_big_screen() and 0.6 or 0.95,
               preview_width = 0.55,
               prompt_position = "top",
               width = 0.9,
@@ -296,7 +300,7 @@ return {
               preview_cutoff = 10,
             },
             vertical = {
-              height = om.on_big_screen() and 0.4 or 0.9,
+              height = fn.on_big_screen() and 0.4 or 0.9,
               preview_height = 0.3,
               width = 0.9,
               preview_cutoff = 10,
@@ -380,7 +384,6 @@ return {
 
       -- Extensions
       telescope.load_extension "aerial"
-      telescope.load_extension "persisted"
       telescope.load_extension "refactoring"
     end,
   },

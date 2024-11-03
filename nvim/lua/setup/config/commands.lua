@@ -17,6 +17,7 @@ return legendary.commands {
         end
       end)
     end,
+    description = "Format file",
   },
   {
     ":LineNumbers",

@@ -1,5 +1,7 @@
-local utils = require("heirline.utils")
-local conditions = require("heirline.conditions")
+local utils = require "heirline.utils"
+local conditions = require "heirline.conditions"
+
+local fn = require "setup.config.functions"
 
 local LeftSlantStart = {
   provider = "",
@@ -27,7 +29,7 @@ local VimMode = {
     "ModeChanged",
     pattern = "*:*",
     callback = vim.schedule_wrap(function()
-      vim.cmd("redrawstatus")
+      vim.cmd "redrawstatus"
     end),
   },
   static = {
@@ -106,9 +108,9 @@ local GitBranch = {
   end,
   {
     condition = function(self)
-      return not conditions.buffer_matches({
+      return not conditions.buffer_matches {
         filetype = self.filetypes,
-      })
+      }
     end,
     LeftSlantStart,
     {
@@ -117,7 +119,7 @@ local GitBranch = {
       end,
       on_click = {
         callback = function()
-          om.ListBranches()
+          fn.ListBranches()
         end,
         name = "sl_git_click",
       },
@@ -131,7 +133,7 @@ local GitBranch = {
         "User",
         pattern = "GitStatusChanged",
         callback = vim.schedule_wrap(function()
-          vim.cmd("redrawstatus")
+          vim.cmd "redrawstatus"
         end),
       },
       {
@@ -151,7 +153,7 @@ local GitBranch = {
         on_click = {
           callback = function()
             if _G.GitStatus.behind > 0 then
-              om.GitPull()
+              fn.GitPull()
             end
           end,
           name = "sl_gitpull_click",
@@ -167,7 +169,7 @@ local GitBranch = {
         on_click = {
           callback = function()
             if _G.GitStatus.ahead > 0 then
-              om.GitPush()
+              fn.GitPush()
             end
           end,
           name = "sl_gitpush_click",
@@ -183,9 +185,9 @@ local FileBlock = {
     self.filename = vim.api.nvim_buf_get_name(0)
   end,
   condition = function(self)
-    return not conditions.buffer_matches({
+    return not conditions.buffer_matches {
       filetype = self.filetypes,
-    })
+    }
   end,
 }
 
@@ -199,7 +201,7 @@ local FileName = {
   end,
   on_click = {
     callback = function()
-      vim.cmd("Telescope find_files")
+      vim.cmd "Telescope find_files"
     end,
     name = "sl_filename_click",
   },
@@ -234,10 +236,10 @@ local LspDiagnostics = {
   end,
   on_click = {
     callback = function()
-      require("telescope.builtin").diagnostics({
+      require("telescope.builtin").diagnostics {
         layout_strategy = "center",
         bufnr = 0,
-      })
+      }
     end,
     name = "sl_diagnostics_click",
   },
@@ -324,7 +326,7 @@ local LspAttached = {
     },
   },
   init = function(self)
-    for i, server in pairs(vim.lsp.get_clients({ bufnr = 0 })) do
+    for i, server in pairs(vim.lsp.get_clients { bufnr = 0 }) do
       if self.show_lsps[server.name] ~= false then
         self.lsp_attached = true
         return
@@ -335,7 +337,7 @@ local LspAttached = {
   on_click = {
     callback = function()
       vim.defer_fn(function()
-        vim.cmd("LspInfo")
+        vim.cmd "LspInfo"
       end, 100)
     end,
     name = "sl_lsp_click",
@@ -356,9 +358,9 @@ local LspAttached = {
 ---Return the current line number as a % of total lines and the total lines in the file
 local Ruler = {
   condition = function(self)
-    return not conditions.buffer_matches({
+    return not conditions.buffer_matches {
       filetype = self.filetypes,
-    })
+    }
   end,
   {
     provider = "",
@@ -375,9 +377,9 @@ local Ruler = {
         local total_lines = vim.api.nvim_buf_line_count(0)
 
         if math.floor((line / total_lines)) > 0.5 then
-          vim.cmd("normal! gg")
+          vim.cmd "normal! gg"
         else
-          vim.cmd("normal! G")
+          vim.cmd "normal! G"
         end
       end,
       name = "sl_ruler_click",
@@ -446,9 +448,9 @@ local SearchResults = {
 ---Return the status of the current session
 local Session = {
   condition = function(self)
-    return not conditions.buffer_matches({
+    return not conditions.buffer_matches {
       filetype = self.filetypes,
-    })
+    }
   end,
   RightSlantStart,
   {
@@ -463,12 +465,12 @@ local Session = {
       "User",
       pattern = { "PersistedToggle", "PersistedDeletePost" },
       callback = vim.schedule_wrap(function()
-        vim.cmd("redrawstatus")
+        vim.cmd "redrawstatus"
       end),
     },
     on_click = {
       callback = function()
-        vim.cmd("SessionToggle")
+        vim.cmd "SessionToggle"
       end,
       name = "sl_session_click",
     },
@@ -489,7 +491,7 @@ local CodeCompanion = {
       elseif args.match == "CodeCompanionRequestFinished" then
         self.processing = false
       end
-      vim.cmd("redrawstatus")
+      vim.cmd "redrawstatus"
     end,
   },
   {
@@ -513,7 +515,7 @@ local CodeCompanionAgent = {
       elseif args.match == "CodeCompanionAgentFinished" then
         self.processing = false
       end
-      vim.cmd("redrawstatus")
+      vim.cmd "redrawstatus"
     end,
   },
   {
@@ -546,7 +548,7 @@ local Overseer = {
     return package.loaded.overseer
   end,
   init = function(self)
-    local tasks = require("overseer.task_list").list_tasks({ unique = true })
+    local tasks = require("overseer.task_list").list_tasks { unique = true }
     local tasks_by_status = require("overseer.util").tbl_group_by(tasks, "status")
     self.tasks = tasks_by_status
   end,
@@ -564,10 +566,10 @@ local Overseer = {
       ["SUCCESS"] = "green",
     },
   },
-  OverseerTasksForStatus("CANCELED"),
-  OverseerTasksForStatus("RUNNING"),
-  OverseerTasksForStatus("SUCCESS"),
-  OverseerTasksForStatus("FAILURE"),
+  OverseerTasksForStatus "CANCELED",
+  OverseerTasksForStatus "RUNNING",
+  OverseerTasksForStatus "SUCCESS",
+  OverseerTasksForStatus "FAILURE",
   on_click = {
     callback = function()
       require("neotest").run.run_last()
@@ -596,15 +598,15 @@ local Dap = {
 -- Show plugin updates available from lazy.nvim
 local Lazy = {
   condition = function(self)
-    return not conditions.buffer_matches({
+    return not conditions.buffer_matches {
       filetype = self.filetypes,
-    }) and require("lazy.status").has_updates()
+    } and require("lazy.status").has_updates()
   end,
   update = {
     "User",
     pattern = "LazyCheck",
     callback = vim.schedule_wrap(function()
-      vim.cmd("redrawstatus")
+      vim.cmd "redrawstatus"
     end),
   },
   provider = function()
@@ -631,7 +633,7 @@ local FileIcon = {
   end,
   on_click = {
     callback = function()
-      om.ChangeFiletype()
+      fn.ChangeFiletype()
     end,
     name = "sl_fileicon_click",
   },
@@ -644,7 +646,7 @@ local FileType = {
   end,
   on_click = {
     callback = function()
-      om.ChangeFiletype()
+      fn.ChangeFiletype()
     end,
     name = "sl_filetype_click",
   },
@@ -656,9 +658,9 @@ local FileType = utils.insert(FileBlock, RightSlantStart, FileIcon, FileType, Ri
 --- Return information on the current file's encoding
 local FileEncoding = {
   condition = function(self)
-    return not conditions.buffer_matches({
+    return not conditions.buffer_matches {
       filetype = self.filetypes,
-    })
+    }
   end,
   RightSlantStart,
   {
@@ -699,9 +701,9 @@ return {
     },
   },
   condition = function(self)
-    return not conditions.buffer_matches({
+    return not conditions.buffer_matches {
       filetype = self.force_inactive_filetypes,
-    })
+    }
   end,
   {
     VimMode,

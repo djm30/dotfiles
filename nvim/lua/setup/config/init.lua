@@ -1,6 +1,2 @@
 require "setup.config.options"
-require "setup.config.keymaps"
 require "setup.config.lazy"
-require "setup.config.lsp"
-require "setup.config.autocmds"
-require "setup.config.commands"

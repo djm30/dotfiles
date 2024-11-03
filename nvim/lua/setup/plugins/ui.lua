@@ -1,3 +1,5 @@
+local fn = require "setup.config.functions"
+
 return {
   "nvim-tree/nvim-web-devicons",
   {
@@ -16,7 +18,7 @@ return {
         {
           ft = "terminal",
           title = "Terminal",
-          size = { height = om.on_big_screen() and 20 or 0.2 },
+          size = { height = fn.on_big_screen() and 20 or 0.2 },
           filter = function(buf)
             return not vim.b[buf].lazyterm_cmd
           end,

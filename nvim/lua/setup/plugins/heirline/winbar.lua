@@ -1,5 +1,5 @@
-local conditions = require("heirline.conditions")
-local bit = require("bit")
+local conditions = require "heirline.conditions"
+local bit = require "bit"
 
 local sep = "  "
 
@@ -22,7 +22,7 @@ local Filepath = {
     self.current_dir = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":h")
 
     self.filepath = vim.fn.fnamemodify(self.current_dir, self.modifiers.dirname or nil)
-    self.short_path = vim.fn.fnamemodify(vim.fn.expand("%:h"), self.modifiers.dirname or nil)
+    self.short_path = vim.fn.fnamemodify(vim.fn.expand "%:h", self.modifiers.dirname or nil)
     if self.filepath == "" then
       self.filepath = "[No Name]"
     end
@@ -34,9 +34,9 @@ local Filepath = {
     end,
     on_click = {
       callback = function(self)
-        require("telescope.builtin").find_files({
+        require("telescope.builtin").find_files {
           cwd = self.current_dir,
-        })
+        }
       end,
       name = "wb_path_click",
     },
@@ -105,8 +105,8 @@ local FileName = {
       filename = vim.fn.pathshorten(filename)
     end
 
-    self.path = filename:match("^(.*)/")
-    self.name = filename:match("([^/]+)$")
+    self.path = filename:match "^(.*)/"
+    self.name = filename:match "([^/]+)$"
   end,
   {
     provider = function(self)
@@ -223,6 +223,7 @@ return {
   FileType,
   FileName,
   FileFlags,
+  Spacer,
   Symbols,
   { provider = "%=" },
   VimLogo,

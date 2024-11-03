@@ -1,3 +1,4 @@
+-- TODO: Finish configuring debugging for node
 return {
   "mfussenegger/nvim-dap", -- Debug Adapter Protocol for Neovim
   lazy = true,

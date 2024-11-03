@@ -1,5 +1,4 @@
 return {
-return {
   {
     "olimorris/onedarkpro.nvim",
     priority = 1000,
@@ -167,7 +166,7 @@ return {
       },
 
       caching = true,
-      cache_path = vim.fn.expand(vim.fn.stdpath("cache") .. "/onedarkpro_dotfiles"),
+      cache_path = vim.fn.expand(vim.fn.stdpath "cache" .. "/onedarkpro_dotfiles"),
 
       plugins = {
         barbar = false,
@@ -200,12 +199,10 @@ return {
       require("onedarkpro").setup(opts)
 
       if vim.o.background == "light" then
-        vim.cmd([[colorscheme onelight]])
+        vim.cmd [[colorscheme onelight]]
       else
-        vim.cmd([[colorscheme onedark]])
+        vim.cmd [[colorscheme onedark]]
       end
     end,
   },
-}
-
 }
