@@ -114,12 +114,12 @@ return require("legendary").keymaps {
   { "<leader>sh", ":split<CR>", description = "Split horizontally" },
 
   -- Surrounds
-  { "(", { x = "S)" }, hide = true, description = "Surround with ()'s", opts = { remap = true } },
-  { ")", { x = "S)" }, hide = true, description = "Surround with ()'s", opts = { remap = true } },
-  { "{", { x = "S}" }, hide = true, description = "Surround with {}'s", opts = { remap = true } },
-  { "}", { x = "S}" }, hide = true, description = "Surround with {}'s", opts = { remap = true } },
-  { "[", { x = "S]" }, hide = true, description = "Surround with []'s", opts = { remap = true } },
-  { "]", { x = "S]" }, hide = true, description = "Surround with []'s", opts = { remap = true } },
+  { "(", { x = "Z)" }, hide = true, description = "Surround with ()'z", opts = { remap = true } },
+  { ")", { x = "Z)" }, hide = true, description = "Surround with ()'z", opts = { remap = true } },
+  { "{", { x = "Z}" }, hide = true, description = "Surround with {}'z", opts = { remap = true } },
+  { "}", { x = "Z}" }, hide = true, description = "Surround with {}'z", opts = { remap = true } },
+  { "[", { x = "Z]" }, hide = true, description = "Surround with []'z", opts = { remap = true } },
+  { "]", { x = "Z]" }, hide = true, description = "Surround with []'z", opts = { remap = true } },
 
   -- Disable Q
   { "Q", "<nop>", description = "Disable Q" },
