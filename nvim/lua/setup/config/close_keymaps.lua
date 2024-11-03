@@ -45,7 +45,7 @@ end
 -- vim.keymap.set("n", "<leader>xc", ":close<CR>", opts_with_desc "Close current window")
 
 -- Close Current Window
--- vim.keymap.set("n", "<leader>xw", ":wa | close<CR>", opts_with_desc "Save all and close current window")
+vim.keymap.set("n", "<leader>xw", ":wa | close<CR>", opts_with_desc "Save all and close current window")
 
 -- Close other buffers than the active one
 -- vim.keymap.set("n", "<leader>xo", close_others, opts_with_desc "Closes all other buffers")
