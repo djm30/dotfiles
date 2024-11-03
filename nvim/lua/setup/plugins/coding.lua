@@ -92,6 +92,28 @@ return {
   },
 
   {
+    "kylechui/nvim-surround",
+    version = "*", -- Use for stability; omit to use `main` branch for the latest features
+    event = "VeryLazy",
+    config = function()
+      require("nvim-surround").setup {
+        keymaps = {
+          insert = "<C-g>z",
+          insert_line = "gC-ggZ",
+          normal = "gz",
+          normal_cur = "gZ",
+          normal_line = "gzgz",
+          normal_cur_line = "gZgZ",
+          visual = "gz",
+          visual_line = "gZ",
+          delete = "gzd",
+          change = "gzc",
+        },
+      }
+    end,
+  },
+
+  {
     "abecodes/tabout.nvim",
     config = function()
       require("tabout").setup {
@@ -120,7 +142,6 @@ return {
   },
 
   "tpope/vim-sleuth", -- Automatically detects which indents should be used in the current buffer
-
   {
     "echasnovski/mini.diff",
     config = function()
@@ -222,10 +243,6 @@ return {
     "folke/ts-comments.nvim",
     opts = {},
     event = "VeryLazy",
-  },
-  {
-    "kylechui/nvim-surround", -- Use vim commands to surround text, tags with brackets, parenthesis etc
-    config = true,
   },
   {
     "ThePrimeagen/refactoring.nvim", -- Refactor code like Martin Fowler
