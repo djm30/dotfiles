@@ -154,6 +154,13 @@ return {
   },
 
   {
+    "github/copilot.vim",
+    config = function()
+      vim.keymap.set("i", "<C-CR>", 'copilot#Accept("<CR>")', { expr = true, silent = true })
+    end,
+  },
+
+  {
     "olimorris/codecompanion.nvim",
     config = function()
       require("codecompanion").setup {
