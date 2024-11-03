@@ -110,8 +110,8 @@ M.config = function()
       },
     }
 
-    require("setup.config.styled-components").directives()
-    require("setup.config.styled-components").queries()
+    require("setup.config.treesitter.styled-components").directives()
+    require("setup.config.treesitter.styled-components").queries()
   end, 0)
 
   require("nvim-treesitter.configs").setup {
@@ -137,3 +137,63 @@ M.config = function()
 end
 
 return M
+
+-- return {
+--   {
+--     "nvim-treesitter/nvim-treesitter", -- Smarter code understanding like syntax Highlight and navigation
+--     build = ":TSUpdate",
+--     dependencies = {
+--       "nvim-treesitter/nvim-treesitter-textobjects", -- Syntax aware text-objects, select, move, swap, and peek support.
+--       {
+--         "JoosepAlviste/nvim-ts-context-commentstring", -- Smart commenting in multi language files - Enabled in Treesitter file
+--       },
+--       {
+--         "windwp/nvim-ts-autotag", -- Autoclose and autorename HTML and Vue tags
+--         config = true,
+--       },
+--       {
+--         "PriceHiller/nvim-treesitter-endwise", -- Automatically add end keywords for Ruby, Lua, Python, and more
+--         branch = "fix/iter-matches",
+--       },
+--     },
+--     config = function()
+--       require("setup.config.styled-components").directives()
+--       require("setup.config.styled-components").queries()
+--       require("nvim-treesitter.configs").setup({
+--         sync_install = false,
+--         auto_install = false,
+--         ensure_installed = "all",
+--         ignore_install = { "phpdoc" }, -- list of parser which cause issues or crashes
+--         highlight = { enable = true },
+--         incremental_selection = {
+--           enable = true,
+--           keymaps = {
+--             init_selection = "<M-w>",
+--             scope_incremental = "<CR>",
+--             node_incremental = "<Tab>", -- increment to the upper named parent
+--             node_decremental = "<S-Tab>", -- decrement to the previous node
+--           },
+--         },
+--         indent = { enable = true },
+--
+--         -- nvim-treesitter-endwise plugin
+--         endwise = { enable = true },
+--
+--         textobjects = {
+--           select = {
+--             enable = true,
+--             lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
+--
+--             keymaps = {
+--               -- Use v[keymap], c[keymap], d[keymap] to perform any operation
+--               ["af"] = "@function.outer",
+--               ["if"] = "@function.inner",
+--               ["ac"] = "@class.outer",
+--             },
+--           },
+--         },
+--       })
+--     end,
+--   },
+-- }
+--

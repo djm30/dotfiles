@@ -147,4 +147,8 @@ function fn.ToggleTheme(mode)
   end
 end
 
+function fn.on_big_screen()
+  return vim.o.columns > 150 and vim.o.lines >= 40
+end
+
 return fn

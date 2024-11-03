@@ -66,11 +66,12 @@ return {
   {
     "stevearc/aerial.nvim", -- Toggled list of classes, methods etc in current file
     opts = {
+      backends = { "lsp", "markdown", "asciidoc", "man" },
       attach_mode = "global",
       close_on_select = true,
       layout = {
         min_width = 30,
-        default_direction = "prefer_right",
+        default_direction = "left",
       },
       -- Use nvim-navic icons
       icons = {
@@ -105,7 +106,7 @@ return {
     init = function()
       require("legendary").keymaps {
         {
-          "<C-t>",
+          "<C-s>",
           function()
             require("aerial").toggle()
           end,

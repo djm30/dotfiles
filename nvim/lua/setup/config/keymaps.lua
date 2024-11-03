@@ -1,13 +1,6 @@
-local opts_with_desc = require("setup.config.util").opts_with_desc
-local opts = require("setup.config.util").opts
 local move_with_count = require("setup.config.util").move_with_count
 
 local keymap = vim.keymap.set
-
--- Remap space as leader key
-keymap("", "<Space>", "<Nop>", opts)
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
 
 -- Normal --
 
@@ -26,7 +19,7 @@ nnoremap <expr> i IndentWithI()]]
 
 local toolbox = require "legendary.toolbox"
 
-local keymaps = {
+return require("legendary").keymaps {
   -- Better arrow key navigation
   {
     "<Down>",
@@ -60,10 +53,6 @@ local keymaps = {
   -- Buffer navigation
   { "<Tab>", ":bnext<CR>", description = "Next buffer" },
   { "<S-Tab>", ":bprev<CR>", description = "Previous buffer" },
-  { "<S-l>", ":bnext<CR>", description = "Next buffer (alternate)" },
-  { "<S-h>", ":bprevious<CR>", description = "Previous buffer (alternate)" },
-  { "<C-n>", ":bnext<CR>", description = "Next buffer (ctrl)" },
-  { "<C-m>", ":bprevious<CR>", description = "Previous buffer (ctrl)" },
 
   -- Save on Enter
   { "<CR>", ":w<CR>", description = "Save file" },
@@ -269,5 +258,3 @@ local keymaps = {
     mode = "v",
   },
 }
-
-return keymaps

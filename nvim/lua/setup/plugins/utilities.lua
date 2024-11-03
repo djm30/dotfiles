@@ -1,15 +1,6 @@
 return {
 
   {
-    "folke/neodev.nvim",
-    opts = {},
-    config = function()
-      require("neodev").setup()
-    end,
-  },
-  "nvim-lua/plenary.nvim", -- Required dependency for many plugins. Super useful Lua functions
-
-  {
     "mrjones2014/legendary.nvim", -- A command palette for keymaps, commands and autocmds
     priority = 10000,
     lazy = false,
@@ -35,10 +26,19 @@ return {
           which_key = false,
         },
         -- Load these with the plugin to ensure they are loaded before any Neovim events
-        autocmds = require "config.autocmds",
+        autocmds = require "setup.config.autocmds",
       }
     end,
   },
+
+  {
+    "folke/neodev.nvim",
+    opts = {},
+    config = function()
+      require("neodev").setup()
+    end,
+  },
+  "nvim-lua/plenary.nvim", -- Required dependency for many plugins. Super useful Lua functions
 
   {
     "kevinhwang91/nvim-bqf", -- Better quickfix window,

@@ -1,11 +1,11 @@
 local v, fn, api = vim.v, vim.fn, vim.api
 
-local conditions = require("heirline.conditions")
+local conditions = require "heirline.conditions"
 
 local align = { provider = "%=" }
 local spacer = { provider = " ", hl = "HeirlineStatusColumn" }
 
-local git_ns = api.nvim_create_namespace("gitsigns_signs_")
+local git_ns = api.nvim_create_namespace "gitsigns_signs_"
 local function get_signs(bufnr, lnum)
   local signs = {}
 
@@ -39,10 +39,10 @@ end
 return {
   {
     condition = function()
-      return not conditions.buffer_matches({
+      return not conditions.buffer_matches {
         buftype = { "nofile", "prompt", "help", "quickfix", "terminal" },
         filetype = { "alpha", "codecompanion", "harpoon", "oil", "lspinfo", "toggleterm" },
-      })
+      }
     end,
     static = {
       bufnr = api.nvim_win_get_buf(0),
@@ -98,7 +98,7 @@ return {
         end,
         GitSigns = function(self, args)
           vim.defer_fn(function()
-            require("gitsigns").blame_line({ full = true })
+            require("gitsigns").blame_line { full = true }
           end, 100)
         end,
       },

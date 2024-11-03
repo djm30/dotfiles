@@ -1,5 +1,7 @@
 local conceal_ns = vim.api.nvim_create_namespace "ConcealClassAttribute"
 
+local fn = require "setup.config.functions"
+
 return {
   {
     name = "TerminalSetup",
@@ -166,7 +168,7 @@ return {
     {
       { "TermLeave" },
       function()
-        om.GitRemoteSync()
+        fn.GitRemoteSync()
       end,
       opts = {
         pattern = { "*" },
@@ -292,7 +294,6 @@ return {
         if vim.bo.filetype == "" or vim.bo.filetype == "toggleterm" then
           local opts = { silent = false, buffer = 0 }
           vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
-          vim.keymap.set("t", "jk", [[<C-\><C-n>]], opts)
         end
       end,
       opts = {
