@@ -74,6 +74,25 @@ return require("legendary").keymaps {
     },
   },
 
+  -- Surround
+  {
+    itemgroup = "surround",
+    description = "Surround.nvim",
+    icon = "<>",
+    keymaps = {
+      { "ds", "<Plug>Dsurround", description = "Delete surrounding", mode = "n" },
+      { "cs", "<Plug>Csurround", description = "Change surrounding", mode = "n" },
+      { "cS", "<Plug>CSurround", description = "Change surrounding (keep delimiter)", mode = "n" },
+      { "ys", "<Plug>Ysurround", description = "Add surrounding", "n" },
+      { "yS", "<Plug>YSurround", description = "Add surrounding (keep delimiter)", mode = "n" },
+      { "yss", "<Plug>Yssurround", description = "Add surrounding to line", mode = "n" },
+      { "ySs", "<Plug>YSsurround", description = "Add surrounding to line (keep delimiter)", mode = "n" },
+      { "ySS", "<Plug>YSsurround", description = "Add surrounding to line (keep delimiter)", mode = "n" },
+      { "gs", "<Plug>VSurround", description = "Add surrounding to visual selection", mode = "x" },
+      { "gS", "<Plug>VgSurround", description = "Add surrounding to visual selection (keep delimiter)", mode = "x" },
+    },
+  },
+
   -- File tree
   { "<leader>v", ":Neotree toggle<CR>", description = "Toggle Filetree" },
   { "<leader>e", ":Neotree focus<CR>", description = "Focus Filetree" },

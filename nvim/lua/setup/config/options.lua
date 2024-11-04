@@ -50,6 +50,7 @@ vim.loader.enable()
 
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+vim.g["surround_no_mappings"] = 1
 
 vim.opt.shortmess:append "c"
 
