@@ -96,20 +96,7 @@ return {
     version = "*", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
     config = function()
-      require("nvim-surround").setup {
-        keymaps = {
-          insert = "<C-g>z",
-          insert_line = "gC-ggZ",
-          normal = "gz",
-          normal_cur = "gZ",
-          normal_line = "gzgz",
-          normal_cur_line = "gZgZ",
-          visual = "gz",
-          visual_line = "gZ",
-          delete = "gzd",
-          change = "gzc",
-        },
-      }
+      require("nvim-surround").setup {}
     end,
   },
 
@@ -156,7 +143,8 @@ return {
   {
     "github/copilot.vim",
     config = function()
-      vim.keymap.set("i", "<C-CR>", 'copilot#Accept("<CR>")', { expr = true, silent = true })
+      vim.g.copilot_no_tab_map = true
+      vim.keymap.set("i", "<C-CR>", 'copilot#Accept("<CR>")', { expr = true, silent = true, replace_keycodes = false })
     end,
   },
 
@@ -165,38 +153,42 @@ return {
     config = function()
       require("codecompanion").setup {
         adapters = {
-          anthropic = function()
-            return require("codecompanion.adapters").extend("anthropic", {
-              env = {
-                api_key = "cmd:op read op://personal/Anthropic_API/credential --no-newline",
-              },
-            })
-          end,
-          gemini = function()
-            return require("codecompanion.adapters").extend("gemini", {
-              env = {
-                api_key = "cmd:op read op://personal/Gemini_API/credential --no-newline",
-              },
-            })
-          end,
-          openai = function()
-            return require("codecompanion.adapters").extend("openai", {
-              env = {
-                api_key = "cmd:op read op://personal/OpenAI_API/credential --no-newline",
-              },
-            })
-          end,
-          xai = function()
-            return require("codecompanion.adapters").extend("xai", {
-              env = {
-                api_key = "cmd:op read op://personal/xAI_API/credential --no-newline",
-              },
-            })
-          end,
+          -- anthropic = function()
+          --   return require("codecompanion.adapters").extend("anthropic", {
+          --     env = {
+          --       api_key = "cmd:op read op://personal/Anthropic_API/credential --no-newline",
+          --     },
+          --   })
+          -- end,
+          -- gemini = function()
+          --   return require("codecompanion.adapters").extend("gemini", {
+          --     env = {
+          --       api_key = "cmd:op read op://personal/Gemini_API/credential --no-newline",
+          --     },
+          --   })
+          -- end,
+          -- openai = function()
+          --   return require("codecompanion.adapters").extend("openai", {
+          --     env = {
+          --       api_key = "cmd:op read op://personal/OpenAI_API/credential --no-newline",
+          --     },
+          --   })
+          -- end,
+          -- xai = function()
+          --   return require("codecompanion.adapters").extend("xai", {
+          --     env = {
+          --       api_key = "cmd:op read op://personal/xAI_API/credential --no-newline",
+          --     },
+          --   })
+          -- end,
         },
         strategies = {
           chat = {
-            roles = { llm = "  CodeCompanion", user = "olimorris" },
+            roles = { llm = "  CodeCompanion", user = "Dylan" },
+            adapter = "copilot",
+          },
+          inline = {
+            adapter = "copilot",
           },
         },
         display = {

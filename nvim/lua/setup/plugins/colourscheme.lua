@@ -13,7 +13,7 @@ return {
           telescope_results = "require('onedarkpro.helpers').darken('bg', 4, 'onedark')",
           telescope_preview = "require('onedarkpro.helpers').darken('bg', 6, 'onedark')",
           telescope_selection = "require('onedarkpro.helpers').darken('bg', 8, 'onedark')",
-          copilot = "require('onedarkpro.helpers').darken('gray', 8, 'onedark')",
+          copilot = "#d7f2f5",
           breadcrumbs = "require('onedarkpro.helpers').darken('gray', 10, 'onedark')",
           local_highlight = "require('onedarkpro.helpers').lighten('bg', 4, 'onedark')",
           light_gray = "require('onedarkpro.helpers').darken('gray', 7, 'onedark')",
@@ -93,6 +93,10 @@ return {
 
         -- Copilot
         CopilotSuggestion = { fg = "${copilot}", italic = true },
+        CopilotAnnotation = { fg = "${copilot}", italic = true },
+
+        --Leap
+        LeapLabel = { fg = "#2c3e50", bg = "#e5c07b" },
 
         -- DAP
         DebugBreakpoint = { fg = "${red}", italic = true },
