@@ -3,15 +3,8 @@ from datetime import datetime
 
 from kitty.boss import get_boss
 from kitty.fast_data_types import Screen, add_timer, get_options
-from kitty.tab_bar import (
-    DrawData,
-    ExtraData,
-    Formatter,
-    TabBarData,
-    as_rgb,
-    draw_attributed_string,
-    draw_title,
-)
+from kitty.tab_bar import (DrawData, ExtraData, Formatter, TabBarData, as_rgb,
+                           draw_attributed_string, draw_title)
 from kitty.utils import color_as_int
 
 opts = get_options()
@@ -234,9 +227,9 @@ def draw_tab(
         is_last,
         extra_data,
     )
-    _draw_right_status(
-        screen,
-        is_last,
-        cells,
-    )
+    # _draw_right_status(
+    #     screen,
+    #     is_last,
+    #     cells,
+    # )
     return screen.cursor.x

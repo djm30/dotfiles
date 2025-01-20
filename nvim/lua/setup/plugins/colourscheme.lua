@@ -112,12 +112,12 @@ return {
         DiagnosticFloatingHint = { fg = "${cyan}", italic = true },
         DiagnosticFloatingInfo = { fg = "${blue}", italic = true },
 
-        -- Heirline
-        Heirline = { bg = "${statusline_bg}" },
-        HeirlineStatusColumn = { fg = "${statuscolumn_border}" },
-        HeirlineBufferline = { fg = { dark = "#939aa3", light = "#6a6a6a" } },
-        HeirlineWinbar = { fg = "${breadcrumbs}", italic = true },
-        HeirlineWinbarEmphasis = { fg = "${fg}", italic = true },
+        -- -- Heirline
+        -- Heirline = { bg = "${statusline_bg}" },
+        -- HeirlineStatusColumn = { fg = "${statuscolumn_border}" },
+        -- HeirlineBufferline = { fg = { dark = "#939aa3", light = "#6a6a6a" } },
+        -- HeirlineWinbar = { fg = "${breadcrumbs}", italic = true },
+        -- HeirlineWinbarEmphasis = { fg = "${fg}", italic = true },
 
         -- Luasnip
         LuaSnipChoiceNode = { fg = "${yellow}" },
@@ -129,6 +129,11 @@ return {
         NeotestAdapterName = { fg = "${purple}", bold = true },
         NeotestFocused = { bold = true },
         NeotestNamespace = { fg = "${blue}", bold = true },
+
+        --- Neotree
+        NeotreeNormal = { bg = "#23252C" },
+        NeotreeNormalNC = { bg = "#23252C" },
+        NeoTreeEndOfBuffer = { fg = "#23252C" },
 
         -- Nvim UFO
         UfoFoldedEllipsis = { fg = "${yellow}" },
