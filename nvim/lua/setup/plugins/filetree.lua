@@ -36,22 +36,4 @@ return {
       }
     end,
   },
-  -- {
-  --   "stevearc/oil.nvim",
-  --   ---@module 'oil'
-  --   ---@type oil.SetupOpts
-  --   opts = {},
-  --   dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
-  --   config = function()
-  --     require("oil").setup()
-  --     require("legendary").keymaps {
-  --       {
-  --         "-",
-  --         "<CMD>Oil<CR>",
-  --         description = "Open Oil",
-  --         mode = { "n", "v" },
-  --       },
-  --     }
-  --   end,
-  -- },
 }

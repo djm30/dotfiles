@@ -94,31 +94,31 @@ return {
       opts = { pattern = "CodeCompanionInlineFinished" },
     },
   },
-  {
-    name = "Heirline",
-    {
-      "ColorScheme",
-      function()
-        local utils = require "heirline.utils"
-        utils.on_colorscheme(require("onedarkpro.helpers").get_colors())
-      end,
-      opts = {
-        pattern = { "*" },
-      },
-    },
-    {
-      "User",
-      function(args)
-        local buf = args.buf
-        local buftype = vim.tbl_contains({ "prompt", "nofile", "help", "quickfix" }, vim.bo[buf].buftype)
-        local filetype = vim.tbl_contains({ "", "alpha", "gitcommit", "fugitive" }, vim.bo[buf].filetype)
-        if buftype or filetype then
-          vim.opt_local.winbar = nil
-        end
-      end,
-      opts = { pattern = "HeirlineInitWinbar" },
-    },
-  },
+  -- {
+  --   name = "Heirline",
+  --   {
+  --     "ColorScheme",
+  --     function()
+  --       local utils = require "heirline.utils"
+  --       utils.on_colorscheme(require("onedarkpro.helpers").get_colors())
+  --     end,
+  --     opts = {
+  --       pattern = { "*" },
+  --     },
+  --   },
+  --   {
+  --     "User",
+  --     function(args)
+  --       local buf = args.buf
+  --       local buftype = vim.tbl_contains({ "prompt", "nofile", "help", "quickfix" }, vim.bo[buf].buftype)
+  --       local filetype = vim.tbl_contains({ "", "alpha", "gitcommit", "fugitive" }, vim.bo[buf].filetype)
+  --       if buftype or filetype then
+  --         vim.opt_local.winbar = nil
+  --       end
+  --     end,
+  --     opts = { pattern = "HeirlineInitWinbar" },
+  --   },
+  -- },
   {
     name = "PersistedHooks",
     {

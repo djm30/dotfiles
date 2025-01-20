@@ -214,6 +214,11 @@ return {
               description = "Find files",
             },
             {
+              "<leader>f",
+              t.lazy_required_fn("telescope.builtin", "find_files", { hidden = true }),
+              description = "Find files",
+            },
+            {
               "<C-g>",
               t.lazy_required_fn(
                 "telescope.builtin",
@@ -232,7 +237,7 @@ return {
               description = "Search CWD",
             },
             {
-              "<C-b>",
+              "<leader><leader>",
               t.lazy_required_fn(
                 "telescope.builtin",
                 "buffers",
@@ -241,7 +246,7 @@ return {
               description = "List buffers",
             },
             {
-              "<Leader><Leader>",
+              "<Leader>r",
               "<cmd>lua require('telescope').extensions.frecency.frecency({ prompt_title = 'Recent Files', workspace = 'CWD', path_display = { 'smart' } })<CR>",
               description = "Find recent files",
             },
