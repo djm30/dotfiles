@@ -78,6 +78,13 @@ return {
         desc = "Previous reference",
       },
       {
+        "<leader>n",
+        function()
+          Snacks.notifier.show_history()
+        end,
+        desc = "Notification history",
+      },
+      {
         "<leader>gg",
         function()
           Snacks.lazygit()
@@ -124,6 +131,7 @@ return {
       },
       explorer = { replace_netrw = false }, -- `nvim .` keeps opening oil
       bufdelete = { enabled = true },
+      notifier = { enabled = true, timeout = 3000 }, -- vim.notify popups (cmdheight=0 hides messages)
       scroll = { enabled = true }, -- smooth scrolling for <C-d>/<C-u>, zz, G, search jumps, etc.
       words = { enabled = true }, -- highlight other uses of the symbol under the cursor (LSP)
       scratch = { enabled = true }, -- persistent per-project/branch scratch buffers
