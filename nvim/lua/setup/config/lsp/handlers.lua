@@ -59,7 +59,19 @@ local function lsp_keymaps(bufnr)
   map("<leader>cs", vim.lsp.buf.signature_help, "Show signature help")
   map("<leader>cq", vim.diagnostic.setloclist, "Diagnostics to location list")
   map("<LocalLeader>p", function()
-    require("nvim-treesitter.textobjects.lsp_interop").peek_definition_code "@block.outer"
+    -- Show the definition in a floating window without jumping to it
+    local client = vim.lsp.get_clients({ bufnr = bufnr, method = "textDocument/definition" })[1]
+    if not client then
+      return
+    end
+    local params = vim.lsp.util.make_position_params(0, client.offset_encoding)
+    client:request("textDocument/definition", params, function(_, result)
+      if not result or vim.tbl_isempty(result) then
+        return vim.notify("No definition found", vim.log.levels.INFO)
+      end
+      local location = vim.islist(result) and result[1] or result
+      vim.lsp.util.preview_location(location, { border = "rounded" })
+    end, bufnr)
   end, "Peek definition")
   map("[d", function()
     vim.diagnostic.jump { count = -1, float = true }
