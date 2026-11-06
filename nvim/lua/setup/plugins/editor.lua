@@ -1,20 +1,7 @@
 return {
   {
-    -- Manual install script
-    -- cd ~/.local/share/nvim/lazy/markdown-preview.nvim/app
-    -- ./install.sh
-    "iamcco/markdown-preview.nvim",
-    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-    ft = { "markdown" },
-    build = function()
-      vim.fn["mkdp#util#install"]()
-    end,
-  },
-
-  {
     "akinsho/toggleterm.nvim",
     event = "VeryLazy",
-    commit = "c80844fd52ba76f48fabf83e2b9f9b93273f418d",
     config = function()
       require("toggleterm").setup {
         size = 20,
@@ -45,18 +32,6 @@ return {
         },
       }
 
-      -- Lazygit terminal setup
-      local Terminal = require("toggleterm.terminal").Terminal
-      local lazygit = Terminal:new { cmd = "lazygit", hidden = true }
-
-      local function lazygit_toggle()
-        lazygit:toggle()
-        if lazygit:is_open() then
-          vim.cmd "startinsert"
-        end
-      end
-
-      vim.keymap.set("n", "<leader>gg", lazygit_toggle, { silent = true, desc = "Open Lazygit" })
     end,
   },
 

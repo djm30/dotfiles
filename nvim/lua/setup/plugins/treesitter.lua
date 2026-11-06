@@ -21,6 +21,8 @@ return {
           "vim",
           "bash",
           "svelte",
+          "markdown",
+          "markdown_inline",
         },
         auto_install = true,
         highlight = { enable = true },

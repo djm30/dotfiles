@@ -45,7 +45,7 @@ return {
       default_file_explorer = true,
       skip_confirm_for_simple_edits = true,
       view_options = { show_hidden = true },
-      win_options = { signcolumn = "no", number = false, relativenumber = false },
+      win_options = { signcolumn = "yes:2", number = false, relativenumber = false }, -- signcolumn for git status
       keymaps = {
         -- Free up <C-h/j/k/l> for window navigation
         ["<C-h>"] = false,
@@ -56,6 +56,19 @@ return {
         ["h"] = "actions.parent",
         ["q"] = "actions.close",
         ["R"] = "actions.refresh",
+      },
+    },
+  },
+
+  {
+    -- Git status icons in oil (like neo-tree had)
+    "refractalize/oil-git-status.nvim",
+    dependencies = { "stevearc/oil.nvim" },
+    ft = "oil",
+    opts = {
+      symbols = {
+        index = { ["A"] = "󰄬", ["M"] = "󰄬", ["D"] = "󰄬", ["R"] = "󰄬", ["C"] = "󰄬", ["?"] = "󱨧", ["!"] = "" },
+        working_tree = { ["A"] = "󰲶", ["M"] = "󰲶", ["D"] = "󰲶", ["R"] = "󰲶", ["C"] = "󰲶", ["?"] = "󱨧", ["!"] = "" },
       },
     },
   },
