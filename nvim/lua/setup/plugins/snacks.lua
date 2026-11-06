@@ -97,10 +97,10 @@ return {
         preset = {
           header = header,
           keys = {
-            { icon = "󰊳 ", key = "u", desc = "Update", action = ":Lazy update" },
-            { icon = " ", key = "f", desc = "Files", action = ":Telescope find_files" },
-            { icon = " ", key = "e", desc = "Filetree", action = function() Snacks.explorer() end },
-            { icon = "󰗼 ", key = "q", desc = "Quit", action = ":qa" },
+            { icon = "\u{f02b3} ", key = "u", desc = "Update", action = ":Lazy update" },
+            { icon = "\u{e215} ", key = "f", desc = "Files", action = ":Telescope find_files" },
+            { icon = "\u{eb86} ", key = "e", desc = "Filetree", action = function() Snacks.explorer() end },
+            { icon = "\u{f05fc} ", key = "q", desc = "Quit", action = ":qa" },
           },
         },
         sections = {

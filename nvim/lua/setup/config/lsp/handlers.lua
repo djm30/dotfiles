@@ -10,10 +10,10 @@ M.setup = function()
     virtual_text = true,
     signs = {
       text = {
-        [vim.diagnostic.severity.ERROR] = "",
-        [vim.diagnostic.severity.WARN] = "",
-        [vim.diagnostic.severity.HINT] = "",
-        [vim.diagnostic.severity.INFO] = "",
+        [vim.diagnostic.severity.ERROR] = "\u{f057}",
+        [vim.diagnostic.severity.WARN] = "\u{f071}",
+        [vim.diagnostic.severity.HINT] = "\u{f06a}",
+        [vim.diagnostic.severity.INFO] = "\u{f05a}",
       },
     },
     update_in_insert = false,
