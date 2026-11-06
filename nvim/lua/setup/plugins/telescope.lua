@@ -389,7 +389,6 @@ return {
 
       -- Extensions
       telescope.load_extension "aerial"
-      telescope.load_extension "refactoring"
     end,
   },
 }

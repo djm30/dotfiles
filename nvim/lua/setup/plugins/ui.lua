@@ -53,6 +53,7 @@ return {
     "tzachar/local-highlight.nvim", -- Highlight word under cursor throughout the visible buffer
     opts = {
       file_types = { "lua", "javascript", "python", "ruby" },
+      animate = { enabled = false },
     },
   },
 

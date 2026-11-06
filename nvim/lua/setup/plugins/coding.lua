@@ -115,37 +115,40 @@ return {
             {
               "<Leader>rf",
               function()
-                require("telescope").extensions.refactoring.refactors()
+                return require("refactoring").select_refactor()
               end,
-              description = "Open Refactoring.nvim",
-              mode = { "n", "v", "x" },
+              description = "Select refactor",
+              mode = { "n", "x" },
             },
             {
               "<LocalLeader>rd",
               function()
-                require("refactoring").debug.printf { below = false }
+                return require("refactoring.debug").print_loc { output_location = "above" }
               end,
-              description = "Insert Printf statement for debugging",
+              description = "Insert print statement for debugging",
+              opts = { expr = true },
             },
             {
               "<LocalLeader>rv",
               {
                 n = function()
-                  require("refactoring").debug.print_var { normal = true }
+                  return require("refactoring.debug").print_var { output_location = "below" } .. "iw"
                 end,
                 x = function()
-                  require("refactoring").debug.print_var {}
+                  return require("refactoring.debug").print_var { output_location = "below" }
                 end,
               },
-              description = "Insert Print_Var statement for debugging",
-              mode = { "n", "v" },
+              description = "Insert print var statement for debugging",
+              opts = { expr = true },
             },
             {
               "<LocalLeader>rc",
               function()
-                require("refactoring").debug.cleanup()
+                -- Operator now needs a range: jump to top, then apply to the whole buffer (G)
+                return "gg" .. require("refactoring.debug").cleanup { restore_view = true } .. "G"
               end,
               description = "Cleanup debug statements",
+              opts = { expr = true },
             },
           },
         },

@@ -47,19 +47,24 @@ require("mason").setup {
   max_concurrent_installers = 4,
 }
 
-require("mason-lspconfig").setup { ensure_installed = servers }
-
 local handlers = require "setup.config.lsp.handlers"
-local lspconfig = require "lspconfig"
 
+-- Defaults for every server (native Neovim 0.11+ API; server definitions come from nvim-lspconfig)
+vim.lsp.config("*", {
+  capabilities = handlers.capabilities,
+  on_attach = handlers.on_attach,
+})
+
+-- Optional per-server overrides in lsp/settings/<server>.lua
 for _, server in ipairs(servers) do
-  local opts = { on_attach = handlers.on_attach, capabilities = handlers.capabilities }
-
-  -- Optional per-server overrides in lsp/settings/<server>.lua
   local ok, server_opts = pcall(require, "setup.config.lsp.settings." .. server)
   if ok then
-    opts = vim.tbl_deep_extend("force", server_opts, opts)
+    vim.lsp.config(server, server_opts)
   end
-
-  lspconfig[server].setup(opts)
 end
+
+-- Installs the servers and calls vim.lsp.enable() on them
+require("mason-lspconfig").setup {
+  ensure_installed = servers,
+  automatic_enable = servers, -- only these (not e.g. ts_ls, which typescript-tools replaces)
+}

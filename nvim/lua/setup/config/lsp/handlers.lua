@@ -5,29 +5,21 @@ if not status_cmp_ok then
   return
 end
 
-local border = "rounded"
-
-M.capabilities = vim.lsp.protocol.make_client_capabilities()
-M.capabilities.textDocument.completion.completionItem.snippetSupport = true
-M.capabilities = cmp_nvim_lsp.default_capabilities(M.capabilities)
+M.capabilities = cmp_nvim_lsp.default_capabilities()
 
 M.setup = function()
-  local signs = {
+  -- Rounded borders for hover/signature/diagnostic floats (replaces vim.lsp.with handlers)
+  vim.o.winborder = "rounded"
 
-    { name = "DiagnosticSignError", text = "" },
-    { name = "DiagnosticSignWarn", text = "" },
-    { name = "DiagnosticSignHint", text = "" },
-    { name = "DiagnosticSignInfo", text = "" },
-  }
-
-  for _, sign in ipairs(signs) do
-    vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
-  end
-
-  local config = {
+  vim.diagnostic.config {
     virtual_text = true,
     signs = {
-      active = signs, -- show signs
+      text = {
+        [vim.diagnostic.severity.ERROR] = "",
+        [vim.diagnostic.severity.WARN] = "",
+        [vim.diagnostic.severity.HINT] = "",
+        [vim.diagnostic.severity.INFO] = "",
+      },
     },
     update_in_insert = false,
     underline = true,
@@ -35,22 +27,11 @@ M.setup = function()
     float = {
       focusable = true,
       style = "minimal",
-      border = border,
-      source = "always",
+      source = true,
       header = "",
       prefix = "",
     },
   }
-
-  vim.diagnostic.config(config)
-
-  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-    border = border,
-  })
-
-  vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-    border = border,
-  })
 end
 
 local function lsp_keymaps(bufnr)
@@ -75,9 +56,9 @@ local function lsp_keymaps(bufnr)
   end, "Format")
 
   map("<leader>cd", function()
-    vim.diagnostic.open_float { border = "single", source = "always" }
+    vim.diagnostic.open_float()
   end, "Show line diagnostics")
-  map("<leader>ci", "<cmd>LspInfo<cr>", "Open LSP info")
+  map("<leader>ci", "<cmd>checkhealth vim.lsp<cr>", "Open LSP info")
   map("<leader>ca", vim.lsp.buf.code_action, "Show code actions")
   map("<leader>cr", vim.lsp.buf.rename, "Rename symbol")
   map("<leader>cs", vim.lsp.buf.signature_help, "Show signature help")
@@ -85,8 +66,12 @@ local function lsp_keymaps(bufnr)
   map("<LocalLeader>p", function()
     require("nvim-treesitter.textobjects.lsp_interop").peek_definition_code "@block.outer"
   end, "Peek definition")
-  map("[d", vim.diagnostic.goto_prev, "Previous diagnostic")
-  map("]d", vim.diagnostic.goto_next, "Next diagnostic")
+  map("[d", function()
+    vim.diagnostic.jump { count = -1, float = true }
+  end, "Previous diagnostic")
+  map("]d", function()
+    vim.diagnostic.jump { count = 1, float = true }
+  end, "Next diagnostic")
 end
 
 -- Servers whose formatting is handled by conform instead
