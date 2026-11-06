@@ -1,11 +1,6 @@
 local M = {}
 
-local status_cmp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-if not status_cmp_ok then
-  return
-end
-
-M.capabilities = cmp_nvim_lsp.default_capabilities()
+M.capabilities = require("blink.cmp").get_lsp_capabilities()
 
 M.setup = function()
   -- Rounded borders for hover/signature/diagnostic floats (replaces vim.lsp.with handlers)

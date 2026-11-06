@@ -37,15 +37,5 @@ return {
     ft = "qf",
   },
 
-  {
-    "famiu/bufdelete.nvim", -- Easily close buffers whilst preserving your window layouts
-    cmd = "Bdelete",
-    init = function()
-      require("legendary").keymaps {
-        { "<C-c>", "<cmd>Bdelete<CR>", hide = true, description = "Close Buffer" }, -- bufdelete.nvim
-      }
-    end,
-  },
-
   { "romainl/vim-cool", event = "VeryLazy" },
 }

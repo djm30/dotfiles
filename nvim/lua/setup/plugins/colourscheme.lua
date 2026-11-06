@@ -84,8 +84,7 @@ return {
         AlphaFooter = { fg = "${gray}", italic = true },
 
         -- Cmp
-        CmpItemAbbrMatch = { fg = "${blue}", bold = true },
-        CmpItemAbbrMatchFuzzy = { fg = "${blue}", underline = true },
+        BlinkCmpLabelMatch = { fg = "${blue}", bold = true },
 
 
         --Leap
@@ -113,8 +112,6 @@ return {
         -- HeirlineWinbarEmphasis = { fg = "${fg}", italic = true },
 
         -- Luasnip
-        LuaSnipChoiceNode = { fg = "${yellow}" },
-        LuaSnipInsertNode = { fg = "${yellow}" },
 
         ["@markup.list.unchecked.markdown"] = { fg = "${bg}", bg = "${fg}" },
 

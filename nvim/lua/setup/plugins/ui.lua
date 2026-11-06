@@ -58,35 +58,6 @@ return {
   },
 
   {
-    "stevearc/dressing.nvim", -- Utilises Neovim UI hooks to manage inputs, selects etc
-    opts = {
-      input = {
-        default_prompt = "> ",
-        relative = "editor",
-        prefer_width = 50,
-        prompt_align = "center",
-        win_options = { winblend = 0 },
-      },
-      select = {
-        get_config = function(opts)
-          opts = opts or {}
-          local config = {
-            telescope = {
-              layout_config = {
-                width = 0.8,
-              },
-            },
-          }
-          if opts.kind == "legendary.nvim" then
-            config.telescope.sorter = require("telescope.sorters").fuzzy_with_index_bias {}
-          end
-          return config
-        end,
-      },
-    },
-  },
-
-  {
     "lewis6991/gitsigns.nvim", -- Git signs in the statuscolumn
     opts = {
       signs = {
@@ -150,43 +121,5 @@ return {
         "vue",
       },
     },
-  },
-
-  {
-    "lukas-reineke/indent-blankline.nvim", -- Show indentation lines
-    config = function()
-      require("ibl").setup {
-        indent = {
-          char = "│",
-        },
-        scope = {
-          highlight = "IblIndent",
-          show_end = false,
-          show_start = false,
-        },
-        exclude = {
-          filetypes = {
-            "help",
-            "alpha",
-            "dashboard",
-            "neo-tree",
-            "oil",
-            "Trouble",
-            "trouble",
-            "lazy",
-            "mason",
-            "notify",
-            "toggleterm",
-            "lazyterm",
-          },
-          buftypes = {
-            "dashboard",
-          },
-        },
-      }
-
-      local hooks = require "ibl.hooks"
-      hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
-    end,
   },
 }
