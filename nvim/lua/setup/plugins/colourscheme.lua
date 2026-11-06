@@ -50,7 +50,10 @@ return {
         FloatBorder = { fg = "${gray}", bg = "${bg}" },
 
         CursorLineNr = { bg = "${bg}", fg = "${fg}", italic = true },
-        LocalHighlight = { bg = "${local_highlight}" },
+        -- Same look as the old local-highlight, now used by snacks.words (LSP references)
+        LspReferenceText = { bg = "${local_highlight}" },
+        LspReferenceRead = { bg = "${local_highlight}" },
+        LspReferenceWrite = { bg = "${local_highlight}" },
         MatchParen = { fg = "${cyan}" },
         ModeMsg = { fg = "${gray}" }, -- Make command line text lighter
         Search = { bg = "${selection}", fg = "${yellow}", underline = true },
