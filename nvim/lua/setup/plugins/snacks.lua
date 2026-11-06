@@ -124,6 +124,7 @@ return {
       },
       explorer = { replace_netrw = false }, -- `nvim .` keeps opening oil
       bufdelete = { enabled = true },
+      scroll = { enabled = true }, -- smooth scrolling for <C-d>/<C-u>, zz, G, search jumps, etc.
       words = { enabled = true }, -- highlight other uses of the symbol under the cursor (LSP)
       scratch = { enabled = true }, -- persistent per-project/branch scratch buffers
       lazygit = { enabled = true },
