@@ -57,10 +57,6 @@ return {
           },
         },
       }
-
-      local styled = require "setup.config.treesitter.styled-components"
-      styled.directives()
-      styled.queries()
     end,
   },
 

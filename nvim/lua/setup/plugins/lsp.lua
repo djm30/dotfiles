@@ -8,8 +8,15 @@ return {
       "williamboman/mason-lspconfig.nvim",
       "stevearc/conform.nvim",
 
-      -- Additional lua configuration, makes nvim stuff amazing!
-      { "folke/neodev.nvim", opts = {} },
+    },
+  },
+
+  {
+    -- Neovim Lua API completion/types for this config (replaces neodev)
+    "folke/lazydev.nvim",
+    ft = "lua",
+    opts = {
+      library = { { path = "${3rd}/luv/library", words = { "vim%.uv" } } },
     },
   },
 
