@@ -24,7 +24,7 @@ return {
         shade_terminals = true,
         shading_factor = 1, -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
         start_in_insert = true,
-        insert_mappings = true, -- whether or not the open mapping applies in insert mode
+        insert_mappings = false, -- whether or not the open mapping applies in insert mode
         persist_size = false,
         direction = "float",
         close_on_exit = true, -- close the terminal window when the process exits
@@ -49,17 +49,14 @@ return {
       local Terminal = require("toggleterm.terminal").Terminal
       local lazygit = Terminal:new { cmd = "lazygit", hidden = true }
 
-      function _lazygit_toggle()
+      local function lazygit_toggle()
         lazygit:toggle()
         if lazygit:is_open() then
           vim.cmd "startinsert"
         end
       end
 
-      -- Set key mapping for the lazygit terminal
-      local map = vim.api.nvim_set_keymap
-      local opts = { noremap = true, silent = true, desc = "Open Lazygit" }
-      map("n", "<leader>gg", "<cmd>lua _lazygit_toggle()<CR>", opts)
+      vim.keymap.set("n", "<leader>gg", lazygit_toggle, { silent = true, desc = "Open Lazygit" })
     end,
   },
 

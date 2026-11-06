@@ -13,7 +13,6 @@ return {
           telescope_results = "require('onedarkpro.helpers').darken('bg', 4, 'onedark')",
           telescope_preview = "require('onedarkpro.helpers').darken('bg', 6, 'onedark')",
           telescope_selection = "require('onedarkpro.helpers').darken('bg', 8, 'onedark')",
-          copilot = "#d7f2f5",
           breadcrumbs = "require('onedarkpro.helpers').darken('gray', 10, 'onedark')",
           local_highlight = "require('onedarkpro.helpers').lighten('bg', 4, 'onedark')",
           light_gray = "require('onedarkpro.helpers').darken('gray', 7, 'onedark')",
@@ -31,15 +30,12 @@ return {
           telescope_results = "require('onedarkpro.helpers').darken('bg', 5, 'onelight')",
           telescope_preview = "require('onedarkpro.helpers').darken('bg', 7, 'onelight')",
           telescope_selection = "require('onedarkpro.helpers').darken('bg', 9, 'onelight')",
-          copilot = "require('onedarkpro.helpers').lighten('gray', 8, 'onelight')",
           breadcrumbs = "require('onedarkpro.helpers').lighten('gray', 8, 'onelight')",
           local_highlight = "require('onedarkpro.helpers').darken('bg', 5, 'onelight')",
           light_gray = "require('onedarkpro.helpers').lighten('gray', 10, 'onelight')",
         },
       },
       highlights = {
-        CodeCompanionTokens = { fg = "${gray}", italic = true },
-        CodeCompanionVirtualText = { fg = "${gray}", italic = true },
 
         ["@markup.raw.block.markdown"] = { bg = "${codeblock}" },
         ["@markup.quote.markdown"] = { italic = true, extend = true },
@@ -91,9 +87,6 @@ return {
         CmpItemAbbrMatch = { fg = "${blue}", bold = true },
         CmpItemAbbrMatchFuzzy = { fg = "${blue}", underline = true },
 
-        -- Copilot
-        CopilotSuggestion = { fg = "${copilot}", italic = true },
-        CopilotAnnotation = { fg = "${copilot}", italic = true },
 
         --Leap
         LeapLabel = { fg = "#2c3e50", bg = "#e5c07b" },

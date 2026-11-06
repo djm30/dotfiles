@@ -8,24 +8,20 @@ return {
       "williamboman/mason-lspconfig.nvim",
       "stevearc/conform.nvim",
 
-      -- -- Useful status updates for LSP
-      -- -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      -- { "j-hui/fidget.nvim", opts = {} },
-
       -- Additional lua configuration, makes nvim stuff amazing!
-      "folke/neodev.nvim",
+      { "folke/neodev.nvim", opts = {} },
     },
   },
 
   {
     "pmizio/typescript-tools.nvim",
     dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-    opts = {},
     -- Need to install styled components plugin globally
     -- npm i -g @styled/typescript-styled-plugin typescript-styled-plugin
     config = function()
       require("typescript-tools").setup {
-        on_attach = require("setup.config.lsp.handlers").setup,
+        on_attach = require("setup.config.lsp.handlers").on_attach,
+        capabilities = require("setup.config.lsp.handlers").capabilities,
         settings = {
           tsserver_plugins = {
             -- for TypeScript v4.9+

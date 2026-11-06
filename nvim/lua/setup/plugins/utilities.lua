@@ -21,7 +21,6 @@ return {
         select_prompt = "Legendary",
         include_builtin = false,
         extensions = {
-          codecompanion = false,
           lazy_nvim = false,
           which_key = false,
         },
@@ -31,13 +30,6 @@ return {
     end,
   },
 
-  {
-    "folke/neodev.nvim",
-    opts = {},
-    config = function()
-      require("neodev").setup()
-    end,
-  },
   "nvim-lua/plenary.nvim", -- Required dependency for many plugins. Super useful Lua functions
 
   {
@@ -51,17 +43,9 @@ return {
     init = function()
       require("legendary").keymaps {
         { "<C-c>", "<cmd>Bdelete<CR>", hide = true, description = "Close Buffer" }, -- bufdelete.nvim
-        { "<Tab>", "<cmd>bnext<CR>", hide = true, description = "Next buffer", opts = { noremap = false } }, -- Heirline.nvim
-        {
-          "<S-Tab>",
-          "<cmd>bprev<CR>",
-          hide = true,
-          description = "Previous buffer",
-          opts = { noremap = false },
-        }, -- Heirline.nvim
       }
     end,
   },
 
-  "romainl/vim-cool",
+  { "romainl/vim-cool", event = "VeryLazy" },
 }

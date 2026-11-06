@@ -57,7 +57,7 @@ return require("legendary").keymaps {
   { "<Tab>", ":bnext<CR>", description = "Next buffer" },
   { "<S-Tab>", ":bprev<CR>", description = "Previous buffer" },
   {
-    "<leader>w",
+    "<C-w>",
     function()
       close_buffer_without_closing_window()
     end,
@@ -82,12 +82,14 @@ return require("legendary").keymaps {
       { "<S-Down>", "<C-w>j", description = "Move to bottom window (arrows)" },
       { "<S-Up>", "<C-w>k", description = "Move to top window (arrows)" },
       { "<S-Right>", "<C-w>l", description = "Move to right window (arrows)" },
+      { "<S-C-m>", "<C-w>h", description = "Move to left window (arrows)" },
+      { "<S-C-n>", "<C-w>j", description = "Move to bottom window (arrows)" },
+      { "<S-C-e>", "<C-w>k", description = "Move to top window (arrows)" },
+      { "<S-C-i>", "<C-w>l", description = "Move to right window (arrows)" },
     },
   },
 
-  -- File tree
-  { "<leader>v", ":Neotree toggle<CR>", description = "Toggle Filetree" },
-  { "<leader>e", ":Neotree focus<CR>", description = "Focus Filetree" },
+  -- File tree: <leader>v / <leader>e are defined with the oil plugin spec (plugins/oil.lua)
 
   -- Word wrap navigation
   {

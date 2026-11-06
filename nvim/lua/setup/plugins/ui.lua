@@ -37,7 +37,6 @@ return {
       right = {
         { ft = "aerial", title = "Symbols", size = { width = 0.3 } },
         { ft = "neotest-summary", title = "Neotest Summary", size = { width = 0.3 } },
-        { ft = "oil", title = "File Explorer", size = { width = 0.3 } },
       },
     },
   },
@@ -130,6 +129,7 @@ return {
 
   {
     "NvChad/nvim-colorizer.lua", -- Highlight hex and rgb colors within Neovim
+    event = { "BufReadPost", "BufNewFile" },
     cmd = "ColorizerToggle",
     init = function()
       require("legendary").commands {
@@ -169,6 +169,7 @@ return {
             "alpha",
             "dashboard",
             "neo-tree",
+            "oil",
             "Trouble",
             "trouble",
             "lazy",

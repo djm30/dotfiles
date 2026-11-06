@@ -54,161 +54,55 @@ M.setup = function()
 end
 
 local function lsp_keymaps(bufnr)
-  local t = require "legendary.toolbox"
+  local function map(lhs, rhs, desc)
+    vim.keymap.set("n", lhs, rhs, { buffer = bufnr, desc = desc })
+  end
+  local function telescope(picker, opts)
+    return function()
+      require("telescope.builtin")[picker](opts or {})
+    end
+  end
 
-  require("legendary").keymaps {
-    itemgroup = "LSP",
-    icon = "",
-    description = "LSP related functionality",
-    keymaps = {
-      -- Your existing keymaps converted to legendary format
-      {
-        "gD",
-        vim.lsp.buf.declaration,
-        description = "Go to declaration",
-        opts = { buffer = bufnr },
-      },
-      {
-        "gd",
-        vim.lsp.buf.definition,
-        description = "Go to definition",
-        opts = { buffer = bufnr },
-      },
-      {
-        "K",
-        vim.lsp.buf.hover,
-        description = "Show hover information",
-        opts = { buffer = bufnr },
-      },
-      {
-        "gI",
-        vim.lsp.buf.implementation,
-        description = "Go to implementation",
-        opts = { buffer = bufnr },
-      },
-      {
-        "gr",
-        t.lazy_required_fn("telescope.builtin", "lsp_references", {
-          layout_strategy = "center",
-        }),
-        description = "Go to references",
-        opts = { buffer = bufnr },
-      },
-      {
-        "<leader>cd",
-        function()
-          vim.diagnostic.open_float(0, { border = "single", source = "always" })
-        end,
-        description = "Show line diagnostics",
-        opts = { buffer = bufnr },
-      },
-      {
-        "<leader>ci",
-        "<cmd>LspInfo<cr>",
-        description = "Open LSP info",
-        opts = { buffer = bufnr },
-      },
-      {
-        "<leader>ca",
-        vim.lsp.buf.code_action,
-        description = "Show code actions",
-        opts = { buffer = bufnr },
-      },
-      {
-        "<leader>cr",
-        vim.lsp.buf.rename,
-        description = "Rename symbol",
-        opts = { buffer = bufnr },
-      },
-      {
-        "<leader>cs",
-        vim.lsp.buf.signature_help,
-        description = "Show signature help",
-        opts = { buffer = bufnr },
-      },
-      {
-        "<leader>cq",
-        vim.diagnostic.setloclist,
-        description = "Populate location list with diagnostics",
-        opts = { buffer = bufnr },
-      },
+  map("gD", vim.lsp.buf.declaration, "Go to declaration")
+  map("gd", vim.lsp.buf.definition, "Go to definition")
+  map("K", vim.lsp.buf.hover, "Show hover information")
+  map("gI", vim.lsp.buf.implementation, "Go to implementation")
+  map("gt", vim.lsp.buf.type_definition, "Go to type definition")
+  map("gr", telescope("lsp_references", { layout_strategy = "center" }), "Go to references")
+  map("gf", telescope("diagnostics", { layout_strategy = "center", bufnr = 0 }), "Find diagnostics")
+  map("gq", function()
+    require("conform").format { bufnr = bufnr }
+  end, "Format")
 
-      -- Additional useful mappings from the original list
-      {
-        "gf",
-        t.lazy_required_fn("telescope.builtin", "diagnostics", {
-          layout_strategy = "center",
-          bufnr = 0,
-        }),
-        description = "Find diagnostics",
-        opts = { noremap = true },
-      },
-      {
-        "gt",
-        vim.lsp.buf.type_definition,
-        description = "Go to type definition",
-        opts = { buffer = bufnr },
-      },
-      {
-        "gq",
-        function()
-          require("conform").format { bufnr = bufnr }
-        end,
-        description = "Format",
-        opts = { buffer = bufnr },
-      },
-      {
-        "<LocalLeader>p",
-        t.lazy_required_fn("nvim-treesitter.textobjects.lsp_interop", "peek_definition_code", "@block.outer"),
-        description = "Peek definition",
-        opts = { buffer = bufnr },
-      },
-      {
-        "[d",
-        vim.diagnostic.goto_prev,
-        description = "Go to previous diagnostic item",
-        opts = { buffer = bufnr },
-      },
-      {
-        "]d",
-        vim.diagnostic.goto_next,
-        description = "Go to next diagnostic item",
-        opts = { buffer = bufnr },
-      },
-    },
-  }
+  map("<leader>cd", function()
+    vim.diagnostic.open_float { border = "single", source = "always" }
+  end, "Show line diagnostics")
+  map("<leader>ci", "<cmd>LspInfo<cr>", "Open LSP info")
+  map("<leader>ca", vim.lsp.buf.code_action, "Show code actions")
+  map("<leader>cr", vim.lsp.buf.rename, "Rename symbol")
+  map("<leader>cs", vim.lsp.buf.signature_help, "Show signature help")
+  map("<leader>cq", vim.diagnostic.setloclist, "Diagnostics to location list")
+  map("<LocalLeader>p", function()
+    require("nvim-treesitter.textobjects.lsp_interop").peek_definition_code "@block.outer"
+  end, "Peek definition")
+  map("[d", vim.diagnostic.goto_prev, "Previous diagnostic")
+  map("]d", vim.diagnostic.goto_next, "Next diagnostic")
 end
 
+-- Servers whose formatting is handled by conform instead
+local no_format = { ts_ls = true, tsserver = true, ["typescript-tools"] = true, lua_ls = true }
+
 M.on_attach = function(client, bufnr)
-  if client.name == "tsserver" then
+  if no_format[client.name] then
     client.server_capabilities.documentFormattingProvider = false
   end
-
-  if client.name == "sumneko_lua" then
-    client.server_capabilities.documentFormattingProvider = false
-  end
-
-  -- if client.name == "svelte" then
-  --   vim.api.nvim_create_autocmd("BufWritePost", {
-  --     pattern = { "*.js", "*.ts" },
-  --     callback = function(ctx)
-  --       client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.file })
-  --     end,
-  --   })
-  --
-  --   vim.api.nvim_create_autocmd({ "BufWrite" }, {
-  --     pattern = { "+page.server.ts", "+page.ts", "+layout.server.ts", "+layout.ts" },
-  --     command = "LspRestart svelte",
-  --   })
-  -- end
 
   lsp_keymaps(bufnr)
 
-  local status_ok, illuminate = pcall(require, "illuminate")
-  if not status_ok then
-    return
+  local ok, illuminate = pcall(require, "illuminate")
+  if ok then
+    illuminate.on_attach(client)
   end
-  illuminate.on_attach(client)
 end
 
 return M

@@ -41,7 +41,7 @@ local function close_others()
   for _, buf in ipairs(buffers) do
     if buf ~= current_buf and vim.api.nvim_buf_is_loaded(buf) and vim.api.nvim_buf_is_valid(buf) then
       local filetype = vim.api.nvim_buf_get_option(buf, "filetype")
-      if filetype ~= "neo-tree" then
+      if filetype ~= "neo-tree" and filetype ~= "oil" then
         vim.api.nvim_buf_delete(buf, { force = true })
       end
     end
