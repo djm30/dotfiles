@@ -49,6 +49,7 @@ return {
       preset = "modern",
       delay = 400,
       spec = {
+        { "<leader>a", group = "agents (orca)" },
         { "<leader>c", group = "code" },
         { "<leader>g", group = "git" },
         { "<leader>gt", group = "git toggles" },
@@ -80,5 +81,35 @@ return {
       },
     },
     opts = {},
+  },
+
+  {
+    -- Drive Orca (onorca.dev) worktrees and agents from Neovim via the `orca` CLI
+    "PannenetsF/orca-ctl.nvim",
+    main = "orcactl",
+    cmd = {
+      "Orca",
+      "OrcaFind",
+      "OrcaSwitchProject",
+      "OrcaSwitchWorktree",
+      "OrcaSwitchAgent",
+      "OrcaWorktrees",
+      "OrcaSend",
+      "OrcaPrompt",
+      "OrcaOutput",
+      "OrcaScreen",
+      "OrcaWait",
+      "OrcaAgentNew",
+    },
+    keys = {
+      { "<leader>ao", "<cmd>Orca<cr>", desc = "Orca: explorer" },
+      { "<leader>af", "<cmd>OrcaFind<cr>", desc = "Orca: find worktree or agent" },
+      { "<leader>ap", "<cmd>OrcaSwitchProject<cr>", desc = "Orca: switch project" },
+      { "<leader>aw", "<cmd>OrcaSwitchWorktree<cr>", desc = "Orca: switch worktree" },
+      { "<leader>aa", "<cmd>OrcaSwitchAgent<cr>", desc = "Orca: switch agent" },
+      { "<leader>as", ":OrcaSend<cr>", mode = "x", desc = "Orca: send selection to agent" },
+      { "<leader>aO", "<cmd>OrcaOutput<cr>", desc = "Orca: follow agent output" },
+    },
+    opts = { agent = "pi" }, -- command used by :OrcaAgentNew
   },
 }
