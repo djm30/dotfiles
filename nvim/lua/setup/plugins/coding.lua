@@ -8,8 +8,22 @@ return {
 
   {
     "stevearc/conform.nvim",
+    event = "BufWritePre",
+    cmd = { "ConformInfo", "FormatToggle" },
+    keys = {
+      {
+        "<leader>cf",
+        function()
+          vim.cmd "FormatToggle"
+        end,
+        desc = "Toggle format on save (global)",
+      },
+    },
     config = function()
-      local web = { "prettierd", "prettier", stop_after_first = true }
+      -- Prettier only runs when the project has a Prettier config; no LSP fallback for these filetypes,
+      -- so repos without Prettier are left untouched.
+      local web = { "prettierd", "prettier", stop_after_first = true, lsp_format = "never" }
+
       require("conform").setup {
         formatters_by_ft = {
           lua = { "stylua" },
@@ -20,12 +34,34 @@ return {
           javascriptreact = web,
           svelte = web,
           json = web,
+          jsonc = web,
+          css = web,
+          scss = web,
+          html = web,
+          yaml = web,
+          markdown = web,
         },
-        format_on_save = {
-          timeout_ms = 500,
-          lsp_fallback = true,
+        formatters = {
+          prettierd = { require_cwd = true },
+          prettier = { require_cwd = true },
         },
+        format_on_save = function(bufnr)
+          if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+            return
+          end
+          return { timeout_ms = 500, lsp_format = "fallback" }
+        end,
       }
+
+      -- :FormatToggle toggles for everything, :FormatToggle! for the current buffer only
+      vim.api.nvim_create_user_command("FormatToggle", function(args)
+        local scope, store = "globally", vim.g
+        if args.bang then
+          scope, store = "for this buffer", vim.b
+        end
+        store.disable_autoformat = not store.disable_autoformat
+        vim.notify(("Format on save %s %s"):format(store.disable_autoformat and "disabled" or "enabled", scope))
+      end, { bang = true, desc = "Toggle format on save (! = buffer only)" })
     end,
   },
 
