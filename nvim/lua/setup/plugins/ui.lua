@@ -80,7 +80,6 @@ return {
             gs.blame_line { full = true }
           end)
           map("n", "<leader>gtb", gs.toggle_current_line_blame)
-          map("n", "<leader>gd", gs.diffthis)
           map("n", "<leader>gtd", gs.toggle_deleted)
 
           -- map("n", "<leader>hD", function()

@@ -58,4 +58,26 @@ return {
       },
     },
   },
+
+  {
+    -- Review all changed files with VSCode-style diffs; auto-refreshes while an agent edits.
+    -- In the review tab: ]f/[f files, ]c/[c changes, t inline/side-by-side, gc fold unchanged,
+    -- - stage file, <leader>hs/<leader>hr stage/discard hunk, gf open file, g? help, q close.
+    "esmuellert/codediff.nvim",
+    cmd = "CodeDiff",
+    keys = {
+      { "<leader>gd", "<cmd>CodeDiff<cr>", desc = "Review uncommitted changes" },
+      {
+        "<leader>gD",
+        function()
+          -- Compare against the repo's default branch (main/master), including uncommitted work
+          local ref = vim.fn.systemlist("git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null")[1]
+          local base = (ref and ref ~= "") and ref:gsub("^origin/", "") or "main"
+          vim.cmd("CodeDiff " .. base)
+        end,
+        desc = "Review branch changes vs default branch",
+      },
+    },
+    opts = {},
+  },
 }
