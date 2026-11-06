@@ -64,6 +64,14 @@ return require("legendary").keymaps {
     description = "Close buffer",
     mode = "n",
   },
+  {
+    "<leader>xo",
+    function()
+      Snacks.bufdelete.other()
+    end,
+    description = "Close other buffers",
+    mode = "n",
+  },
 
   -- Save on Enter
   { "<CR>", ":w<CR>", description = "Save file" },
