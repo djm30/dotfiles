@@ -50,14 +50,6 @@ return {
   },
 
   {
-    "tzachar/local-highlight.nvim", -- Highlight word under cursor throughout the visible buffer
-    opts = {
-      file_types = { "lua", "javascript", "python", "ruby" },
-      animate = { enabled = false },
-    },
-  },
-
-  {
     "lewis6991/gitsigns.nvim", -- Git signs in the statuscolumn
     opts = {
       signs = {

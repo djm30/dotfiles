@@ -1,5 +1,5 @@
 -- snacks.nvim replaces: dashboard-nvim, indent-blankline, bufdelete, dressing, the toggleterm lazygit terminal,
--- and provides the sidebar file tree (explorer)
+-- local-highlight (now `words`), and provides the sidebar file tree (explorer) and scratch buffers
 
 local function explorer_picker()
   return Snacks.picker.get({ source = "explorer" })[1]
@@ -50,6 +50,34 @@ return {
         desc = "Close buffer (keep window)",
       },
       {
+        "<leader>.",
+        function()
+          Snacks.scratch()
+        end,
+        desc = "Toggle scratch buffer",
+      },
+      {
+        "<leader>S",
+        function()
+          Snacks.scratch.select()
+        end,
+        desc = "Select scratch buffer",
+      },
+      {
+        "]r",
+        function()
+          Snacks.words.jump(vim.v.count1)
+        end,
+        desc = "Next reference",
+      },
+      {
+        "[r",
+        function()
+          Snacks.words.jump(-vim.v.count1)
+        end,
+        desc = "Previous reference",
+      },
+      {
         "<leader>gg",
         function()
           Snacks.lazygit()
@@ -96,6 +124,8 @@ return {
       },
       explorer = { replace_netrw = false }, -- `nvim .` keeps opening oil
       bufdelete = { enabled = true },
+      words = { enabled = true }, -- highlight other uses of the symbol under the cursor (LSP)
+      scratch = { enabled = true }, -- persistent per-project/branch scratch buffers
       lazygit = { enabled = true },
     },
   },
