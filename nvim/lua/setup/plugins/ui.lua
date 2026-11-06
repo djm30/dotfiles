@@ -63,31 +63,21 @@ return {
       signs_staged_enable = false,
       numhl = false,
       linehl = false,
+      current_line_blame_opts = { delay = 300 },
+      on_attach = function(bufnr)
+        local gs = require "gitsigns"
+        local function map(lhs, rhs, desc)
+          vim.keymap.set("n", lhs, rhs, { buffer = bufnr, desc = desc })
+        end
+
+        map("<leader>gb", function()
+          gs.blame_line { full = true }
+        end, "Blame line (popup)")
+        map("<leader>gB", gs.blame, "Blame whole file")
+        map("<leader>gtb", gs.toggle_current_line_blame, "Toggle inline blame")
+        map("<leader>gtd", gs.preview_hunk_inline, "Preview hunk inline")
+      end,
     },
-    config = function()
-      require("gitsigns").setup {
-
-        on_attach = function(bufnr)
-          local gs = package.loaded.gitsigns
-
-          local function map(mode, l, r, opts)
-            opts = opts or {}
-            opts.buffer = bufnr
-            vim.keymap.set(mode, l, r, opts)
-          end
-
-          map("n", "<leader>gb", function()
-            gs.blame_line { full = true }
-          end)
-          map("n", "<leader>gtb", gs.toggle_current_line_blame)
-          map("n", "<leader>gtd", gs.toggle_deleted)
-
-          -- map("n", "<leader>hD", function()
-          --   gs.diffthis "~"
-          -- end)
-        end,
-      }
-    end,
   },
 
   {
