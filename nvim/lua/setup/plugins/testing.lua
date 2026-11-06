@@ -84,6 +84,34 @@ return {
           require "neotest-rspec",
           require "neotest-phpunit",
         },
+        consumers = {
+          -- Pop up a "N passed, M failed" notification when a run finishes
+          summary_notify = function(client)
+            client.listeners.results = function(adapter_id, results, partial)
+              if partial then
+                return
+              end
+              local counts = { passed = 0, failed = 0, skipped = 0 }
+              for pos_id, result in pairs(results) do
+                local node = client:get_position(pos_id, { adapter = adapter_id })
+                if node and node:data().type == "test" and counts[result.status] then
+                  counts[result.status] = counts[result.status] + 1
+                end
+              end
+              if counts.passed + counts.failed + counts.skipped == 0 then
+                return
+              end
+              local msg = ("\u{f058} %d passed   \u{f057} %d failed"):format(counts.passed, counts.failed)
+              if counts.skipped > 0 then
+                msg = msg .. ("   %d skipped"):format(counts.skipped)
+              end
+              vim.schedule(function()
+                vim.notify(msg, counts.failed > 0 and vim.log.levels.ERROR or vim.log.levels.INFO, { title = "Tests" })
+              end)
+            end
+            return {}
+          end,
+        },
         -- Failures show inline as diagnostics on the failing line
         diagnostic = { enabled = true, severity = vim.diagnostic.severity.ERROR },
         status = { virtual_text = true, signs = true },
@@ -91,11 +119,11 @@ return {
         quickfix = { open = false },
         log_level = vim.log.levels.WARN,
         icons = {
-          passed = "",
-          running = "",
-          failed = "",
-          unknown = "",
-          skipped = "",
+          passed = "\u{f058}", -- nf-fa-check_circle
+          running = "\u{f10c}", -- nf-fa-circle_o
+          failed = "\u{f057}", -- nf-fa-times_circle
+          unknown = "\u{f059}", -- nf-fa-question_circle
+          skipped = "\u{eabd}",
         },
         floating = { border = "rounded", max_height = 0.8, max_width = 0.9 },
       }
