@@ -28,6 +28,22 @@ local function uses_jest(file_path)
     or (pkg.scripts and pkg.scripts.test and pkg.scripts.test:match "jest") ~= nil
 end
 
+-- Cap test parallelism at half the CPU so test runs don't lag the machine
+local MAX_WORKERS = "50%"
+local HALF_CPUS = tostring(math.max(1, math.floor(#vim.uv.cpu_info() / 2)))
+
+-- Project-local vitest binary (walks up for monorepos), plus the worker cap.
+-- Plain vim.uv/vim.fs only: neotest calls this from an async context.
+local function vitest_command(path)
+  for dir in vim.fs.parents(path) do
+    local bin = dir .. "/node_modules/.bin/vitest"
+    if vim.uv.fs_stat(bin) then
+      return bin .. " --maxWorkers=" .. MAX_WORKERS
+    end
+  end
+  return "vitest --maxWorkers=" .. MAX_WORKERS
+end
+
 local function neotest(fn)
   return function()
     fn(require "neotest")
@@ -76,10 +92,15 @@ return {
                 and require("neotest-jest.jest-util").defaultIsTestFile(file_path)
                 and uses_jest(file_path)
             end,
+            jestArguments = function(default_args)
+              table.insert(default_args, "--maxWorkers=" .. MAX_WORKERS)
+              return default_args
+            end,
           },
-          require "neotest-vitest" {},
+          require "neotest-vitest" { vitestCommand = vitest_command },
           require "neotest-python" { dap = { justMyCode = false } },
-          require "neotest-golang" {},
+          -- adapter defaults + `-p` to cap how many packages build/test at once
+          require "neotest-golang" { go_test_args = { "-v", "-race", "-count=1", "-p", HALF_CPUS } },
           require "neotest-plenary",
           require "neotest-rspec",
           require "neotest-phpunit",
