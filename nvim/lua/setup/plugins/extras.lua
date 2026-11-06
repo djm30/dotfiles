@@ -80,7 +80,10 @@ return {
         desc = "Review branch changes vs default branch",
       },
     },
-    opts = {},
+    opts = {
+      diff = { layout = "inline" }, -- single pane with deletions shown inline (`t` switches to side-by-side)
+      explorer = { view_mode = "tree" }, -- folders in the file list (`i` switches to flat list)
+    },
   },
 
   {
