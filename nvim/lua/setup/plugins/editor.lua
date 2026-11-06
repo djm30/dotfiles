@@ -94,7 +94,7 @@ return {
     event = "BufEnter",
     init = function()
       require("legendary").keymaps {
-        { "<Leader>t", "<cmd>TodoTelescope<CR>", description = "Todo comments" },
+        { "<leader>st", "<cmd>TodoTelescope<CR>", description = "Search todo comments" },
       }
     end,
     opts = {

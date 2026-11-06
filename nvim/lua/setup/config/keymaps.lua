@@ -139,7 +139,7 @@ return require("legendary").keymaps {
 
   -- Replace current word
   {
-    "<leader>r",
+    "<leader>rw",
     [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
     description = "Replace current word",
   },

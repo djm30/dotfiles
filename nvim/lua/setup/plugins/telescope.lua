@@ -228,7 +228,7 @@ return {
               description = "Find in open files",
             },
             {
-              "<Leader>g",
+              "<leader>/",
               t.lazy_required_fn(
                 "telescope.builtin",
                 "live_grep",
@@ -246,7 +246,7 @@ return {
               description = "List buffers",
             },
             {
-              "<Leader>r",
+              "<leader>?",
               "<cmd>lua require('telescope').extensions.frecency.frecency({ prompt_title = 'Recent Files', workspace = 'CWD', path_display = { 'smart' } })<CR>",
               description = "Find recent files",
             },
