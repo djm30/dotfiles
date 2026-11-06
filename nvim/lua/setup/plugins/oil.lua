@@ -1,45 +1,12 @@
--- Oil is the primary file explorer (see filetree.lua for the neo-tree config kept as an alternative)
-local function oil_win()
-  for _, win in ipairs(vim.api.nvim_list_wins()) do
-    if vim.bo[vim.api.nvim_win_get_buf(win)].filetype == "oil" then
-      return win
-    end
-  end
-end
-
--- Open oil in a right-hand sidebar (mirrors the old neo-tree position/width)
-local function open_sidebar()
-  vim.cmd "botright 30vsplit"
-  vim.wo.winfixwidth = true
-  require("oil").open()
-end
-
-local function toggle()
-  local win = oil_win()
-  if win then
-    vim.api.nvim_win_close(win, true)
-  else
-    open_sidebar()
-  end
-end
-
-local function focus()
-  local win = oil_win()
-  if win then
-    vim.api.nvim_set_current_win(win)
-  else
-    open_sidebar()
-  end
-end
-
+-- Oil: edit the filesystem like a buffer. `-` opens the current file's folder.
+-- The sidebar tree is the snacks explorer (plugins/snacks.lua); neo-tree config kept in filetree.lua.
 return {
   {
     "stevearc/oil.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     cmd = "Oil",
     keys = {
-      { "<leader>v", toggle, desc = "Toggle Filetree" },
-      { "<leader>e", focus, desc = "Focus Filetree" },
+      { "-", "<cmd>Oil<cr>", desc = "Open parent directory (oil)" },
     },
     opts = {
       default_file_explorer = true,
