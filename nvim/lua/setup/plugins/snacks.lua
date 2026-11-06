@@ -1,4 +1,9 @@
--- snacks.nvim replaces: dashboard-nvim, indent-blankline, bufdelete, dressing, and the toggleterm lazygit terminal
+-- snacks.nvim replaces: dashboard-nvim, indent-blankline, bufdelete, dressing, the toggleterm lazygit terminal,
+-- and provides the sidebar file tree (explorer)
+
+local function explorer_picker()
+  return Snacks.picker.get({ source = "explorer" })[1]
+end
 local header = [[
   ██╗    ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗        ██╗    ██╗  
  ██╔╝    ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║       ██╔╝    ╚██╗ 
@@ -13,6 +18,30 @@ return {
     priority = 1000,
     lazy = false,
     keys = {
+      {
+        "<leader>v",
+        function()
+          local picker = explorer_picker()
+          if picker then
+            picker:close()
+          else
+            Snacks.explorer()
+          end
+        end,
+        desc = "Toggle file tree",
+      },
+      {
+        "<leader>e",
+        function()
+          local picker = explorer_picker()
+          if picker then
+            picker:focus()
+          else
+            Snacks.explorer()
+          end
+        end,
+        desc = "Focus file tree",
+      },
       {
         "<C-c>",
         function()
@@ -35,7 +64,7 @@ return {
           keys = {
             { icon = "󰊳 ", key = "u", desc = "Update", action = ":Lazy update" },
             { icon = " ", key = "f", desc = "Files", action = ":Telescope find_files" },
-            { icon = " ", key = "e", desc = "Filetree", action = ":Oil" },
+            { icon = " ", key = "e", desc = "Filetree", action = function() Snacks.explorer() end },
             { icon = "󰗼 ", key = "q", desc = "Quit", action = ":qa" },
           },
         },
@@ -55,7 +84,17 @@ return {
         end,
       },
       input = { enabled = true }, -- vim.ui.input
-      picker = { enabled = true, ui_select = true }, -- vim.ui.select (legendary, code actions, etc.)
+      picker = {
+        enabled = true,
+        ui_select = true, -- vim.ui.select (legendary, code actions, etc.)
+        sources = {
+          explorer = {
+            hidden = true, -- show dotfiles (toggle with H)
+            layout = { layout = { position = "right", width = 30 } },
+          },
+        },
+      },
+      explorer = { replace_netrw = false }, -- `nvim .` keeps opening oil
       bufdelete = { enabled = true },
       lazygit = { enabled = true },
     },
