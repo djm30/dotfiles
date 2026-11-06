@@ -66,7 +66,7 @@ M.config = function()
         {
           icon = " ",
           desc = "Filetree",
-          action = "Neotree toggle .",
+          action = "Oil",
           key = "e",
           icon_hl = "DiagnosticWarn",
           desc_hl = "DiagnosticInfo",
