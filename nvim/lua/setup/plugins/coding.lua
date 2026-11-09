@@ -23,6 +23,9 @@ return {
       -- Prettier only runs when the project has a Prettier config; no LSP fallback for these filetypes,
       -- so repos without Prettier are left untouched.
       local web = { "prettierd", "prettier", stop_after_first = true, lsp_format = "never" }
+      -- Same idea for Swift: `swift format` only runs when the project has a .swift-format config
+      -- (sourcekit-lsp would otherwise format with swift-format's defaults).
+      local swift = { "swift", lsp_format = "never" }
 
       require("conform").setup {
         formatters_by_ft = {
@@ -40,10 +43,12 @@ return {
           html = web,
           yaml = web,
           markdown = web,
+          swift = swift,
         },
         formatters = {
           prettierd = { require_cwd = true },
           prettier = { require_cwd = true },
+          swift = { require_cwd = true, cwd = require("conform.util").root_file { ".swift-format" } },
         },
         format_on_save = function(bufnr)
           if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
