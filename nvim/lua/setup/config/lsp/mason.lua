@@ -68,3 +68,10 @@ require("mason-lspconfig").setup {
   ensure_installed = servers,
   automatic_enable = servers, -- only these (not e.g. ts_ls, which typescript-tools replaces)
 }
+
+-- Swift: sourcekit-lsp ships with Xcode / the Command Line Tools, not Mason.
+-- Limited to Swift so it doesn't compete with clangd on C/C++/Objective-C files.
+if vim.fn.executable "sourcekit-lsp" == 1 then
+  vim.lsp.config("sourcekit", { filetypes = { "swift" } })
+  vim.lsp.enable "sourcekit"
+end

@@ -16,6 +16,7 @@ local ensure_installed = {
   "vim",
   "bash",
   "svelte",
+  "swift",
   "json",
   "yaml",
   "markdown",
