@@ -69,6 +69,9 @@ return {
       vim.keymap.set("n", "<C-space>", "van", { remap = true, desc = "Start node selection" })
       vim.keymap.set("x", "<C-space>", "an", { remap = true, desc = "Grow node selection" })
       vim.keymap.set("x", "<M-space>", "in", { remap = true, desc = "Shrink node selection" })
+      local document = require("setup.config.util").document
+      document("<C-space>", "Start / grow node selection", { "n", "x" })
+      document("<M-space>", "Shrink node selection", "x")
     end,
   },
 
@@ -94,6 +97,7 @@ return {
         vim.keymap.set({ "x", "o" }, keys, function()
           select.select_textobject(obj, "textobjects")
         end, { desc = "Select " .. obj })
+        require("setup.config.util").document(keys, "Select " .. obj, { "x", "o" })
       end
 
       local move = require "nvim-treesitter-textobjects.move"
@@ -110,6 +114,7 @@ return {
         vim.keymap.set({ "n", "x", "o" }, keys, function()
           move[spec[1]](spec[2], "textobjects")
         end, { desc = spec[1]:gsub("_", " ") .. " " .. spec[2] })
+        require("setup.config.util").document(keys, spec[1]:gsub("_", " ") .. " " .. spec[2], { "n", "x", "o" })
       end
     end,
   },

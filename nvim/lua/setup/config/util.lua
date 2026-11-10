@@ -53,7 +53,24 @@ local function close_all()
   close_buffer_without_closing_window()
 end
 
+-- List a key in the legendary palette (<C-p>) without binding it. For keys set with
+-- vim.keymap.set (e.g. buffer-local LSP maps); each lhs/mode is only registered once.
+local documented = {}
+local function document(lhs, desc, mode)
+  mode = mode or "n"
+  local id = lhs .. vim.inspect(mode)
+  if documented[id] then
+    return
+  end
+  documented[id] = true
+  local ok, legendary = pcall(require, "legendary")
+  if ok then
+    legendary.keymap { lhs, description = desc, mode = mode }
+  end
+end
+
 return {
+  document = document,
   opts_with_desc = opts_with_desc,
   opts = opts,
   move_with_count = move_with_count,
