@@ -51,8 +51,7 @@ local handlers = require "setup.config.lsp.handlers"
 
 -- Defaults for every server (native Neovim 0.11+ API; server definitions come from nvim-lspconfig)
 vim.lsp.config("*", {
-  capabilities = handlers.capabilities,
-  on_attach = handlers.on_attach,
+  capabilities = handlers.capabilities, -- keymaps are attached via LspAttach in handlers.lua
 })
 
 -- Optional per-server overrides in lsp/settings/<server>.lua

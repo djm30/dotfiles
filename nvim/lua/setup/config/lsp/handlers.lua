@@ -93,4 +93,17 @@ M.on_attach = function(client, bufnr)
   lsp_keymaps(bufnr)
 end
 
+-- Attach keymaps via LspAttach rather than each server's on_attach: several nvim-lspconfig
+-- configs (pyright, clangd, rust_analyzer, svelte...) define their own on_attach, which
+-- replaces a shared one instead of adding to it.
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("setup_lsp_attach", { clear = true }),
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client then
+      M.on_attach(client, args.buf)
+    end
+  end,
+})
+
 return M
