@@ -1,0 +1,17 @@
+[user]
+	name = Dylan Morrison
+[core]
+	editor = nvim
+	excludesfile = ~/.gitignore_global
+[color]
+	diff = auto
+	status = auto
+
+# Machine-specific settings (email, proxy certs) live in an untracked file.
+# Example ~/.gitconfig.local:
+#   [user]
+#   	email = you@example.com
+#   [http]
+#   	sslCAInfo = /path/to/corporate-ca.pem
+[include]
+	path = ~/.gitconfig.local
