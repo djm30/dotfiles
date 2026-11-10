@@ -1,0 +1,18 @@
+{
+  "name": "synchronized-ui-comparison",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "record": "node scripts/record.mjs",
+    "export": "node scripts/export.mjs",
+    "example:serve": "node examples/serve.mjs"
+  },
+  "dependencies": {
+    "playwright": "1.64.1"
+  }
+}
