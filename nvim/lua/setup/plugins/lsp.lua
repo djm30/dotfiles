@@ -27,7 +27,6 @@ return {
     -- npm i -g @styled/typescript-styled-plugin typescript-styled-plugin
     config = function()
       require("typescript-tools").setup {
-        on_attach = require("setup.config.lsp.handlers").on_attach,
         capabilities = require("setup.config.lsp.handlers").capabilities,
         settings = {
           tsserver_plugins = {
