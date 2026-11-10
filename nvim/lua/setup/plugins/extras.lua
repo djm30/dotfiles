@@ -68,7 +68,7 @@ return {
     "esmuellert/codediff.nvim",
     cmd = "CodeDiff",
     keys = {
-      { "<leader>gd", "<cmd>CodeDiff<cr>", desc = "Review uncommitted changes" },
+      { "<leader>gd", "<cmd>CodeDiff<cr>", desc = "CodeDiff: review uncommitted changes" },
       {
         "<leader>gD",
         function()
@@ -77,7 +77,7 @@ return {
           local base = (ref and ref ~= "") and ref:gsub("^origin/", "") or "main"
           vim.cmd("CodeDiff " .. base)
         end,
-        desc = "Review branch changes vs default branch",
+        desc = "CodeDiff: review branch vs default branch",
       },
     },
     opts = {
