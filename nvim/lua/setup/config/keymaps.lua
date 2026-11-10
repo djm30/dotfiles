@@ -5,6 +5,12 @@ local close_buffer_without_closing_window = require("setup.config.util").close_b
 
 local keymap = vim.keymap.set
 
+-- Remove Neovim's built-in gr* LSP keys (grr/grn/gra/gri/grt/grx) so our `gr` (references)
+-- fires instantly instead of waiting timeoutlen. Our equivalents: gr, <leader>cr, <leader>ca, gI, gt.
+for _, m in ipairs { { "n", "grr" }, { "n", "grn" }, { { "n", "x" }, "gra" }, { "n", "gri" }, { "n", "grt" }, { "n", "grx" } } do
+  pcall(vim.keymap.del, m[1], m[2])
+end
+
 -- Normal --
 
 -- Make i match current line indent
