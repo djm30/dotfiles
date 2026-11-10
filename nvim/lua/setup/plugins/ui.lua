@@ -68,6 +68,7 @@ return {
         local gs = require "gitsigns"
         local function map(lhs, rhs, desc)
           vim.keymap.set("n", lhs, rhs, { buffer = bufnr, desc = desc })
+          require("setup.config.util").document(lhs, "Git: " .. desc)
         end
 
         map("<leader>gb", function()

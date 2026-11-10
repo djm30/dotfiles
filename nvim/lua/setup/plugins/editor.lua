@@ -112,9 +112,15 @@ return {
     url = "https://codeberg.org/andyg/leap.nvim", -- moved off GitHub
     config = function()
       -- Same keys as the old create_default_mappings()
-      vim.keymap.set({ "n", "x", "o" }, "s", "<Plug>(leap-forward)")
-      vim.keymap.set({ "n", "x", "o" }, "S", "<Plug>(leap-backward)")
-      vim.keymap.set({ "n", "x", "o" }, "gs", "<Plug>(leap-from-window)")
+      local document = require("setup.config.util").document
+      for _, m in ipairs {
+        { "s", "<Plug>(leap-forward)", "Leap forward" },
+        { "S", "<Plug>(leap-backward)", "Leap backward" },
+        { "gs", "<Plug>(leap-from-window)", "Leap to another window" },
+      } do
+        vim.keymap.set({ "n", "x", "o" }, m[1], m[2], { desc = m[3] })
+        document(m[1], m[3], { "n", "x", "o" })
+      end
     end,
   },
 }

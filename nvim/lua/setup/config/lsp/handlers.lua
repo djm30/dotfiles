@@ -32,6 +32,7 @@ end
 local function lsp_keymaps(bufnr)
   local function map(lhs, rhs, desc)
     vim.keymap.set("n", lhs, rhs, { buffer = bufnr, desc = desc })
+    require("setup.config.util").document(lhs, "LSP: " .. desc)
   end
   local function telescope(picker, opts)
     return function()

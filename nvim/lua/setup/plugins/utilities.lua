@@ -21,7 +21,7 @@ return {
         select_prompt = "Legendary",
         include_builtin = false,
         extensions = {
-          lazy_nvim = false,
+          lazy_nvim = true, -- list every lazy.nvim `keys = {}` entry that has a desc
           which_key = false,
         },
         -- Load these with the plugin to ensure they are loaded before any Neovim events
