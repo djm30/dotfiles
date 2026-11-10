@@ -1,0 +1,71 @@
+# Homebrew packages for this machine.
+# Apply with: brew bundle --file=~/dotfiles/install/Brewfile
+# Refresh after installing something new: brew bundle dump --file=- | less
+# (then copy across what you want to keep; dependencies don't need listing).
+
+# --- Shell ------------------------------------------------------------------
+brew "zsh"
+brew "zsh-autosuggestions"
+brew "zsh-syntax-highlighting"
+brew "powerlevel10k"
+brew "fzf"
+brew "zoxide"
+
+# --- CLI tools --------------------------------------------------------------
+brew "git"
+brew "gh"
+brew "lazygit"
+brew "neovim"
+brew "tree-sitter-cli"
+brew "lf"
+brew "bat"
+brew "ripgrep"
+brew "tree"
+brew "shellcheck"
+brew "ketch"
+
+# lf previews
+brew "ffmpegthumbnailer"
+brew "ghostscript"
+brew "imagemagick"
+
+# --- Languages / runtimes ---------------------------------------------------
+brew "nvm"
+brew "pyenv"
+brew "uv"
+brew "openjdk@21"
+brew "maven"
+
+# --- Dev services / misc ----------------------------------------------------
+brew "postgresql@14"
+brew "act"
+brew "git-xargs"
+brew "syncthing"
+brew "tesseract"
+
+# --- Fonts ------------------------------------------------------------------
+cask "font-meslo-lg-nerd-font"
+cask "font-jetbrains-mono-nerd-font"
+cask "font-iosevka"
+
+# --- Terminals / window management -----------------------------------------
+cask "kitty"
+cask "wezterm"
+cask "amethyst"
+cask "raycast"
+cask "hiddenbar"
+cask "scroll-reverser"
+cask "betterdisplay"
+cask "flux-app"
+
+# --- Apps -------------------------------------------------------------------
+cask "1password"
+cask "1password-cli"
+cask "arc"
+cask "obsidian"
+cask "ticktick"
+cask "visual-studio-code"
+cask "selfcontrol"
+cask "caffeine"
+cask "dropzone"
+cask "dbeaver-community"
