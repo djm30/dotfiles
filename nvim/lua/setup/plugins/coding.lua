@@ -27,10 +27,25 @@ return {
       -- (sourcekit-lsp would otherwise format with swift-format's defaults).
       local swift = { "swift", lsp_format = "never" }
 
+      -- Ruff only formats projects that configure it: ruff.toml / .ruff.toml, or [tool.ruff] in pyproject.toml
+      local function uses_ruff(_, ctx)
+        if vim.fs.find({ "ruff.toml", ".ruff.toml" }, { path = ctx.dirname, upward = true })[1] then
+          return true
+        end
+        local pyproject = vim.fs.find("pyproject.toml", { path = ctx.dirname, upward = true })[1]
+        local f = pyproject and io.open(pyproject)
+        if not f then
+          return false
+        end
+        local content = f:read "*a"
+        f:close()
+        return content:find("%[tool%.ruff") ~= nil
+      end
+
       require("conform").setup {
         formatters_by_ft = {
           lua = { "stylua" },
-          python = { "isort", "black" }, -- run sequentially
+          python = { "ruff_organize_imports", "ruff_format", lsp_format = "never" },
           javascript = web,
           typescript = web,
           typescriptreact = web,
@@ -48,14 +63,19 @@ return {
         formatters = {
           prettierd = { require_cwd = true },
           prettier = { require_cwd = true },
+          ruff_format = { condition = uses_ruff },
+          ruff_organize_imports = { condition = uses_ruff },
           swift = { require_cwd = true, cwd = require("conform.util").root_file { ".swift-format" } },
         },
         format_on_save = function(bufnr)
           if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
             return
           end
-          return { timeout_ms = 500, lsp_format = "fallback" }
+          -- No lsp_format here: options returned by format_on_save override the per-filetype
+          -- lsp_format = "never" above. The LSP fallback lives in default_format_opts instead.
+          return { timeout_ms = 500 }
         end,
+        default_format_opts = { lsp_format = "fallback" },
       }
 
       -- :FormatToggle toggles for everything, :FormatToggle! for the current buffer only
