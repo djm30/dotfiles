@@ -21,7 +21,7 @@ cmd mkfile ${{
 }}
 
 cmd copypath ${{
- echo "$f" | pbcopy 
+ echo "$f" | pbcopy
 }}
 
 cmd open ${{
@@ -63,5 +63,7 @@ map C clear
 
 map gd cd ~/Documents
 map gD cd ~/Downloads
-map gp cd ~/Pictures
+map gp cd ~/payment-hub/
+map gf cd ~/aicape/
+map gb cd ~/payment-hub/b2b/
 map gc cd ~/dotfiles

@@ -1,8 +1,6 @@
-# source_if_exists () {
-#     if test -r "$1"; then
-#         source "$1"
-#     fi
-# }
+[[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
+
+
 if test -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"; then
     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
@@ -15,7 +13,7 @@ fi
 source "$HOME/.local/share/zap/zap.zsh"
 
 # Source the environment-specific configurations
-plug "$HOME/.env.sh" 
+plug "$HOME/.env.sh"
 plug "$DOTFILES/zsh/aliases.zsh"
 plug "$DOTFILES/zsh/commands.zsh"
 plug "$DOTFILES/zsh/exports.zsh"
@@ -30,3 +28,18 @@ plug "romkatv/powerlevel10k"
 
 autoload -Uz compinit
 compinit
+
+# opencode
+export PATH=/Users/n1646868/.opencode/bin:$PATH
+
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - zsh)"
+
+# >>> usrm-sdd-workshop java >>>
+export JAVA_HOME="$(brew --prefix openjdk@21)/libexec/openjdk.jdk/Contents/Home"
+export PATH="$JAVA_HOME/bin:$PATH"
+# <<< usrm-sdd-workshop java <<<
+
+# Personal scripts (awsl etc.)
+export PATH="$HOME/.local/bin:$PATH"
