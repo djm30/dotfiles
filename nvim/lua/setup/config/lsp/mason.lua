@@ -4,6 +4,7 @@ local servers = {
   "cssls",
   "html",
   "pyright",
+  "ruff", -- Python linting + import sorting (formatting runs through conform)
   "bashls",
   "jsonls",
   "yamlls",
@@ -18,8 +19,6 @@ local formatters = {
   "prettier",
   "prettierd",
   "stylua",
-  "isort",
-  "black",
 }
 
 local linters = {
@@ -28,6 +27,7 @@ local linters = {
 
 local debugAdapters = {
   "js-debug-adapter",
+  "debugpy",
 }
 
 -- Install formatters, linters and debug adapters (LSP servers are handled by mason-lspconfig)

@@ -83,11 +83,14 @@ local function lsp_keymaps(bufnr)
 end
 
 -- Servers whose formatting is handled by conform instead
-local no_format = { ts_ls = true, tsserver = true, ["typescript-tools"] = true, lua_ls = true }
+local no_format = { ts_ls = true, tsserver = true, ["typescript-tools"] = true, lua_ls = true, ruff = true }
 
 M.on_attach = function(client, bufnr)
   if no_format[client.name] then
     client.server_capabilities.documentFormattingProvider = false
+  end
+  if client.name == "ruff" then
+    client.server_capabilities.hoverProvider = false -- pyright's hover is the useful one
   end
 
   lsp_keymaps(bufnr)

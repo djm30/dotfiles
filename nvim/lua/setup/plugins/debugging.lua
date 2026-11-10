@@ -45,7 +45,8 @@ return {
   config = function()
     local dap = require "dap"
     require("dap-ruby").setup()
-    require("dap-python").setup "~/.virtualenvs/debugpy/bin/python"
+    -- debugpy is installed by Mason (:InstallTools); the program itself runs with the project's venv
+    require("dap-python").setup(vim.fn.stdpath "data" .. "/mason/packages/debugpy/venv/bin/python")
 
     ---Show the nice virtual text when debugging
     ---@return nil|function
