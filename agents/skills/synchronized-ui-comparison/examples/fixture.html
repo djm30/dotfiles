@@ -1,0 +1,14 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Comparison smoke fixture</title>
+<style>body{font:20px system-ui;margin:90px 60px;background:#f3f5f8;color:#182439}main{max-width:520px;margin:auto;background:white;padding:32px;border-radius:12px}label,input,button{display:block}input,button{font:inherit;padding:12px;margin:12px 0}input{width:90%}input:focus{outline:3px solid #007e91}button{background:#007e91;color:white;border:0;border-radius:6px}li{margin:10px 0}</style>
+<main><h1>Save a name</h1><form><label for="name">Name</label><input id="name" required autocomplete="off" autofocus><button>Save</button></form>
+<p role="status">Ready</p><p data-testid="saved-count">0</p><ul aria-label="Saved names"></ul></main>
+<script>
+const form=document.querySelector('form'),input=document.querySelector('input'),button=document.querySelector('button'),status=document.querySelector('[role=status]');
+let count=0;
+form.addEventListener('submit',e=>{
+ e.preventDefault(); const name=input.value.trim(); if(!name)return;
+ status.textContent='Saving…';button.disabled=true;
+ setTimeout(()=>{const item=document.createElement('li');item.textContent=name;document.querySelector('ul').append(item);document.querySelector('[data-testid=saved-count]').textContent=String(++count);status.textContent='Saved';button.disabled=false;form.reset();input.focus()},new URL(location.href).searchParams.get('version')==='after'?250:150);
+});
+if(new URL(location.href).searchParams.has('crash'))setTimeout(()=>{throw new Error('Deliberate fixture error')},50);
+</script></html>
