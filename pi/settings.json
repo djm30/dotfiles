@@ -1,0 +1,20 @@
+{
+  "lastChangelogVersion": "1.5.0",
+  "theme": "dark",
+  "defaultProvider": "github-copilot",
+  "defaultModel": "gpt-5.6-luna",
+  "packages": [
+    "npm:pi-system-prompt",
+    "npm:pi-permission-system",
+    "npm:pi-blackhole",
+    "npm:pi-ketch",
+    "npm:pi-subagents-lite",
+    "npm:@diegopetrucci/pi-todo",
+    "npm:pi-ask-user",
+    "npm:pi-image-paste"
+  ],
+  "extensionChangelogVersions": {
+    "{\"source\":\"npm:pi-permission-system\",\"scope\":\"user\"}": "0.8.0",
+    "{\"source\":\"npm:pi-blackhole\",\"scope\":\"user\"}": "0.5.17"
+  }
+}
