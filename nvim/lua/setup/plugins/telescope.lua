@@ -359,7 +359,8 @@ return {
         pickers = {
           find_files = {
             -- Skip .git/ at the source instead of listing it and filtering it out afterwards
-            find_command = { "fd", "--type", "f", "--color", "never", "--hidden", "--exclude", ".git" },
+            -- rg (Homebrew) rather than fd, which is only on PATH in some shells
+            find_command = { "rg", "--files", "--hidden", "--color", "never", "--glob", "!.git" },
           },
         },
 
