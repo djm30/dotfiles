@@ -193,6 +193,10 @@ return {
         end,
       },
       {
+        "nvim-telescope/telescope-fzf-native.nvim", -- Compiled fzf sorter (faster, better matches)
+        build = "make",
+      },
+      {
         "nvim-telescope/telescope-frecency.nvim", -- Get frequently opened files
         config = function()
           require("telescope").load_extension "frecency"
@@ -232,7 +236,7 @@ return {
               t.lazy_required_fn(
                 "telescope.builtin",
                 "live_grep",
-                { prompt_title = "Search CWD", path_display = { "smart" } }
+                { prompt_title = "Search CWD", path_display = { "truncate" } }
               ),
               description = "Search CWD",
             },
@@ -241,13 +245,13 @@ return {
               t.lazy_required_fn(
                 "telescope.builtin",
                 "buffers",
-                { prompt_title = "Buffer List", path_display = { "smart" } }
+                { prompt_title = "Buffer List", path_display = { "truncate" } }
               ),
               description = "List buffers",
             },
             {
               "<leader>?",
-              "<cmd>lua require('telescope').extensions.frecency.frecency({ prompt_title = 'Recent Files', workspace = 'CWD', path_display = { 'smart' } })<CR>",
+              "<cmd>lua require('telescope').extensions.frecency.frecency({ prompt_title = 'Recent Files', workspace = 'CWD', path_display = { 'truncate' } })<CR>",
               description = "Find recent files",
             },
           },
@@ -287,7 +291,7 @@ return {
           prompt_prefix = "   ",
           selection_caret = "  ",
           color_devicons = true,
-          path_display = { "smart" },
+          path_display = { "truncate" }, -- "smart" cost 80-300 ms per keystroke
           dynamic_preview_title = true,
 
           sorting_strategy = "ascending",
@@ -331,7 +335,6 @@ return {
             "node_modules",
             "dotbot",
           },
-          file_sorter = require("telescope.sorters").get_fuzzy_file,
 
           -- Mappings
           mappings = {
@@ -350,6 +353,13 @@ return {
               ["<C-n>"] = require("telescope.actions").move_selection_next,
               ["<C-p>"] = require("telescope.actions").move_selection_previous,
             },
+          },
+        },
+
+        pickers = {
+          find_files = {
+            -- Skip .git/ at the source instead of listing it and filtering it out afterwards
+            find_command = { "fd", "--type", "f", "--color", "never", "--hidden", "--exclude", ".git" },
           },
         },
 
@@ -389,6 +399,7 @@ return {
 
       -- Extensions
       telescope.load_extension "aerial"
+      pcall(telescope.load_extension, "fzf") -- after setup(), so its sorter overrides the defaults
     end,
   },
 }
