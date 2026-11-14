@@ -1,4 +1,24 @@
 -- Nerd Font codepoints written as escapes so editors/tools can't strip them
+-- Words in the buffer, cached per change, so LSP items the file already uses can rank higher
+local buffer_words_cache = {}
+local function buffer_words(bufnr)
+  local tick = vim.b[bufnr].changedtick
+  local cached = buffer_words_cache[bufnr]
+  if cached and cached.tick == tick then
+    return cached.words
+  end
+  local words = {}
+  if vim.api.nvim_buf_line_count(bufnr) <= 10000 then
+    for _, line in ipairs(vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)) do
+      for word in line:gmatch "[%a_][%w_]*" do
+        words[word] = true
+      end
+    end
+  end
+  buffer_words_cache[bufnr] = { tick = tick, words = words }
+  return words
+end
+
 local icons = {
   Color = "\u{f03d8}",
   Reference = "\u{f481}",
@@ -64,7 +84,32 @@ return {
       },
       -- Parameter hints pop up after typing `(` or `,` in a call
       signature = { enabled = true, window = { border = "rounded" } },
-      sources = { default = { "lsp", "snippets", "buffer", "path" } },
+      sources = {
+        default = { "lsp", "snippets", "buffer", "path" },
+        providers = {
+          lsp = {
+            -- Ranking tweaks (typing still matches everything normally):
+            --   function parameters (`name=`) first, then names this file already uses
+            --   (your variables, functions, imports) above built-ins, language keywords last.
+            transform_items = function(ctx, items)
+              local kinds = require("blink.cmp.types").CompletionItemKind
+              local words = buffer_words(ctx.bufnr)
+              for _, item in ipairs(items) do
+                local offset = 0
+                if item.label:sub(-1) == "=" and item.kind == kinds.Variable then
+                  offset = 10
+                elseif item.kind == kinds.Keyword then
+                  offset = -5
+                elseif words[item.label] then
+                  offset = 3
+                end
+                item.score_offset = (item.score_offset or 0) + offset
+              end
+              return items
+            end,
+          },
+        },
+      },
       cmdline = { enabled = false }, -- was disabled in the old cmp config too
       fuzzy = { implementation = "prefer_rust_with_warning" },
     },
