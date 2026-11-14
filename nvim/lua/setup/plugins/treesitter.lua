@@ -17,6 +17,7 @@ local ensure_installed = {
   "bash",
   "svelte",
   "swift",
+  "toml",
   "json",
   "yaml",
   "markdown",

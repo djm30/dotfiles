@@ -5,6 +5,7 @@ local servers = {
   "html",
   "pyright",
   "ruff", -- Python linting + import sorting (formatting runs through conform)
+  "taplo", -- TOML: validation (incl. pyproject.toml / Cargo.toml schemas), completion, hover
   "bashls",
   "jsonls",
   "yamlls",
