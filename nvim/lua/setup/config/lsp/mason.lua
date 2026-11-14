@@ -3,7 +3,7 @@ local servers = {
   "lua_ls",
   "cssls",
   "html",
-  "basedpyright", -- pyright fork with Pylance features: add-import quick fixes, auto-import completions
+  "ty", -- Python (Astral): types, hover, go-to, add-import fixes incl. installed packages
   "ruff", -- Python linting + import sorting (formatting runs through conform)
   "taplo", -- TOML: validation (incl. pyproject.toml / Cargo.toml schemas), completion, hover
   "bashls",
