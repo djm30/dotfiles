@@ -59,10 +59,12 @@ return {
           yaml = web,
           markdown = web,
           swift = swift,
+          toml = { "taplo", lsp_format = "never" }, -- only with a .taplo.toml / taplo.toml
         },
         formatters = {
           prettierd = { require_cwd = true },
           prettier = { require_cwd = true },
+          taplo = { require_cwd = true, cwd = require("conform.util").root_file { ".taplo.toml", "taplo.toml" } },
           ruff_format = { condition = uses_ruff },
           ruff_organize_imports = { condition = uses_ruff },
           swift = { require_cwd = true, cwd = require("conform.util").root_file { ".swift-format" } },
