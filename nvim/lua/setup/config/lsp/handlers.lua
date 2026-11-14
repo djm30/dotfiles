@@ -90,7 +90,7 @@ M.on_attach = function(client, bufnr)
     client.server_capabilities.documentFormattingProvider = false
   end
   if client.name == "ruff" then
-    client.server_capabilities.hoverProvider = false -- pyright's hover is the useful one
+    client.server_capabilities.hoverProvider = false -- basedpyright's hover is the useful one
   end
 
   lsp_keymaps(bufnr)

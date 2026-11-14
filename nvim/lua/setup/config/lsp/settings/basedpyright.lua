@@ -20,13 +20,14 @@ return {
     end
   end,
   settings = {
-    pyright = {
+    basedpyright = {
       disableOrganizeImports = true, -- ruff handles imports
-    },
-    python = {
       analysis = {
         typeCheckingMode = "off",
+        -- "off" also disables the undefined-name check, which the "add import" quick fix hangs off
+        diagnosticSeverityOverrides = { reportUndefinedVariable = "error" },
       },
     },
+    python = {},
   },
 }
