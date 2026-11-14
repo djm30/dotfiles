@@ -359,8 +359,15 @@ return {
         pickers = {
           find_files = {
             -- Skip .git/ at the source instead of listing it and filtering it out afterwards
-            -- rg (Homebrew) rather than fd, which is only on PATH in some shells
-            find_command = { "rg", "--files", "--hidden", "--color", "never", "--glob", "!.git" },
+            -- rg (Homebrew) rather than fd, which is only on PATH in some shells.
+            -- Second rg adds .env* files even when git-ignored; awk drops duplicates.
+            find_command = {
+              "sh",
+              "-c",
+              "{ rg --files --hidden --color never --glob '!.git';"
+                .. " rg --files --hidden --no-ignore --color never --glob '.env*'"
+                .. " --glob '!.git' --glob '!node_modules' --glob '!.venv' --glob '!venv'; } | awk '!seen[$0]++'",
+            },
           },
         },
 

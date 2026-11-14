@@ -125,6 +125,7 @@ return {
         sources = {
           explorer = {
             hidden = true, -- show dotfiles (toggle with H)
+            ignored = true, -- show git-ignored files (.env, build output...) dimmed (toggle with I)
             layout = { layout = { position = "right", width = 30 } },
           },
         },
