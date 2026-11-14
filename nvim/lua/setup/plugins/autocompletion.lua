@@ -45,6 +45,7 @@ return {
         ["<C-f>"] = { "scroll_documentation_down", "fallback" },
         ["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
         ["<C-e>"] = { "hide", "fallback" },
+        ["<C-s>"] = { "show_signature", "hide_signature", "fallback" }, -- parameter hints
         ["<CR>"] = { "accept", "fallback" },
         -- Tab only jumps inside snippets; otherwise falls through to tabout
         ["<Tab>"] = { "snippet_forward", "fallback" },
@@ -61,6 +62,8 @@ return {
         },
         documentation = { auto_show = true, auto_show_delay_ms = 200, window = { border = "rounded", scrollbar = false } },
       },
+      -- Parameter hints pop up after typing `(` or `,` in a call
+      signature = { enabled = true, window = { border = "rounded" } },
       sources = { default = { "lsp", "snippets", "buffer", "path" } },
       cmdline = { enabled = false }, -- was disabled in the old cmp config too
       fuzzy = { implementation = "prefer_rust_with_warning" },
