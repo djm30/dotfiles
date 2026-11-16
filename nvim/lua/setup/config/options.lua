@@ -1,6 +1,13 @@
+local opts = require("setup.config.util").opts
+
+-- Remap space as leader key
+vim.keymap.set("", "<Space>", "<Nop>", opts)
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
 local options = {
   backup = false,
-  clipboard = "", -- turn off yank to clipboard, set it to a to enable clipboard
+  clipboard = "", -- use the unnamed register only (set to "unnamedplus" to share the system clipboard)
   cmdheight = 0,
   completeopt = { "menuone", "noselect" },
   conceallevel = 0, -- so that `` is visible in markdown files
@@ -9,8 +16,8 @@ local options = {
   ignorecase = true, -- ignore case in search patterns
   mouse = "a", -- allow the mouse to be used in neovim
   pumheight = 10, -- pop up menu height
-  showmode = true, -- we don't need to see things like -- INSERT -- anymore
-  showtabline = 2, -- always show tabs
+  showmode = true, -- mode is also shown in lualine; set false to hide the native message
+  showtabline = 0, -- lualine takes over the tabline (buffers) when it loads
   smartcase = true, -- smart case
   smartindent = true, -- make indenting smarter again
   splitbelow = true, -- force all horizontal splits to go below current window
@@ -43,6 +50,7 @@ vim.loader.enable()
 
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+vim.g["surround_no_mappings"] = 1
 
 vim.opt.shortmess:append "c"
 
@@ -52,3 +60,5 @@ end
 
 -- Sets cursorline to be a line underneath the current line instead of a highlight
 -- vim.api.nvim_set_hl(0, 'CursorLine', { underline = true })
+
+vim.opt.whichwrap:append "<,>,[,],h,l"

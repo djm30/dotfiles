@@ -1,139 +1,129 @@
-local M = {
-  -- Highlight, edit, and navigate code
-  "nvim-treesitter/nvim-treesitter",
-  dependencies = {
-    "nvim-treesitter/nvim-treesitter-textobjects",
-    "windwp/nvim-ts-autotag",
-    "nvim-treesitter/playground",
-  },
-  build = ":TSUpdate",
+-- nvim-treesitter `main` branch (the old `master` branch is frozen and breaks on Neovim 0.12).
+-- `main` only installs parsers/queries; highlighting, folds and selection are built into Neovim.
+-- Requires the `tree-sitter` CLI (brew install tree-sitter-cli).
+local ensure_installed = {
+  "c",
+  "go",
+  "lua",
+  "python",
+  "rust",
+  "tsx",
+  "javascript",
+  "typescript",
+  "html",
+  "css",
+  "vimdoc",
+  "vim",
+  "bash",
+  "svelte",
+  "swift",
+  "toml",
+  "json",
+  "yaml",
+  "markdown",
+  "markdown_inline",
 }
 
-M.config = function()
-  vim.defer_fn(function()
-    require("nvim-treesitter.configs").setup {
-      -- Add languages to be installed here that you want installed for treesitter
-      ensure_installed = {
-        "c",
-        "go",
-        "lua",
-        "python",
-        "rust",
-        "tsx",
-        "javascript",
-        "tsx",
-        "html",
-        "css",
-        "typescript",
-        "vimdoc",
-        "vim",
-        "bash",
-        "svelte",
-      },
+return {
+  {
+    "nvim-treesitter/nvim-treesitter",
+    branch = "main",
+    lazy = false, -- the plugin doesn't support lazy-loading
+    build = ":TSUpdate",
+    config = function()
+      local ts = require "nvim-treesitter"
+      ts.install(ensure_installed)
 
-      -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
-      auto_install = true,
+      local available = {}
+      for _, lang in ipairs(ts.get_available()) do
+        available[lang] = true
+      end
 
-      autotag = {
-        enable = true,
-        enable_rename = true,
-        enable_close = true,
-        enable_close_slash = true,
-        filetypes = {
-          "tsx",
-          "jsx",
-          "html",
-          "xml",
-          "svelte",
-          "typescriptreact",
-          "typescript",
-          "javascript",
-          "javascriptreact",
-        },
-      },
+      local function start(buf, lang)
+        if not pcall(vim.treesitter.start, buf, lang) then
+          return
+        end
+        vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+      end
 
-      highlight = { enable = true },
-      indent = { enable = true },
-      incremental_selection = {
-        enable = true,
-        keymaps = {
-          init_selection = "<c-space>",
-          node_incremental = "<c-space>",
-          scope_incremental = "<c-s>",
-          node_decremental = "<M-space>",
-        },
-      },
-      textobjects = {
-        select = {
-          enable = true,
-          lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
-          keymaps = {
-            -- You can use the capture groups defined in textobjects.scm
-            ["aa"] = "@parameter.outer",
-            ["ia"] = "@parameter.inner",
-            ["af"] = "@function.outer",
-            ["if"] = "@function.inner",
-            ["ac"] = "@class.outer",
-            ["ic"] = "@class.inner",
-          },
-        },
-        move = {
-          enable = true,
-          set_jumps = true, -- whether to set jumps in the jumplist
-          goto_next_start = {
-            ["]m"] = "@function.outer",
-            ["]]"] = "@class.outer",
-          },
-          goto_next_end = {
-            ["]M"] = "@function.outer",
-            ["]["] = "@class.outer",
-          },
-          goto_previous_start = {
-            ["[m"] = "@function.outer",
-            ["[["] = "@class.outer",
-          },
-          goto_previous_end = {
-            ["[M"] = "@function.outer",
-            ["[]"] = "@class.outer",
-          },
-        },
-        swap = {
-          -- I dont really know what this is or if i will ever use it
-          enable = false,
-          swap_next = {
-            ["<leader>a"] = "@parameter.inner",
-          },
-          swap_previous = {
-            ["<leader>A"] = "@parameter.inner",
-          },
-        },
-      },
-    }
+      -- Start highlighting + indent for every buffer with a parser; auto-install missing ones
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup("setup-treesitter", { clear = true }),
+        callback = function(args)
+          local lang = vim.treesitter.language.get_lang(args.match)
+          if not lang then
+            return
+          end
+          if vim.treesitter.language.add(lang) then
+            start(args.buf, lang)
+          elseif available[lang] then
+            ts.install(lang):await(function()
+              if vim.api.nvim_buf_is_valid(args.buf) then
+                start(args.buf, lang)
+              end
+            end)
+          end
+        end,
+      })
 
-    require("setup.config.styled-components").directives()
-    require("setup.config.styled-components").queries()
-  end, 0)
+      -- Incremental selection (same keys as before) using Neovim 0.12's built-in `an`/`in`
+      vim.keymap.set("n", "<C-space>", "van", { remap = true, desc = "Start node selection" })
+      vim.keymap.set("x", "<C-space>", "an", { remap = true, desc = "Grow node selection" })
+      vim.keymap.set("x", "<M-space>", "in", { remap = true, desc = "Shrink node selection" })
+      local document = require("setup.config.util").document
+      document("<C-space>", "Start / grow node selection", { "n", "x" })
+      document("<M-space>", "Shrink node selection", "x")
+    end,
+  },
 
-  require("nvim-treesitter.configs").setup {
-    playground = {
-      enable = true,
-      disable = {},
-      updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
-      persist_queries = false, -- Whether the query persists across vim sessions
-      keybindings = {
-        toggle_query_editor = "o",
-        toggle_hl_groups = "i",
-        toggle_injected_languages = "t",
-        toggle_anonymous_nodes = "a",
-        toggle_language_display = "I",
-        focus_language = "f",
-        unfocus_language = "F",
-        update = "R",
-        goto_node = "<cr>",
-        show_help = "?",
-      },
-    },
-  }
-end
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    branch = "main",
+    event = { "BufReadPost", "BufNewFile" },
+    config = function()
+      require("nvim-treesitter-textobjects").setup {
+        select = { lookahead = true }, -- jump forward to the next text object
+        move = { set_jumps = true },
+      }
 
-return M
+      local select = require "nvim-treesitter-textobjects.select"
+      for keys, obj in pairs {
+        aa = "@parameter.outer",
+        ia = "@parameter.inner",
+        af = "@function.outer",
+        ["if"] = "@function.inner",
+        ac = "@class.outer",
+        ic = "@class.inner",
+      } do
+        vim.keymap.set({ "x", "o" }, keys, function()
+          select.select_textobject(obj, "textobjects")
+        end, { desc = "Select " .. obj })
+        require("setup.config.util").document(keys, "Select " .. obj, { "x", "o" })
+      end
+
+      local move = require "nvim-treesitter-textobjects.move"
+      for keys, spec in pairs {
+        ["]m"] = { "goto_next_start", "@function.outer" },
+        ["]]"] = { "goto_next_start", "@class.outer" },
+        ["]M"] = { "goto_next_end", "@function.outer" },
+        ["]["] = { "goto_next_end", "@class.outer" },
+        ["[m"] = { "goto_previous_start", "@function.outer" },
+        ["[["] = { "goto_previous_start", "@class.outer" },
+        ["[M"] = { "goto_previous_end", "@function.outer" },
+        ["[]"] = { "goto_previous_end", "@class.outer" },
+      } do
+        vim.keymap.set({ "n", "x", "o" }, keys, function()
+          move[spec[1]](spec[2], "textobjects")
+        end, { desc = spec[1]:gsub("_", " ") .. " " .. spec[2] })
+        require("setup.config.util").document(keys, spec[1]:gsub("_", " ") .. " " .. spec[2], { "n", "x", "o" })
+      end
+    end,
+  },
+
+  {
+    -- Auto close/rename HTML & JSX tags
+    "windwp/nvim-ts-autotag",
+    event = { "BufReadPost", "BufNewFile" },
+    opts = {},
+  },
+}

@@ -1,33 +1,20 @@
 local M = {}
 
-local status_cmp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-if not status_cmp_ok then
-  return
-end
-
-local border = "rounded"
-
-M.capabilities = vim.lsp.protocol.make_client_capabilities()
-M.capabilities.textDocument.completion.completionItem.snippetSupport = true
-M.capabilities = cmp_nvim_lsp.default_capabilities(M.capabilities)
+M.capabilities = require("blink.cmp").get_lsp_capabilities()
 
 M.setup = function()
-  local signs = {
+  -- Rounded borders for hover/signature/diagnostic floats (replaces vim.lsp.with handlers)
+  vim.o.winborder = "rounded"
 
-    { name = "DiagnosticSignError", text = "" },
-    { name = "DiagnosticSignWarn", text = "" },
-    { name = "DiagnosticSignHint", text = "" },
-    { name = "DiagnosticSignInfo", text = "" },
-  }
-
-  for _, sign in ipairs(signs) do
-    vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
-  end
-
-  local config = {
+  vim.diagnostic.config {
     virtual_text = true,
     signs = {
-      active = signs, -- show signs
+      text = {
+        [vim.diagnostic.severity.ERROR] = "\u{f057}",
+        [vim.diagnostic.severity.WARN] = "\u{f071}",
+        [vim.diagnostic.severity.HINT] = "\u{f06a}",
+        [vim.diagnostic.severity.INFO] = "\u{f05a}",
+      },
     },
     update_in_insert = false,
     underline = true,
@@ -35,100 +22,91 @@ M.setup = function()
     float = {
       focusable = true,
       style = "minimal",
-      border = border,
-      source = "always",
+      source = true,
       header = "",
       prefix = "",
     },
   }
-
-  vim.diagnostic.config(config)
-
-  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-    border = border,
-  })
-
-  vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-    border = border,
-  })
 end
+
 local function lsp_keymaps(bufnr)
-  local opts_with_desc = require("setup.config.util").opts_with_desc
+  local function map(lhs, rhs, desc)
+    vim.keymap.set("n", lhs, rhs, { buffer = bufnr, desc = desc })
+    require("setup.config.util").document(lhs, "LSP: " .. desc)
+  end
+  local function telescope(picker, opts)
+    return function()
+      require("telescope.builtin")[picker](opts or {})
+    end
+  end
 
-  local keymap = vim.api.nvim_buf_set_keymap
+  map("gD", vim.lsp.buf.declaration, "Go to declaration")
+  map("gd", vim.lsp.buf.definition, "Go to definition")
+  map("K", vim.lsp.buf.hover, "Show hover information")
+  map("gI", vim.lsp.buf.implementation, "Go to implementation")
+  map("gt", vim.lsp.buf.type_definition, "Go to type definition")
+  map("gr", telescope("lsp_references", { layout_strategy = "center" }), "Go to references")
+  map("gf", telescope("diagnostics", { layout_strategy = "center", bufnr = 0 }), "Find diagnostics")
+  map("gq", function()
+    require("conform").format { bufnr = bufnr }
+  end, "Format")
 
-  keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts_with_desc "Go to declaration")
-  keymap(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts_with_desc "Go to definiton")
-  keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts_with_desc "Show hover popup")
-  keymap(bufnr, "n", "gI", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts_with_desc "Go to implementation")
-  keymap(bufnr, "n", "gr", "<cmd>Telescope lsp_references<CR>", opts_with_desc "Go to references")
-  keymap(bufnr, "n", "<leader>cd", "<cmd>lua vim.diagnostic.open_float()<CR>", opts_with_desc "Open diagnostic float")
-  --  keymap(bufnr, "n", "<leader>cf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr>", opts_with_desc("Format with builtin LSP"))
-  keymap(
-    bufnr,
-    "n",
-    "<leader>cf",
-    "<cmd>lua require('conform').format()<cr>",
-    opts_with_desc "Format with conform formatter"
-  )
-  keymap(bufnr, "n", "<leader>cd", "<cmd>lua vim.diagnostic.open_float()<CR>", opts_with_desc "Open diagnostic float")
-  keymap(bufnr, "n", "<leader>ci", "<cmd>LspInfo<cr>", opts_with_desc "Open LspInfo")
-  keymap(bufnr, "n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts_with_desc "Run Code Action")
-  keymap(
-    bufnr,
-    "n",
-    "<leader>cj",
-    "<cmd>lua vim.diagnostic.goto_next({buffer=0})<cr>",
-    opts_with_desc "Go to next diagnostic"
-  )
-  keymap(
-    bufnr,
-    "n",
-    "<leader>ck",
-    "<cmd>lua vim.diagnostic.goto_prev({buffer=0})<cr>",
-    opts_with_desc "Go to prev diagnostic"
-  )
-  keymap(bufnr, "n", "<leader>cr", "<cmd>lua vim.lsp.buf.rename()<cr>", opts_with_desc "Rename symbol")
-  keymap(bufnr, "n", "<leader>cs", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts_with_desc "Signature Help")
-  keymap(
-    bufnr,
-    "n",
-    "<leader>cq",
-    "<cmd>lua vim.diagnostic.setloclist()<CR>",
-    opts_with_desc "Populates location list with diagnostics"
-  )
+  map("<leader>cd", function()
+    vim.diagnostic.open_float()
+  end, "Show line diagnostics")
+  map("<leader>ci", "<cmd>checkhealth vim.lsp<cr>", "Open LSP info")
+  map("<leader>ca", vim.lsp.buf.code_action, "Show code actions")
+  map("<leader>cr", vim.lsp.buf.rename, "Rename symbol")
+  map("<leader>cs", vim.lsp.buf.signature_help, "Show signature help")
+  map("<leader>cq", vim.diagnostic.setloclist, "Diagnostics to location list")
+  map("<LocalLeader>p", function()
+    -- Show the definition in a floating window without jumping to it
+    local client = vim.lsp.get_clients({ bufnr = bufnr, method = "textDocument/definition" })[1]
+    if not client then
+      return
+    end
+    local params = vim.lsp.util.make_position_params(0, client.offset_encoding)
+    client:request("textDocument/definition", params, function(_, result)
+      if not result or vim.tbl_isempty(result) then
+        return vim.notify("No definition found", vim.log.levels.INFO)
+      end
+      local location = vim.islist(result) and result[1] or result
+      vim.lsp.util.preview_location(location, { border = "rounded" })
+    end, bufnr)
+  end, "Peek definition")
+  map("[d", function()
+    vim.diagnostic.jump { count = -1, float = true }
+  end, "Previous diagnostic")
+  map("]d", function()
+    vim.diagnostic.jump { count = 1, float = true }
+  end, "Next diagnostic")
 end
+
+-- Servers whose formatting is handled by conform instead
+local no_format = { ts_ls = true, tsserver = true, ["typescript-tools"] = true, lua_ls = true, ruff = true }
 
 M.on_attach = function(client, bufnr)
-  if client.name == "tsserver" then
+  if no_format[client.name] then
     client.server_capabilities.documentFormattingProvider = false
   end
-
-  if client.name == "sumneko_lua" then
-    client.server_capabilities.documentFormattingProvider = false
+  if client.name == "ruff" then
+    client.server_capabilities.hoverProvider = false -- ty's hover is the useful one
   end
-
-  -- if client.name == "svelte" then
-  --   vim.api.nvim_create_autocmd("BufWritePost", {
-  --     pattern = { "*.js", "*.ts" },
-  --     callback = function(ctx)
-  --       client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.file })
-  --     end,
-  --   })
-  --
-  --   vim.api.nvim_create_autocmd({ "BufWrite" }, {
-  --     pattern = { "+page.server.ts", "+page.ts", "+layout.server.ts", "+layout.ts" },
-  --     command = "LspRestart svelte",
-  --   })
-  -- end
 
   lsp_keymaps(bufnr)
-
-  local status_ok, illuminate = pcall(require, "illuminate")
-  if not status_ok then
-    return
-  end
-  illuminate.on_attach(client)
 end
+
+-- Attach keymaps via LspAttach rather than each server's on_attach: several nvim-lspconfig
+-- configs (pyright, clangd, rust_analyzer, svelte...) define their own on_attach, which
+-- replaces a shared one instead of adding to it.
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("setup_lsp_attach", { clear = true }),
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client then
+      M.on_attach(client, args.buf)
+    end
+  end,
+})
 
 return M
