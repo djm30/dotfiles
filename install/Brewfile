@@ -36,11 +36,9 @@ brew "uv"
 brew "openjdk@21"
 brew "maven"
 
-# --- Dev services / misc ----------------------------------------------------
-brew "postgresql@14"
+# --- Dev tools / misc -------------------------------------------------------
 brew "act"
 brew "git-xargs"
-brew "syncthing"
 brew "tesseract"
 
 # --- Fonts ------------------------------------------------------------------
@@ -68,4 +66,3 @@ cask "visual-studio-code"
 cask "selfcontrol"
 cask "caffeine"
 cask "dropzone"
-cask "dbeaver-community"
