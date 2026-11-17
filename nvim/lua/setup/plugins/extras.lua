@@ -71,20 +71,30 @@ return {
     "esmuellert/codediff.nvim",
     cmd = { "CodeDiff", "CodeDiffViewedClear" },
     keys = function()
-      -- Switch to an open review tab instead of starting another one
+      -- Switch to an open review tab instead of starting another one. A review whose file list
+      -- window is gone (e.g. its windows were switched to other buffers) is closed instead.
       local function focus_review()
         local ok, lifecycle = pcall(require, "codediff.ui.lifecycle")
         if not ok then
           return false
         end
-        local current = vim.api.nvim_get_current_tabpage()
         for _, tab in ipairs(vim.api.nvim_list_tabpages()) do
-          if tab ~= current and lifecycle.get_session(tab) then
-            vim.api.nvim_set_current_tabpage(tab)
-            return true
+          if lifecycle.get_session(tab) then
+            local view = lifecycle.get_panel_view(tab)
+            local intact = view
+              and view.winid
+              and vim.api.nvim_win_is_valid(view.winid)
+              and vim.api.nvim_win_get_buf(view.winid) == view.bufnr
+            if intact then
+              vim.api.nvim_set_current_tabpage(tab)
+              return true
+            end
+            if #vim.api.nvim_list_tabpages() > 1 then
+              vim.cmd("tabclose " .. vim.api.nvim_tabpage_get_number(tab))
+            end
           end
         end
-        return lifecycle.get_session(current) ~= nil -- already in it
+        return false
       end
       return {
         {
@@ -113,6 +123,9 @@ return {
     end,
     opts = {
       diff = { layout = "inline" }, -- single pane with deletions shown inline (`t` switches to side-by-side)
+      -- <Tab>/<S-Tab> move between files inside a review (globally they're :bnext/:bprev, which
+      -- would swap the review's windows to other buffers and break it)
+      keymaps = { view = { next_file = { "]f", "<Tab>" }, prev_file = { "[f", "<S-Tab>" } } },
       explorer = {
         view_mode = "tree", -- folders in the file list (`i` switches to flat list)
         formatters = {
