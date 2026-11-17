@@ -119,6 +119,21 @@ return {
           end,
           desc = "CodeDiff: review branch vs default branch (or back to open review)",
         },
+        {
+          "<leader>gp",
+          function()
+            vim.ui.input({ prompt = "Review PR #" }, function(input)
+              -- Accepts 123, #123 or a PR URL
+              local number = input and (input:match "/pull/(%d+)" or input:match "^%s*#?(%d+)%s*$")
+              if number then
+                vim.cmd("CodeDiff pr " .. number)
+              elseif input and input ~= "" then
+                vim.notify("Not a PR number: " .. input, vim.log.levels.WARN)
+              end
+            end)
+          end,
+          desc = "CodeDiff: review a pull request",
+        },
       }
     end,
     opts = {
