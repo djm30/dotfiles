@@ -37,6 +37,9 @@ return {
       },
       highlights = {
 
+        -- onedarkpro paints imported names in plain fg; let @module/Type colours show instead
+        ["@odp.import_module.python"] = {},
+
         ["@markup.raw.block.markdown"] = { bg = "${codeblock}" },
         ["@markup.quote.markdown"] = { italic = true, extend = true },
 
